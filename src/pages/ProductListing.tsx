@@ -34,8 +34,10 @@ export default function ProductListing() {
     const params = new URLSearchParams(location.search);
     const urlSearch = params.get('search');
     const urlFilter = params.get('filter');
+    const urlCategory = params.get('category');
     if (urlSearch) setSearchQuery(urlSearch);
     if (urlFilter === 'swap') setSelectedCondition('Swap');
+    if (urlCategory) setSelectedCategory(urlCategory);
   }, [location.search]);
   
   const categories = ['All', 'Phones', 'Laptops', 'Gaming', 'Audio', 'Watches', 'Monitors', 'Tablets'];

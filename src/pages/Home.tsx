@@ -123,17 +123,18 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-              {categories.map((cat, i) => (
+              {categories.map((cat) => (
+                <Link to={`/products?category=${cat.name}`} key={cat.name}>
                 <motion.div
-                  key={cat.name}
                   whileHover={{ y: -5 }}
                   className="bg-white p-8 rounded-2xl border border-primary/5 shadow-sm hover:shadow-md transition-all text-center group cursor-pointer"
-                >
+                  >
                   <div className={`w-16 h-16 mx-auto rounded-2xl ${cat.color} bg-opacity-10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                     <cat.icon className={`text-${cat.color.split('-')[1]}-600`} size={32} />
                   </div>
                   <h3 className="font-bold text-foreground">{cat.name}</h3>
                 </motion.div>
+                </Link>
               ))}
             </div>
           </div>
