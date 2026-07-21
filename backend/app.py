@@ -3,6 +3,7 @@ from flask_cors import CORS
 from database import create_tables
 from auth import auth_bp
 from orders import orders_bp
+from sell import sell_bp
 import os
 
 # path to the static folder
@@ -17,6 +18,7 @@ CORS(app, origins=['http://localhost:5173'], supports_credentials=True)
 
 app.register_blueprint(auth_bp, url_prefix='/api')
 app.register_blueprint(orders_bp, url_prefix='/api')
+app.register_blueprint(sell_bp, url_prefix='/api')
 
 create_tables()
 

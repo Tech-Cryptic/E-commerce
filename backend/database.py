@@ -55,6 +55,23 @@ def create_tables():
         )
     ''')
 
+    # sell requests table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS sell_requests (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            device_type TEXT,
+            condition TEXT,
+            brand TEXT NOT NULL,
+            model TEXT NOT NULL,
+            storage TEXT,
+            name TEXT NOT NULL,
+            phone TEXT NOT NULL,
+            email TEXT,
+            notes TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        )
+    ''')
+
     conn.commit()
     conn.close()
     print('All tables created successfully')

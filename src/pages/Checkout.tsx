@@ -19,6 +19,10 @@ export default function Checkout() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [loading, setLoading] = useState(false);
+  const [promoCode, setPromoCode] = useState('');
+  const [promoInput, setPromoInput] = useState('');
+  const [promoMessage, setPromoMessage] = useState('');
+  const [promoError, setPromoError] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -28,13 +32,11 @@ export default function Checkout() {
     state: '',
   });
 
-  // --- on page load: check auth + load cart ---
   useEffect(() => {
     const loggedIn = localStorage.getItem('gg_logged_in');
     const user = localStorage.getItem('gg_current_user');
 
     if (loggedIn !== 'true' || !user) {
-      // not logged in — save where they were going, send to login
       localStorage.setItem('gg_redirect', '/checkout');
       navigate('/login');
       return;
@@ -43,7 +45,6 @@ export default function Checkout() {
     const parsedUser = JSON.parse(user);
     setCurrentUser(parsedUser);
 
-    // pre-fill form with user details
     setFormData(prev => ({
       ...prev,
       fullName: parsedUser.fullName || '',
@@ -51,7 +52,6 @@ export default function Checkout() {
       phone: parsedUser.phone || '',
     }));
 
-    // load cart
     const cart = localStorage.getItem('gg_cart');
     if (cart) {
       setCartItems(JSON.parse(cart));
@@ -63,8 +63,37 @@ export default function Checkout() {
   };
 
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shippingFee = subtotal > 0 ? 15000 : 0;
-  const total = subtotal + shippingFee;
+  const shippingFee = subtotal > 0 && subtotal < 500000 ? 15000 : 0;
+  const tax = subtotal * 0.075;
+
+  // Promo codes
+  const PROMO_CODES: Record<string, { type: 'percent' | 'freeship'; value: number; label: string }> = {
+    SAVE10:   { type: 'percent',  value: 10, label: '10% off your order' },
+    GABBY20:  { type: 'percent',  value: 20, label: '20% off your order' },
+    FREESHIP: { type: 'freeship', value: 0,  label: 'Free shipping!' },
+  };
+
+  const applyPromo = () => {
+    const code = promoInput.trim().toUpperCase();
+    if (PROMO_CODES[code]) {
+      setPromoCode(code);
+      setPromoMessage(`✓ ${PROMO_CODES[code].label} applied!`);
+      setPromoError('');
+    } else {
+      setPromoCode('');
+      setPromoError('Invalid promo code.');
+      setPromoMessage('');
+    }
+  };
+
+  const promoData = promoCode ? PROMO_CODES[promoCode] : null;
+  const discount = promoData
+    ? promoData.type === 'percent'
+      ? subtotal * (promoData.value / 100)
+      : 0
+    : 0;
+  const effectiveShipping = promoData?.type === 'freeship' ? 0 : shippingFee;
+  const total = subtotal + effectiveShipping + tax - discount;
 
   const formatPrice = (price: number) =>
     new Intl.NumberFormat('en-NG', {
@@ -73,7 +102,6 @@ export default function Checkout() {
       maximumFractionDigits: 0,
     }).format(price);
 
-  // --- Paystack payment ---
   const handlePayment = () => {
     if (!formData.address || !formData.city || !formData.state) {
       alert('Please fill in your delivery address, city and state.');
@@ -86,16 +114,15 @@ export default function Checkout() {
 
     setLoading(true);
 
-    // load Paystack script dynamically
     const script = document.createElement('script');
     script.src = 'https://js.paystack.co/v1/inline.js';
     script.onload = () => {
       const handler = (window as any).PaystackPop.setup({
-        key: 'pk_test_18296512b6aaa266caeab1785c6f649be9a893bc', // 👈 replace with your Paystack public key
+        key: import.meta.env.VITE_PAYSTACK_KEY,
         email: formData.email,
-        amount: total * 100, // Paystack uses kobo (multiply naira by 100)
+        amount: Math.round(total * 100),
         currency: 'NGN',
-        ref: 'GG-' + Date.now(), // unique reference
+        ref: 'GG-' + Date.now(),
         metadata: {
           custom_fields: [
             { display_name: 'Customer Name', value: formData.fullName },
@@ -103,24 +130,52 @@ export default function Checkout() {
             { display_name: 'Delivery Address', value: `${formData.address}, ${formData.city}, ${formData.state}` },
           ],
         },
-        callback: (response: any) => {
-          // payment successful — save order to localStorage
+        callback: async (response: any) => {
+          const deliveryAddress = `${formData.address}, ${formData.city}, ${formData.state}`;
           const order = {
             id: response.reference,
             items: cartItems,
+            subtotal,
+            shippingFee,
+            tax,
             total,
-            address: `${formData.address}, ${formData.city}, ${formData.state}`,
+            address: deliveryAddress,
             date: new Date().toISOString(),
             status: 'Paid',
           };
 
-          // add to order history
+          // ── Save to localStorage immediately ──────────────────
           const existing = JSON.parse(localStorage.getItem('gg_orders') || '[]');
           existing.push(order);
           localStorage.setItem('gg_orders', JSON.stringify(existing));
-
-          // clear cart
           localStorage.removeItem('gg_cart');
+
+          // ── Also persist to Flask backend (store.db) ──────────
+          try {
+            const user = JSON.parse(localStorage.getItem('gg_current_user') || '{}');
+            await fetch('http://localhost:5000/api/orders', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                userId: user.id,
+                total: total,
+                paymentRef: response.reference,
+                address: deliveryAddress,
+                items: cartItems.map(item => ({
+                  id: item.id,
+                  name: item.name,
+                  image: item.image,
+                  brand: item.brand,
+                  condition: item.condition,
+                  quantity: item.quantity,
+                  price: item.price,
+                })),
+              }),
+            });
+          } catch {
+            // backend unavailable — order is still in localStorage
+            console.warn('Backend unavailable; order saved locally only.');
+          }
 
           setLoading(false);
           navigate('/order-confirmation', { state: { order } });
@@ -134,7 +189,6 @@ export default function Checkout() {
     document.body.appendChild(script);
   };
 
-  // show nothing while redirecting unauthenticated users
   if (!currentUser) return null;
 
   return (
@@ -232,6 +286,29 @@ export default function Checkout() {
               </div>
             </div>
 
+            {/* Promo code */}
+            <div className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm">
+              <h2 className="text-base font-bold text-foreground mb-4">Promo Code</h2>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  placeholder="Enter code e.g. SAVE10"
+                  value={promoInput}
+                  onChange={e => { setPromoInput(e.target.value.toUpperCase()); setPromoError(''); setPromoMessage(''); }}
+                  onKeyDown={e => e.key === 'Enter' && applyPromo()}
+                  className="flex-1 border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a3dc4] focus:ring-1 focus:ring-[#1a3dc4] transition-all uppercase font-mono"
+                />
+                <button
+                  onClick={applyPromo}
+                  className="px-5 py-3 bg-[#1a3dc4] text-white rounded-xl text-sm font-bold hover:bg-[#1a3dc4]/90 transition-all"
+                >
+                  Apply
+                </button>
+              </div>
+              {promoMessage && <p className="text-green-600 text-xs font-semibold mt-2">{promoMessage}</p>}
+              {promoError && <p className="text-red-500 text-xs font-semibold mt-2">{promoError}</p>}
+            </div>
+
             {/* security badge */}
             <div className="flex items-center gap-3 p-4 bg-green-50 border border-green-100 rounded-xl">
               <ShieldCheck className="text-green-600 flex-shrink-0" size={20} />
@@ -283,14 +360,30 @@ export default function Checkout() {
                     </div>
                     <div className="flex justify-between text-gray-500">
                       <span>Shipping</span>
-                      <span>{formatPrice(shippingFee)}</span>
+                      <span>{effectiveShipping === 0 ? <span className="text-green-600 font-semibold">Free</span> : formatPrice(effectiveShipping)}</span>
                     </div>
+                    <div className="flex justify-between text-gray-500">
+                      <span>VAT (7.5%)</span>
+                      <span>{formatPrice(tax)}</span>
+                    </div>
+                    {discount > 0 && (
+                      <div className="flex justify-between text-green-600 font-semibold">
+                        <span>Discount ({promoCode})</span>
+                        <span>-{formatPrice(discount)}</span>
+                      </div>
+                    )}
                     <hr className="border-gray-100" />
                     <div className="flex justify-between font-black text-lg text-foreground">
                       <span>Total</span>
                       <span className="text-[#1a3dc4]">{formatPrice(total)}</span>
                     </div>
                   </div>
+
+                  {shippingFee === 0 && subtotal > 0 && (
+                    <p className="text-xs text-green-600 font-semibold mt-2 text-center">
+                      Free shipping applied on your order!
+                    </p>
+                  )}
 
                   <button
                     onClick={handlePayment}

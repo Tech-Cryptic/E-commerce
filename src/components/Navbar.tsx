@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X, Search, LogOut } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Search, LogOut, Heart } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [cartCount, setCartCount] = useState(0);
+  const [wishlistCount, setWishlistCount] = useState(0);
   const [currentUser, setCurrentUser] = useState<{ fullName: string } | null>(null);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -39,11 +40,18 @@ const Navbar = () => {
     } else {
       setCartCount(0);
     }
+
+    const wl = JSON.parse(localStorage.getItem('gg_wishlist') || '[]');
+    setWishlistCount(wl.length);
   };
 
   updateCount();
   window.addEventListener('cartUpdated', updateCount);
-  return () => window.removeEventListener('cartUpdated', updateCount);
+  window.addEventListener('wishlistUpdated', updateCount);
+  return () => {
+    window.removeEventListener('cartUpdated', updateCount);
+    window.removeEventListener('wishlistUpdated', updateCount);
+  };
 }, [location]);
 
 
@@ -130,6 +138,16 @@ const Navbar = () => {
     <Search size={20} />
   </button>
 </div>
+
+          {/* Wishlist */}
+          <Link to="/wishlist" className="p-2 hover:bg-accent rounded-full transition-colors text-foreground/70 relative">
+            <Heart size={20} />
+            {wishlistCount > 0 && (
+              <span className="absolute top-0 right-0 w-4 h-4 bg-red-500 text-white text-[10px] flex items-center justify-center rounded-full font-bold">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
 
           {/* Cart */}
           <Link to="/cart" className="p-2 hover:bg-accent rounded-full transition-colors text-foreground/70 relative">

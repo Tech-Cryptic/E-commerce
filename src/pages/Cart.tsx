@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Trash2, Plus, Minus, ArrowRight, ShoppingBag } from 'lucide-react';
 import { motion } from 'framer-motion';
-import toast from 'react-hot-toast';
+import { toast } from 'react-toastify';
 
 interface CartItem {
   id: string;
@@ -18,30 +18,9 @@ interface CartItem {
 
 export default function Cart() {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-  const saved = localStorage.getItem('gg_cart');
-  if (saved) return JSON.parse(saved);
-  // default items so cart isn't empty during your demo
-  return [
-    {
-      id: '1',
-      name: 'iPhone 15 Pro Max',
-      price: 1450000,
-      quantity: 1,
-      image: 'https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&q=80&w=400',
-      brand: 'Apple',
-      condition: 'New'
-    },
-    {
-      id: '2',
-      name: 'MacBook Pro M3 Max',
-      price: 3200000,
-      quantity: 1,
-      image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=400',
-      brand: 'Apple',
-      condition: 'New'
-    }
-  ];
-});
+    const saved = localStorage.getItem('gg_cart');
+    return saved ? JSON.parse(saved) : [];
+  });
 
   const saveCart = (items: CartItem[]) => {
   setCartItems(items);
@@ -60,7 +39,7 @@ const removeItem = (id: string) => {
 };
 
   const subtotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-  const shippingFee = subtotal > 0 ? 15000 : 0;
+  const shippingFee = subtotal > 0 && subtotal < 500000 ? 15000 : 0;
   const tax = subtotal * 0.075;
   const total = subtotal + shippingFee + tax;
 
@@ -202,18 +181,10 @@ const removeItem = (id: string) => {
       const loggedIn = localStorage.getItem('gg_logged_in');
       if (loggedIn !== 'true') {
         localStorage.setItem('gg_redirect', '/checkout');
-        toast('🔒 Please sign in to checkout', {
-          style: {
-            background: '#0f0f1a',
-            color: '#fff',
-            border: '1px solid #1a3dc4',
-            borderRadius: '12px',
-            fontWeight: '600',
-          },
-        });
+        toast.info('Please sign in to checkout.', { position: 'top-right', autoClose: 2000 });
         setTimeout(() => {
           window.location.href = '/login';
-        }, 2500);
+        }, 2000);
       } else {
         window.location.href = '/checkout';
       }
@@ -234,7 +205,7 @@ const removeItem = (id: string) => {
 
                 <div className="p-4 bg-[#1a3dc4]/5 rounded-xl border border-[#1a3dc4]/10">
                   <p className="text-xs text-muted-foreground mb-2">
-                    ✓ Free delivery on orders over ₦500,000
+                    {subtotal >= 500000 ? '🎉 Free delivery applied!' : `✓ Free delivery on orders over ₦500,000`}
                   </p>
                   <p className="text-xs text-muted-foreground">
                     ✓ 7-day return guarantee on all items

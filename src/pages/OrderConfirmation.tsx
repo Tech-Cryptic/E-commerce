@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { CheckCircle, Package, Phone, Mail, ArrowRight, Home } from 'lucide-react';
+import { CheckCircle, Package, Phone, Mail, ArrowRight, Home, MapPin } from 'lucide-react';
 
 export default function OrderConfirmation() {
   const location = useLocation();
@@ -161,14 +161,21 @@ export default function OrderConfirmation() {
         {/* actions */}
         <div className="flex flex-wrap gap-4">
           <Link
-            to="/products"
+            to={`/track-order?ref=${encodeURIComponent(order.id)}`}
+            id="track-order-link"
             className="flex-1 py-3.5 bg-[#1a3dc4] text-white font-bold rounded-xl text-center flex items-center justify-center gap-2 hover:bg-[#1a3dc4]/90 transition-all hover:scale-[1.02]"
+          >
+            <MapPin size={18} /> Track Your Order
+          </Link>
+          <Link
+            to="/products"
+            className="flex-1 py-3.5 border border-[#1a3dc4] text-[#1a3dc4] font-bold rounded-xl text-center flex items-center justify-center gap-2 hover:bg-[#1a3dc4]/5 transition-all"
           >
             Continue Shopping <ArrowRight size={18} />
           </Link>
           <Link
             to="/"
-            className="flex-1 py-3.5 bg-gray-100 text-foreground font-bold rounded-xl text-center flex items-center justify-center gap-2 hover:bg-gray-200 transition-all"
+            className="w-full py-3.5 bg-gray-100 text-foreground font-bold rounded-xl text-center flex items-center justify-center gap-2 hover:bg-gray-200 transition-all"
           >
             <Home size={18} /> Back to Home
           </Link>

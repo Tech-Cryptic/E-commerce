@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, Smartphone, Laptop, Gamepad2, Watch, Headphones, Monitor, Zap, ShieldCheck, RefreshCw} from 'lucide-react';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ProductCard from '../components/ProductCard';
+import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
+import { ALL_PRODUCTS } from '../data/products';
 
 const categories = [
   { name: 'iPhones', icon: Smartphone, color: 'bg-blue-500' },
@@ -27,10 +29,24 @@ const featuredProducts = [
 ];
 
 export default function Home() {
+  const [recentlyViewed, setRecentlyViewed] = useState<typeof ALL_PRODUCTS>([]);
+
+  useEffect(() => {
+    const ids: string[] = JSON.parse(localStorage.getItem('gg_recently_viewed') || '[]');
+    const products = ids
+      .map(id => ALL_PRODUCTS.find(p => p.id === id))
+      .filter(Boolean)
+      .slice(0, 4) as typeof ALL_PRODUCTS;
+    setRecentlyViewed(products);
+  }, []);
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
-      
+      <SEO
+        title="Home"
+        description="Gabby's Gadget — Nigeria's best place to buy, sell and swap premium smartphones, laptops, gaming gear and accessories. Fast delivery within Lagos."
+      />
+
       <main>
         {/* Hero Section */}
         <section className="relative h-[85vh] flex items-center overflow-hidden bg-[#0a0a0a]">
@@ -64,9 +80,9 @@ export default function Home() {
                 <Link to="/products" className="px-8 py-4 bg-[#1a3dc4] text-white rounded-full font-bold flex items-center gap-2 hover:bg-[#1a3dc4]/90 transition-all hover:scale-105 shadow-xl shadow-primary/20">
                   Shop Now <ArrowRight size={20} />
                 </Link>
-                <button className="px-8 py-4 bg-white/5 text-white border border-white/10 rounded-full font-bold hover:bg-white/10 transition-all">
+                <Link to="/sell" className="px-8 py-4 bg-white/5 text-white border border-white/10 rounded-full font-bold hover:bg-white/10 transition-all">
                   Sell Your Device
-                </button>
+                </Link>
               </div>
             </motion.div>
           
@@ -91,17 +107,11 @@ export default function Home() {
         </section>
 
         {/* Brand Strip */}
-        <section className="py-12 bg-white border-y border-primary/5 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="flex items-center justify-between gap-12 animate-scroll whitespace-nowrap">
-              {brands.map((brand) => (
-                <span key={brand} className="text-2xl font-black text-gray-200 uppercase tracking-tighter hover:text-[#1a3dc4] transition-colors cursor-default">
-                  {brand}
-                </span>
-              ))}
-              {/* Duplicate for seamless scroll */}
-              {brands.map((brand) => (
-                <span key={`${brand}-2`} className="text-2xl font-black text-gray-200 uppercase tracking-tighter hover:text-[#1a3dc4] transition-colors cursor-default">
+        <section className="py-10 bg-white border-y border-primary/5 overflow-hidden">
+          <div className="overflow-hidden">
+            <div className="animate-marquee gap-16 items-center whitespace-nowrap">
+              {[...brands, ...brands].map((brand, i) => (
+                <span key={i} className="inline-block mx-8 text-2xl font-black text-gray-200 uppercase tracking-tighter hover:text-[#1a3dc4] transition-colors cursor-default">
                   {brand}
                 </span>
               ))}
@@ -186,6 +196,21 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        {/* Recently Viewed */}
+        {recentlyViewed.length > 0 && (
+          <section className="py-16 max-w-7xl mx-auto px-6">
+            <div className="flex items-center justify-between mb-8">
+              <h2 className="text-2xl font-black text-foreground">Recently Viewed</h2>
+              <Link to="/products" className="text-sm text-[#1a3dc4] font-bold hover:underline">See all</Link>
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {recentlyViewed.map(p => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <Footer />
