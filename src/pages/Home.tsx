@@ -21,12 +21,7 @@ const brands = [
   'Apple', 'Samsung', 'MSI', 'ASUS', 'HP', 'Dell', 'JBL', 'Lenovo', 'PlayStation', 'Harman Kardon'
 ];
 
-const featuredProducts = [
-  { id: '1', name: 'iPhone 15 Pro Max', price: 1450000, image: 'https://images.unsplash.com/photo-1696446701796-da61225697cc?auto=format&fit=crop&q=80&w=400', category: 'Phones', condition: 'New', brand: 'Apple' },
-  { id: '2', name: 'MacBook Pro M3 Max', price: 3200000, image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=400', category: 'Laptops', condition: 'New', brand: 'Apple' },
-  { id: '3', name: 'PlayStation 5 Slim', price: 650000, image: 'https://images.unsplash.com/photo-1606813907291-d86efa9b94db?auto=format&fit=crop&q=80&w=400', category: 'Gaming', condition: 'New', brand: 'Sony' },
-  { id: '4', name: 'Samsung S24 Ultra', price: 1250000, image: 'https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?auto=format&fit=crop&q=80&w=400', category: 'Phones', condition: 'New', brand: 'Samsung' },
-];
+
 
 export default function Home() {
   const [recentlyViewed, setRecentlyViewed] = useState<typeof ALL_PRODUCTS>([]);
@@ -159,8 +154,8 @@ export default function Home() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {featuredProducts.map((product) => (
-                <ProductCard key={product.id} {...product} />
+              {ALL_PRODUCTS.filter(p => p.condition === 'New').slice(0, 4).map((product) => (
+                <ProductCard key={product.id} product={product} />
               ))}
             </div>
           </div>
