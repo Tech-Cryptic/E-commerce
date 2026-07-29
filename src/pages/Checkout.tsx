@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import API_URL from '../config/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { ShieldCheck, Lock } from 'lucide-react';
@@ -153,7 +154,7 @@ export default function Checkout() {
           // ── Also persist to Flask backend (store.db) ──────────
           try {
             const user = JSON.parse(localStorage.getItem('gg_current_user') || '{}');
-            await fetch('http://localhost:5000/api/orders', {
+            await fetch(`${API_URL}/api/orders`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({

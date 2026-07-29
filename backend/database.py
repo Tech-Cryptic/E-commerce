@@ -1,7 +1,11 @@
 import sqlite3
 import os
 
-DB_PATH = os.path.join(os.path.dirname(__file__), 'store.db')
+# In production on Render set DATA_DIR=/data (persistent disk mount path)
+# Locally it falls back to the backend folder
+DATA_DIR = os.environ.get('DATA_DIR', os.path.dirname(__file__))
+DB_PATH  = os.path.join(DATA_DIR, 'store.db')
+
 
 def get_db():
     conn = sqlite3.connect(DB_PATH)

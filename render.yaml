@@ -1,0 +1,40 @@
+services:
+  # ── Backend: Flask API ──────────────────────────────────────────────────────
+  - type: web
+    name: gabbys-gadget-api
+    runtime: python
+    rootDir: backend
+    buildCommand: pip install -r ../requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATA_DIR
+        value: /data
+      - key: FRONTEND_URL
+        value: https://gabbys-gadget.onrender.com   # update after frontend deploys
+      - key: MAIL_USER
+        sync: false   # set this manually in Render dashboard
+      - key: MAIL_PASS
+        sync: false   # set this manually in Render dashboard
+    disk:
+      name: gabby-data
+      mountPath: /data
+      sizeGB: 1
+
+  # ── Frontend: React/Vite static site ───────────────────────────────────────
+  - type: web
+    name: gabbys-gadget
+    runtime: static
+    rootDir: .
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://gabbys-gadget-api.onrender.com   # update after backend deploys
+      - key: VITE_PAYSTACK_KEY
+        sync: false   # set this manually in Render dashboard
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html

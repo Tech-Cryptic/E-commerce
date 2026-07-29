@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import API_URL from '../config/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import {
@@ -57,7 +58,7 @@ export default function SellDevice() {
     }
     setLoading(true);
     try {
-      await fetch('http://localhost:5000/api/sell', {
+      await fetch(`${API_URL}/api/sell`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

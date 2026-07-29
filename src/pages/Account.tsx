@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import API_URL from '../config/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import {
@@ -46,7 +47,7 @@ export default function Account() {
     // ── Load orders: backend first, merge with localStorage ──
     const localOrders: Order[] = JSON.parse(localStorage.getItem('gg_orders') || '[]');
 
-    fetch(`http://localhost:5000/api/orders/${parsedUser.id}`)
+    fetch(`${API_URL}/api/orders/${parsedUser.id}`)
       .then(r => r.json())
       .then((backendOrders: any[]) => {
         // Normalise backend shape to match frontend shape

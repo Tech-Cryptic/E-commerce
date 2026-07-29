@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
+import API_URL from '../config/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import {
@@ -162,7 +163,7 @@ export default function OrderTracking() {
 
     // ── Query backend by payment reference ───────────────────
     try {
-      const res = await fetch(`http://localhost:5000/api/orders/track/${encodeURIComponent(ref.trim())}`);
+      const res = await fetch(`${API_URL}/api/orders/track/${encodeURIComponent(ref.trim())}`);
       if (res.ok) {
         const data = await res.json();
         const found: Order = {

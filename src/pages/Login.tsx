@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import API_URL from '../config/api';
 
 export default function Login() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -83,7 +84,7 @@ export default function Login() {
   setLoading(true);
 
   try {
-    const response = await fetch('http://localhost:5000/api/login', {
+    const response = await fetch(`${API_URL}/api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

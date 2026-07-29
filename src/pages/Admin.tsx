@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import API_URL from '../config/api';
 import {
   LayoutDashboard, Package, Users, Smartphone,
   TrendingUp, RefreshCw, LogOut, ChevronDown,
@@ -57,7 +58,7 @@ export default function Admin() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/api/admin/stats');
+      const res = await fetch(`${API_URL}/api/admin/stats`);
       const json = await res.json();
       setData(json);
     } catch {
@@ -69,7 +70,7 @@ export default function Admin() {
   const updateStatus = async (orderId: number, status: string) => {
     setUpdating(orderId);
     try {
-      await fetch(`http://localhost:5000/api/orders/${orderId}/status`, {
+      await fetch(`${API_URL}/api/orders/${orderId}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
