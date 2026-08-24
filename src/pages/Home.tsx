@@ -7,6 +7,9 @@ import ProductCard from '../components/ProductCard';
 import SEO from '../components/SEO';
 import { Link } from 'react-router-dom';
 import { ALL_PRODUCTS } from '../data/products';
+import heroBuySellSwap from '../assets/hero-buy-sell-swap.jpg';
+import heroSellDevice from '../assets/hero-sell-device.jpg';
+import heroCompare from '../assets/hero-compare.jpg';
 
 // Each category card now maps to the exact URL that filters products correctly
 const categories = [
@@ -33,8 +36,7 @@ const heroSlides = [
     subheading: ['', 'SELL', ' & SWAP'],
     highlightIndex: 0,
     description: 'Upgrade your lifestyle with the latest gadgets. From iPhones to Workstations, premium tech at unbeatable prices.',
-    // Dark flatlay of multiple premium smartphones — perfectly conveys Buy/Sell/Swap
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=90&w=3840&crop=center',
+    image: heroBuySellSwap,
     cta: { label: 'Shop Now', to: '/products' },
     accent: '#1a3dc4',
   },
@@ -44,8 +46,7 @@ const heroSlides = [
     subheading: ['OLD ', 'DEVICE', ''],
     highlightIndex: 1,
     description: 'Get the best value for your old phone, laptop or console. Fast evaluation, instant cash.',
-    // Real retail counter scene — customer handing over a phone for a deal
-    image: 'https://images.unsplash.com/photo-1556742502-ec3f3fd09953?auto=format&fit=crop&q=90&w=3840&crop=center',
+    image: heroSellDevice,
     cta: { label: 'Sell / Swap', to: '/sell' },
     accent: '#f5a623',
   },
@@ -55,8 +56,7 @@ const heroSlides = [
     subheading: ['PERFECT ', 'MATCH', ''],
     highlightIndex: 1,
     description: 'Side-by-side phone comparison. Compare specs, prices, and storage options to make the right call.',
-    // Person holding two phones side by side — perfectly conveys Compare/Find Your Match
-    image: 'https://images.unsplash.com/photo-1512941937938-ac2d9537b3b2?auto=format&fit=crop&q=90&w=3840&crop=center',
+    image: heroCompare,
     cta: { label: 'Compare Phones', to: '/compare' },
     accent: '#8b5cf6',
   },
