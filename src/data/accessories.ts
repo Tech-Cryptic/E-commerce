@@ -1,28 +1,52 @@
 import type { Product } from './types';
 
+const APPLE = (slug: string) =>
+  `https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/${slug}?wid=800&hei=800&fmt=jpeg&qlt=95`;
+
 const UNS = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=800`;
-const PEX = (id: number) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800`;
+const GSM = (slug: string) => `https://fdn2.gsmarena.com/vv/bigpic/${slug}.jpg`;
 
 const IMG = {
-  ipad:         UNS('1544244015-0df4b3ffc6b0'),
-  ipad2:        UNS('1561154464-82e9adf32764'),
-  awatch:       UNS('1579586337278-3befd40fd17a'),
-  awatch2:      UNS('1434493789847-2f02dc6ca35d'),
-  airpods:      UNS('1588423771073-b8903fead85b'),
-  airpods2:     PEX(3780681),
-  airpodsmax:   UNS('1546435770-a3e426bf472b'),
-  pencil:       PEX(1279228),
-  magic_kb:     UNS('1587829741301-dc798b83add3'),
-  ss_tab:       UNS('1561154464-82e9adf32764'),
-  ss_watch:     UNS('1508685096489-7aacd43bd3b1'),
-  ss_buds:      PEX(3780681),
-  gp_watch:     UNS('1508685096489-7aacd43bd3b1'),
-  laptop:       UNS('1517336714731-489689fd1ca8'),
-  ps5:          UNS('1606813907291-d86efa9b94db'),
-  gaming:       UNS('1612287230202-1ff1d85d1bdf'),
-  monitor:      UNS('1527443224154-c4a3942d3acf'),
-  speaker:      UNS('1589003077984-894e133dabab'),
-  headphones:   UNS('1505740420928-5e560c06d30e'),
+  // Apple Tablets
+  ipad:         APPLE('ipad-11th-select-wifi-blue-202503'),
+  ipad2:        APPLE('ipad-11th-select-wifi-yellow-202503'),
+  // Apple Watches — Apple Store CDN
+  awatch_ultra3: APPLE('apple-watch-ultra-3-finish-select-202509-49mm-black'),
+  awatch_ultra2: APPLE('apple-watch-ultra-2-finish-select-202409-49mm-natural'),
+  awatch_s11_46: APPLE('watch-case-46-aluminum-midnight-nc-s11_FV4_GEO_US'),
+  awatch_s11_42: APPLE('watch-case-42-aluminum-midnight-nc-s11_FV4_GEO_US'),
+  awatch_s10_46: APPLE('watch-case-46-aluminum-black-nc-s10_FV4'),
+  awatch_s10_42: APPLE('watch-case-42-aluminum-black-nc-s10_FV4'),
+  awatch:        UNS('1579586337278-3befd40fd17a'),       // fallback
+  awatch2:       UNS('1434493789847-2f02dc6ca35d'),       // fallback
+  // Apple AirPods — Apple Store CDN
+  airpods_pro3:  APPLE('airpods-pro-3rd-gen-select-202509'),
+  airpods_max2:  APPLE('airpods-max-select-202409-midnight'),
+  airpods_pro2:  APPLE('airpods-pro-2nd-gen-select-202309'),
+  airpods_4_anc: APPLE('airpods-4-select-202409-anc'),
+  airpods_4:     APPLE('airpods-4-select-202409'),
+  airpods:       UNS('1588423771073-b8903fead85b'),       // fallback
+  airpods2:      UNS('1631083955925-4f7086a2bf74'),       // fallback
+  airpodsmax:    UNS('1546435770-a3e426bf472b'),          // fallback
+  // Samsung watches + buds
+  ss_watch:      GSM('samsung-galaxy-watch-7'),
+  ss_buds:       GSM('samsung-galaxy-buds-3-pro'),
+  // Google Pixel Watch
+  gp_watch:      GSM('google-pixel-watch-3'),
+  // Computers / Gaming
+  laptop:        UNS('1517336714731-489689fd1ca8'),
+  ps5:           UNS('1606813907291-d86efa9b94db'),
+  gaming:        UNS('1612287230202-1ff1d85d1bdf'),
+  monitor:       UNS('1527443224154-c4a3942d3acf'),
+  speaker:       UNS('1589003077984-894e133dabab'),
+  headphones:    UNS('1505740420928-5e560c06d30e'),
+  pencil:        APPLE('apple-pencil-pro-select-202405'),
+  magic_kb:      APPLE('magic-keyboard-select-202401-space-gray'),
+  ss_tab:        GSM('samsung-galaxy-tab-s10-fe'),
+  // Power products
+  itel_power:    UNS('1609091839358-9b0e6c2e1d26'),      // power bank placeholder
+  ecoflow:       UNS('1609166222665-b8b5c0823d1a'),      // power station placeholder
+  anker:         UNS('1609092524229-7e8a25c9d1a2'),      // power bank placeholder
 };
 
 export const ACCESSORY_PRODUCTS: Product[] = [
@@ -83,7 +107,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
     colors: [
       { name: 'Black', hex: '#1C1C1E' },
     ],
-    images: [IMG.awatch, IMG.awatch2],
+    images: [IMG.awatch_ultra3, IMG.awatch],
   },
 
   {
@@ -108,7 +132,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { name: 'Natural', hex: '#8C8A8E' },
       { name: 'White',   hex: '#EDEAE4' },
     ],
-    images: [IMG.awatch, IMG.awatch2],
+    images: [IMG.awatch_ultra2, IMG.awatch],
   },
 
   {
@@ -134,7 +158,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { name: 'Pink',      hex: '#F4A7C0' },
       { name: 'Blue',      hex: '#6B97C2' },
     ],
-    images: [IMG.awatch, IMG.awatch2],
+    images: [IMG.awatch_s11_46, IMG.awatch],
   },
 
   {
@@ -160,7 +184,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { name: 'Pink',      hex: '#F4A7C0' },
       { name: 'Blue',      hex: '#6B97C2' },
     ],
-    images: [IMG.awatch, IMG.awatch2],
+    images: [IMG.awatch_s11_42, IMG.awatch],
   },
 
   {
@@ -185,7 +209,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { name: 'Silver',       hex: '#C8C8CC' },
       { name: 'Jet Black',    hex: '#0A0A0A' },
     ],
-    images: [IMG.awatch, IMG.awatch2],
+    images: [IMG.awatch_s10_46, IMG.awatch],
   },
 
   {
@@ -209,7 +233,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { name: 'Rose Gold', hex: '#E8B0A0' },
       { name: 'Silver',    hex: '#C8C8CC' },
     ],
-    images: [IMG.awatch, IMG.awatch2],
+    images: [IMG.awatch_s10_42, IMG.awatch],
   },
 
   {
@@ -230,7 +254,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { storage: 'One Size', price: 300000 },
     ],
     colors: [{ name: 'White', hex: '#FAFAF8' }],
-    images: [IMG.airpods, IMG.airpods2],
+    images: [IMG.airpods_pro3, IMG.airpods],
   },
 
   {
@@ -257,7 +281,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { name: 'Starlight',  hex: '#F5EFE2' },
       { name: 'Orange',     hex: '#E87040' },
     ],
-    images: [IMG.airpodsmax, IMG.airpods],
+    images: [IMG.airpods_max2, IMG.airpods],
   },
 
   {
@@ -278,7 +302,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { storage: 'One Size', price: 260000 },
     ],
     colors: [{ name: 'White', hex: '#FAFAF8' }],
-    images: [IMG.airpods, IMG.airpods2],
+    images: [IMG.airpods_pro2, IMG.airpods],
   },
 
   {
@@ -298,7 +322,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { storage: 'One Size', price: 250000 },
     ],
     colors: [{ name: 'White', hex: '#FAFAF8' }],
-    images: [IMG.airpods, IMG.airpods2],
+    images: [IMG.airpods_4_anc, IMG.airpods],
   },
 
   {
@@ -318,7 +342,7 @@ export const ACCESSORY_PRODUCTS: Product[] = [
       { storage: 'One Size', price: 170000 },
     ],
     colors: [{ name: 'White', hex: '#FAFAF8' }],
-    images: [IMG.airpods, IMG.airpods2],
+    images: [IMG.airpods_4, IMG.airpods],
   },
 
   {
@@ -1292,4 +1316,101 @@ export const ACCESSORY_PRODUCTS: Product[] = [
     ],
     images: [IMG.ss_buds, IMG.airpods],
   },
+
+  // ════════════════════════════════════════════════════════════
+  // POWER — Power Banks & Power Stations
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id: 'itel-power-go-pro-100000',
+    name: 'Itel Power Go Pro: 100000mAh Portable Power Station 130W',
+    brand: 'Itel',
+    category: 'Power',
+    condition: 'New',
+    description: 'The Itel Power Go Pro is a massive 100,000mAh portable power station delivering up to 130W output. It can charge laptops, phones, tablets, and even small appliances simultaneously. Compact for its capacity, with a convenient carry handle — perfect for travel, camping, or power outages.',
+    specs: [
+      { label: 'Capacity', value: '100,000mAh' },
+      { label: 'Max Output', value: '130W (AC + USB-C PD + USB-A)' },
+      { label: 'Input', value: 'USB-C PD 65W / AC 100W' },
+      { label: 'Ports', value: '1× AC · 1× USB-C (100W) · 2× USB-A' },
+      { label: 'Battery Type', value: 'LiFePO4 (long-cycle)' },
+      { label: 'Display', value: 'LED indicator with capacity readout' },
+      { label: 'Weight', value: '3.2kg' },
+    ],
+    storageVariants: [
+      { storage: '100000mAh 130W', price: 98000 },
+    ],
+    colors: [{ name: 'White', hex: '#F5F5F5' }],
+    images: [IMG.itel_power, IMG.ecoflow],
+  },
+
+  {
+    id: 'ecoflow-river-3',
+    name: 'EcoFlow RIVER 3 Portable Power Station',
+    brand: 'EcoFlow',
+    category: 'Power',
+    condition: 'New',
+    description: 'The EcoFlow RIVER 3 is a compact 245Wh portable power station that recharges from 0–80% in just 50 minutes via X-Stream fast charging. With 600W AC output, it powers laptops, electric fans, lights, and more — perfect for camping, travel, and emergency backup.',
+    specs: [
+      { label: 'Capacity', value: '245Wh' },
+      { label: 'AC Output', value: '600W (1200W surge)' },
+      { label: 'Charging', value: 'X-Stream 440W — 0–80% in 50 min' },
+      { label: 'Ports', value: '1× AC · 2× USB-C (100W) · 2× USB-A · 1× DC5521' },
+      { label: 'Battery Type', value: 'LFP (Lithium Iron Phosphate)' },
+      { label: 'Solar Input', value: 'Up to 110W' },
+      { label: 'Weight', value: '3.5kg' },
+    ],
+    storageVariants: [
+      { storage: '245Wh', price: 270000 },
+    ],
+    colors: [{ name: 'Black', hex: '#1C1C1E' }],
+    images: [IMG.ecoflow, IMG.itel_power],
+  },
+
+  {
+    id: 'anker-737-power-bank',
+    name: 'Anker 737 PowerCore 24K Power Bank',
+    brand: 'Anker',
+    category: 'Power',
+    condition: 'New',
+    description: 'The Anker 737 PowerCore 24K is a dual USB-C 140W power bank with a 24,000mAh capacity that can fully charge a MacBook Pro in under 2 hours. Features a smart display showing real-time wattage, charge remaining, and time until full — the flagship Anker power bank for professional use.',
+    specs: [
+      { label: 'Capacity', value: '24,000mAh (88.8Wh)' },
+      { label: 'USB-C Output', value: '140W max (USB-C 1) · 20W (USB-C 2)' },
+      { label: 'USB-A Output', value: '18W max' },
+      { label: 'Input', value: 'USB-C PD 100W' },
+      { label: 'Display', value: 'Smart digital display (wattage + time + %)' },
+      { label: 'Weight', value: '668g' },
+    ],
+    storageVariants: [
+      { storage: '24000mAh 140W', price: 95000 },
+    ],
+    colors: [{ name: 'Black', hex: '#1C1C1E' }],
+    images: [IMG.anker, IMG.ecoflow],
+  },
+
+  {
+    id: 'baseus-power-bank-65w',
+    name: 'Baseus Blade 2 100W Power Bank 20000mAh',
+    brand: 'Baseus',
+    category: 'Power',
+    condition: 'New',
+    description: 'The Baseus Blade 2 is an ultra-slim 20,000mAh power bank with 100W bi-directional fast charge. Its razor-thin profile fits in any bag or laptop sleeve — yet it can fully charge a MacBook Air in under 2 hours and a phone 4+ times.',
+    specs: [
+      { label: 'Capacity', value: '20,000mAh (72Wh)' },
+      { label: 'Max Output', value: '100W USB-C' },
+      { label: 'Max Input', value: '65W USB-C' },
+      { label: 'Thickness', value: '14.5mm — Ultra-slim' },
+      { label: 'Weight', value: '460g' },
+    ],
+    storageVariants: [
+      { storage: '20000mAh 100W', price: 65000 },
+    ],
+    colors: [
+      { name: 'Black', hex: '#1C1C1E' },
+      { name: 'Silver', hex: '#C8C8CC' },
+    ],
+    images: [IMG.anker, IMG.itel_power],
+  },
 ];
+

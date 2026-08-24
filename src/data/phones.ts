@@ -1,25 +1,121 @@
 import type { Product } from './types';
 
-// ─── shared image shortcuts ─────────────────────────────────────────────────
-const UNS = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=800`;
-const PEX = (id: number) => `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=800`;
+// ─── Apple Store CDN helper ────────────────────────────────────────────────
+// Apple's publicly accessible product render CDN
+const APPLE = (slug: string) =>
+  `https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/${slug}?wid=800&hei=800&fmt=jpeg&qlt=95`;
 
-// curated phone images
+// ─── GSMArena press render CDN (official manufacturer renders) ─────────────
+const GSM = (slug: string) => `https://fdn2.gsmarena.com/vv/bigpic/${slug}.jpg`;
+
+// ─── Fallback (only for products without a confirmed CDN render) ────────────
+const UNS = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=800`;
+
+// ─── Per-model official product images ────────────────────────────────────
 const IMG = {
-  // iPhones
-  ip_dark:   UNS('1696446701796-da61225697cc'),
-  ip_light:  UNS('1695048133142-1a20484d2569'),
-  ip_side:   UNS('1632661674596-df8be070a5c5'),
-  ip_hand:   PEX(607812),
-  ip_box:    PEX(788946),
-  // Samsung
-  ss_dark:   UNS('1610945265064-0e34e5519bbf'),
-  ss_light:  UNS('1709127752027-24b4b8c9c31c'),
-  ss_fold:   UNS('1671920090611-9a140c252e0d'),
-  ss_hand:   PEX(1042143),
-  // Pixel
-  gp_dark:   UNS('1598327105666-5b89351aff97'),
-  gp_light:  UNS('1574944985070-8f3ebacd55a2'),
+  // ── Apple iPhones (Apple Store CDN — official renders) ──────────────────
+  // iPhone 17 series
+  ip17_pro_max:   APPLE('iphone-17-pro-max-finish-select-202509-6-9inch-blacktitanium'),
+  ip17_pro_max_2: APPLE('iphone-17-pro-max-finish-select-202509-6-9inch-desertTitanium'),
+  ip17_pro:       APPLE('iphone-17-pro-finish-select-202509-6-3inch-blacktitanium'),
+  ip17_pro_2:     APPLE('iphone-17-pro-finish-select-202509-6-3inch-desertTitanium'),
+  ip17_air:       APPLE('iphone-17-air-finish-select-202509-6-5inch-black'),
+  ip17_air_2:     APPLE('iphone-17-air-finish-select-202509-6-5inch-skyblue'),
+  ip17:           APPLE('iphone-17-finish-select-202509-6-3inch-black'),
+  ip17_2:         APPLE('iphone-17-finish-select-202509-6-3inch-ultramarine'),
+  // iPhone 16 series
+  ip16_pro_max:   APPLE('iphone-16-pro-max-finish-select-202409-6-9inch-blacktitanium'),
+  ip16_pro_max_2: APPLE('iphone-16-pro-max-finish-select-202409-6-9inch-desertTitanium'),
+  ip16_pro:       APPLE('iphone-16-pro-finish-select-202409-6-3inch-blacktitanium'),
+  ip16_pro_2:     APPLE('iphone-16-pro-finish-select-202409-6-3inch-naturaltitanium'),
+  ip16_plus:      APPLE('iphone-16-plus-finish-select-202409-6-7inch-ultramarine'),
+  ip16_plus_2:    APPLE('iphone-16-plus-finish-select-202409-6-7inch-black'),
+  ip16:           APPLE('iphone-16-finish-select-202409-6-1inch-ultramarine'),
+  ip16_2:         APPLE('iphone-16-finish-select-202409-6-1inch-black'),
+  // iPhone 15 series
+  ip15_pro_max:   APPLE('iphone-15-pro-max-black-titanium-select'),
+  ip15_pro_max_2: APPLE('iphone-15-pro-max-natural-titanium-select'),
+  ip15_pro:       APPLE('iphone-15-pro-black-titanium-select'),
+  ip15_pro_2:     APPLE('iphone-15-pro-natural-titanium-select'),
+  ip15_plus:      APPLE('iphone-15-plus-black-select'),
+  ip15_plus_2:    APPLE('iphone-15-plus-blue-select'),
+  ip15:           APPLE('iphone-15-black-select'),
+  ip15_2:         APPLE('iphone-15-blue-select'),
+  // iPhone 14 / 13 series (older)
+  ip14_pro_max:   APPLE('iphone-14-pro-max-deep-purple-select'),
+  ip14_pro:       APPLE('iphone-14-pro-deep-purple-select'),
+  ip14_plus:      APPLE('iphone-14-plus-midnight-select'),
+  ip14:           APPLE('iphone-14-midnight-select'),
+  ip13_pro_max:   APPLE('iphone-13-pro-max-alpinegreen-select'),
+  ip13_pro:       APPLE('iphone-13-pro-sierrablue-select'),
+  ip13:           APPLE('iphone-13-midnight-select'),
+  ip12:           APPLE('iphone-12-black-select-2020'),
+  ip11:           UNS('1510557880182-3d4d3cba35a5'),
+
+  // ── Samsung (GSMArena official press renders) ────────────────────────────
+  // Flagships
+  ss26_ultra:     GSM('samsung-galaxy-s26-ultra'),
+  ss26_plus:      GSM('samsung-galaxy-s26+'),
+  ss26:           GSM('samsung-galaxy-s26'),
+  ss25_ultra:     GSM('samsung-galaxy-s25-ultra'),
+  ss25_plus:      GSM('samsung-galaxy-s25+'),
+  ss25:           GSM('samsung-galaxy-s25'),
+  ss25_fe:        GSM('samsung-galaxy-s25-fe'),
+  // Foldables
+  ss_trifold:     GSM('samsung-galaxy-z-fold-6'),
+  ss_fold7:       GSM('samsung-galaxy-z-fold-7'),
+  ss_fold6:       GSM('samsung-galaxy-z-fold-6'),
+  ss_flip7:       GSM('samsung-galaxy-z-flip-7'),
+  ss_flip6:       GSM('samsung-galaxy-z-flip-6'),
+  // A-Series
+  ss_a57:         GSM('samsung-galaxy-a57-5g'),
+  ss_a56:         GSM('samsung-galaxy-a56'),
+  ss_a37_5g:      GSM('samsung-galaxy-a37-5g'),
+  ss_a36:         GSM('samsung-galaxy-a36'),
+  ss_a27_5g:      GSM('samsung-galaxy-a27-5g'),
+  ss_a26:         GSM('samsung-galaxy-a26'),
+  ss_a17:         GSM('samsung-galaxy-a17'),
+  ss_a16:         GSM('samsung-galaxy-a16'),
+  ss_a07:         GSM('samsung-galaxy-a07'),
+  ss_a06:         GSM('samsung-galaxy-a06'),
+  // Fallback
+  ss_dark:        UNS('1610945265064-0e34e5519bbf'),
+  ss_light:       UNS('1709127752027-24b4b8c9c31c'),
+  ss_fold:        UNS('1671920090611-9a140c252e0d'),
+
+  // ── Google Pixel (GSMArena official press renders) ───────────────────────
+  gp_10_pro_fold: GSM('google-pixel-10-pro-fold'),
+  gp_10_pro_xl:   GSM('google-pixel-10-pro-xl'),
+  gp_10_pro:      GSM('google-pixel-10-pro'),
+  gp_10:          GSM('google-pixel-10'),
+  gp_10a:         GSM('google-pixel-10a'),
+  gp_9_pro_fold:  GSM('google-pixel-9-pro-fold'),
+  gp_9_pro_xl:    GSM('google-pixel-9-pro-xl'),
+  gp_9_pro:       GSM('google-pixel-9-pro'),
+  gp_9:           GSM('google-pixel-9'),
+  gp_9a:          GSM('google-pixel-9a'),
+  gp_8:           GSM('google-pixel-8'),
+  // Fallback
+  gp_dark:        UNS('1598327105666-5b89351aff97'),
+  gp_light:       UNS('1574944985070-8f3ebacd55a2'),
+
+  // ── Xiaomi (GSMArena official press renders) ─────────────────────────────
+  xi_17t:         GSM('xiaomi-17t'),
+  xi_17t_pro:     GSM('xiaomi-17t-pro'),
+  xi_14t:         GSM('xiaomi-14t'),
+  xi_14t_pro:     GSM('xiaomi-14t-pro'),
+
+  // ── Infinix (GSMArena official press renders) ────────────────────────────
+  inf_note_edge:  GSM('infinix-note-edge'),
+  inf_note60_pro: GSM('infinix-note-60-pro'),
+  inf_hot50:      GSM('infinix-hot-50-pro'),
+
+  // ── Tecno (GSMArena official press renders) ──────────────────────────────
+  tecno_camon40:  GSM('tecno-camon-40-pro'),
+
+  // ── Redmi (GSMArena official press renders) ──────────────────────────────
+  redmi_note14:   GSM('xiaomi-redmi-note-14-pro'),
+  redmi_a5:       GSM('xiaomi-redmi-a5'),
 };
 
 export const PHONE_PRODUCTS: Product[] = [
@@ -59,7 +155,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Natural Titanium', hex: '#8C8A8E' },
       { name: 'White Titanium',   hex: '#EDEAE4' },
     ],
-    images: [IMG.ip_dark, IMG.ip_light],
+    images: [IMG.ip17_pro_max, IMG.ip17_pro_max_2],
   },
 
   {
@@ -92,7 +188,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Natural Titanium', hex: '#8C8A8E' },
       { name: 'White Titanium',   hex: '#EDEAE4' },
     ],
-    images: [IMG.ip_dark, IMG.ip_light],
+    images: [IMG.ip17_pro, IMG.ip17_pro_2],
   },
 
   {
@@ -124,7 +220,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Sky Blue',    hex: '#88C0D8' },
       { name: 'Starlight',   hex: '#F5EFE2' },
     ],
-    images: [IMG.ip_light, IMG.ip_dark],
+    images: [IMG.ip17_air, IMG.ip17_air_2],
   },
 
   {
@@ -156,7 +252,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'White',        hex: '#FAFAF8' },
       { name: 'Pink',         hex: '#F4B8C0' },
     ],
-    images: [IMG.ip_light, IMG.ip_dark],
+    images: [IMG.ip17, IMG.ip17_2],
   },
 
   {
@@ -189,7 +285,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Natural Titanium', hex: '#8C8A8E' },
       { name: 'White Titanium',   hex: '#EDEAE4' },
     ],
-    images: [IMG.ip_dark, IMG.ip_light],
+    images: [IMG.ip16_pro_max, IMG.ip16_pro_max_2],
   },
 
   {
@@ -223,7 +319,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Natural Titanium', hex: '#8C8A8E' },
       { name: 'White Titanium',   hex: '#EDEAE4' },
     ],
-    images: [IMG.ip_dark, IMG.ip_light],
+    images: [IMG.ip16_pro, IMG.ip16_pro_2],
   },
 
   {
@@ -257,7 +353,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'White',       hex: '#FAFAF8' },
       { name: 'Black',       hex: '#1C1C1E' },
     ],
-    images: [IMG.ip_light, IMG.ip_dark],
+    images: [IMG.ip16_plus, IMG.ip16_plus_2],
   },
 
   {
@@ -291,7 +387,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'White',       hex: '#FAFAF8' },
       { name: 'Black',       hex: '#1C1C1E' },
     ],
-    images: [IMG.ip_light, IMG.ip_dark],
+    images: [IMG.ip16, IMG.ip16_2],
   },
 
   {
@@ -324,7 +420,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Natural Titanium', hex: '#8C8A8E' },
       { name: 'White Titanium',   hex: '#EDEAE4' },
     ],
-    images: [IMG.ip_dark, IMG.ip_light],
+    images: [IMG.ip15_pro_max, IMG.ip15_pro_max_2],
   },
 
   {
@@ -357,7 +453,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Natural Titanium', hex: '#8C8A8E' },
       { name: 'White Titanium',   hex: '#EDEAE4' },
     ],
-    images: [IMG.ip_dark, IMG.ip_light],
+    images: [IMG.ip15_pro, IMG.ip15_pro_2],
   },
 
   {
@@ -390,7 +486,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Yellow', hex: '#F5D97F' },
       { name: 'Pink',   hex: '#F4A7C0' },
     ],
-    images: [IMG.ip_light, IMG.ip_dark],
+    images: [IMG.ip15_plus, IMG.ip15_plus_2],
   },
 
   {
@@ -423,7 +519,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Yellow', hex: '#F5D97F' },
       { name: 'Pink',   hex: '#F4A7C0' },
     ],
-    images: [IMG.ip_light, IMG.ip_dark],
+    images: [IMG.ip15, IMG.ip15_2],
   },
 
   // ════════════════════════════════════════════════════════════
@@ -460,7 +556,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Titanium Cyan',  hex: '#00B4C8' },
       { name: 'Titanium Gray',  hex: '#8C8A8E' },
     ],
-    images: [IMG.ss_dark, IMG.ss_light],
+    images: [IMG.ss26_ultra, IMG.ss_dark],
   },
 
   {
@@ -491,7 +587,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Navy',        hex: '#1A2240' },
       { name: 'White',       hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss26_plus, IMG.ss_light],
   },
 
   {
@@ -522,7 +618,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Navy',        hex: '#1A2240' },
       { name: 'White',       hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss26, IMG.ss_light],
   },
 
   {
@@ -555,7 +651,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Titanium Blue',      hex: '#2A4A6A' },
       { name: 'Titanium Gray',      hex: '#8C8A8E' },
     ],
-    images: [IMG.ss_dark, IMG.ss_light],
+    images: [IMG.ss25_ultra, IMG.ss_dark],
   },
 
   {
@@ -585,7 +681,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Navy',        hex: '#1A2240' },
       { name: 'Silver Shadow', hex: '#C8C8CC' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss25, IMG.ss_light],
   },
 
   {
@@ -615,7 +711,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Purple', hex: '#6A4A8A' },
       { name: 'White',  hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss25_fe, IMG.ss_light],
   },
 
   // ─── SAMSUNG FOLDABLES ─────────────────────────────────────
@@ -645,7 +741,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Shadow Black', hex: '#1C1C1E' },
       { name: 'Silver',       hex: '#C8C8CC' },
     ],
-    images: [IMG.ss_fold, IMG.ss_dark],
+    images: [IMG.ss_trifold, IMG.ss_fold],
   },
 
   {
@@ -676,7 +772,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Platinum Silver', hex: '#C8C8CC' },
       { name: 'Navy Blue',       hex: '#1A2240' },
     ],
-    images: [IMG.ss_fold, IMG.ss_dark],
+    images: [IMG.ss_fold7, IMG.ss_fold],
   },
 
   {
@@ -708,7 +804,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Silver',    hex: '#C8C8CC' },
       { name: 'White',     hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_fold, IMG.ss_dark],
+    images: [IMG.ss_fold6, IMG.ss_fold],
   },
 
   {
@@ -739,7 +835,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Silver Blue',   hex: '#88B0D8' },
       { name: 'Peach Gold',    hex: '#E8C0A0' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_flip7, IMG.ss_light],
   },
 
   {
@@ -770,7 +866,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Blue',        hex: '#4169B0' },
       { name: 'Silver',      hex: '#C8C8CC' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_flip6, IMG.ss_light],
   },
 
   // ─── SAMSUNG A SERIES ──────────────────────────────────────
@@ -801,7 +897,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Awesome Violet',     hex: '#6A4A8A' },
       { name: 'Awesome Ice Blue',   hex: '#88C0D8' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a57, IMG.ss_light],
   },
 
   {
@@ -831,7 +927,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Awesome Mint',       hex: '#A8D8C8' },
       { name: 'Awesome White',      hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a56, IMG.ss_light],
   },
 
   {
@@ -858,7 +954,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Awesome Blue',  hex: '#4169B0' },
       { name: 'Awesome Green', hex: '#4A7C59' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a37_5g, IMG.ss_light],
   },
 
   {
@@ -886,7 +982,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Awesome Violet', hex: '#6A4A8A' },
       { name: 'Awesome White',  hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a36, IMG.ss_light],
   },
 
   {
@@ -914,7 +1010,36 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Awesome Black',  hex: '#1C1C1E' },
       { name: 'Awesome White',  hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a26, IMG.ss_light],
+  },
+
+  {
+    id: 'samsung-a27-5g',
+    name: 'Samsung Galaxy A27 5G',
+    brand: 'Samsung',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Galaxy A27 5G brings fast 5G connectivity to an accessible price point. A 6.5-inch Super AMOLED 90Hz display, Dimensity 6100+ chipset, and a capable 50MP camera system make everyday use seamless and enjoyable.',
+    specs: [
+      { label: 'Display', value: '6.5\" FHD+ Super AMOLED, 90Hz' },
+      { label: 'Chip', value: 'Dimensity 6100+' },
+      { label: 'RAM', value: '6GB / 8GB' },
+      { label: 'Rear Camera', value: '50MP + 5MP + 2MP Macro' },
+      { label: 'Front Camera', value: '13MP' },
+      { label: 'Battery', value: '5,000mAh, 25W wired' },
+      { label: 'OS', value: 'Android 14, One UI 6.0' },
+      { label: 'Connectivity', value: '5G SA/NSA, Wi-Fi 5, NFC' },
+    ],
+    storageVariants: [
+      { storage: '128GB+6GB', price: 310000 },
+      { storage: '256GB+8GB', price: 355000 },
+    ],
+    colors: [
+      { name: 'Awesome Black', hex: '#1C1C1E' },
+      { name: 'Awesome Blue',  hex: '#4169B0' },
+      { name: 'Awesome White', hex: '#F5F5F5' },
+    ],
+    images: [IMG.ss_a27_5g, IMG.ss_light],
   },
 
   {
@@ -943,7 +1068,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Blue',  hex: '#4169B0' },
       { name: 'White', hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a17, IMG.ss_light],
   },
 
   {
@@ -973,7 +1098,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Gold Silver', hex: '#D4B896' },
       { name: 'Blue Black',  hex: '#1A2240' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a16, IMG.ss_light],
   },
 
   {
@@ -1000,7 +1125,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'White', hex: '#F5F5F5' },
       { name: 'Blue',  hex: '#4169B0' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a07, IMG.ss_light],
   },
 
   {
@@ -1028,7 +1153,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Gold',   hex: '#D4B896' },
       { name: 'White',  hex: '#F5F5F5' },
     ],
-    images: [IMG.ss_light, IMG.ss_dark],
+    images: [IMG.ss_a06, IMG.ss_light],
   },
 
   // ════════════════════════════════════════════════════════════
@@ -1061,7 +1186,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Obsidian',  hex: '#1C1C1E' },
       { name: 'Porcelain', hex: '#F0EDE8' },
     ],
-    images: [IMG.gp_dark, IMG.gp_light],
+    images: [IMG.gp_10_pro_fold, IMG.gp_dark],
   },
 
   {
@@ -1092,7 +1217,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Porcelain', hex: '#F0EDE8' },
       { name: 'Hazel',     hex: '#5C6840' },
     ],
-    images: [IMG.gp_dark, IMG.gp_light],
+    images: [IMG.gp_10_pro_xl, IMG.gp_dark],
   },
 
   {
@@ -1123,7 +1248,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Porcelain', hex: '#F0EDE8' },
       { name: 'Hazel',     hex: '#5C6840' },
     ],
-    images: [IMG.gp_dark, IMG.gp_light],
+    images: [IMG.gp_10_pro, IMG.gp_dark],
   },
 
   {
@@ -1152,7 +1277,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Porcelain', hex: '#F0EDE8' },
       { name: 'Peony',     hex: '#D4688A' },
     ],
-    images: [IMG.gp_light, IMG.gp_dark],
+    images: [IMG.gp_10, IMG.gp_light],
   },
 
   {
@@ -1180,7 +1305,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Obsidian',  hex: '#1C1C1E' },
       { name: 'Porcelain', hex: '#F0EDE8' },
     ],
-    images: [IMG.gp_dark, IMG.gp_light],
+    images: [IMG.gp_9_pro_fold, IMG.gp_dark],
   },
 
   {
@@ -1210,7 +1335,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Hazel',     hex: '#5C6840' },
       { name: 'Rose Quartz', hex: '#E8C0C0' },
     ],
-    images: [IMG.gp_dark, IMG.gp_light],
+    images: [IMG.gp_9_pro_xl, IMG.gp_dark],
   },
 
   {
@@ -1240,7 +1365,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Hazel',        hex: '#5C6840' },
       { name: 'Rose Quartz',  hex: '#E8C0C0' },
     ],
-    images: [IMG.gp_dark, IMG.gp_light],
+    images: [IMG.gp_9_pro, IMG.gp_dark],
   },
 
   {
@@ -1271,7 +1396,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Wintergreen', hex: '#3A6A5A' },
       { name: 'Peony',      hex: '#D4688A' },
     ],
-    images: [IMG.gp_light, IMG.gp_dark],
+    images: [IMG.gp_9, IMG.gp_light],
   },
 
   {
@@ -1302,7 +1427,7 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Iris',      hex: '#8870B0' },
       { name: 'Peony',     hex: '#D4688A' },
     ],
-    images: [IMG.gp_light, IMG.gp_dark],
+    images: [IMG.gp_9a, IMG.gp_light],
   },
 
   {
@@ -1332,6 +1457,222 @@ export const PHONE_PRODUCTS: Product[] = [
       { name: 'Rose',     hex: '#D4688A' },
       { name: 'Mint',     hex: '#A8D8C8' },
     ],
-    images: [IMG.gp_dark, IMG.gp_light],
+    images: [IMG.gp_8, IMG.gp_dark],
+  },
+
+  // ════════════════════════════════════════════════════════════
+  // XIAOMI
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id: 'xiaomi-17t',
+    name: 'Xiaomi 17T',
+    brand: 'Xiaomi',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Xiaomi 17T brings the Snapdragon 8s Gen 4 chipset, a 6.67-inch 144Hz AMOLED display, and a Leica-tuned triple camera system. With 12GB RAM, 50W wireless charging, and an IP68 rating, it redefines mid-flagship value.',
+    specs: [
+      { label: 'Display', value: '6.67" AMOLED, 144Hz, 2K' },
+      { label: 'Chip', value: 'Snapdragon 8s Gen 4' },
+      { label: 'RAM', value: '12GB' },
+      { label: 'Rear Camera', value: '50MP Leica Summarit + 50MP Tele + 12MP UW' },
+      { label: 'Front Camera', value: '32MP' },
+      { label: 'Battery', value: '5,000mAh, 90W wired · 50W wireless' },
+      { label: 'OS', value: 'Android 15, HyperOS 2' },
+      { label: 'Water Resistance', value: 'IP68' },
+    ],
+    storageVariants: [
+      { storage: '256GB+12GB', price: 864000 },
+      { storage: '512GB+12GB', price: 980000 },
+    ],
+    colors: [
+      { name: 'Titan Black', hex: '#1C1C1E' },
+      { name: 'Titan Blue',  hex: '#4169B0' },
+      { name: 'Titan Grey',  hex: '#8C8C8E' },
+    ],
+    images: [IMG.xi_17t, IMG.xi_17t_pro],
+  },
+
+  {
+    id: 'xiaomi-14t',
+    name: 'Xiaomi 14T',
+    brand: 'Xiaomi',
+    category: 'Phones',
+    condition: 'Used',
+    description: 'UK Used Xiaomi 14T — Dimensity 8300 Ultra chipset, 6.67" 144Hz AMOLED, 50MP Leica triple camera, and a 5,000mAh battery with 67W wired charging. Excellent condition — a flagship-level performer at a used price.',
+    specs: [
+      { label: 'Display', value: '6.67" AMOLED, 144Hz' },
+      { label: 'Chip', value: 'Dimensity 8300-Ultra' },
+      { label: 'RAM', value: '12GB' },
+      { label: 'Rear Camera', value: '50MP Leica + 50MP Tele + 12MP UW' },
+      { label: 'Front Camera', value: '32MP' },
+      { label: 'Battery', value: '5,000mAh, 67W wired' },
+      { label: 'OS', value: 'Android 14, HyperOS' },
+    ],
+    storageVariants: [
+      { storage: '256GB+12GB', price: 580000 },
+    ],
+    colors: [
+      { name: 'Titan Black', hex: '#1C1C1E' },
+      { name: 'Lemon Green', hex: '#8BC34A' },
+      { name: 'Titan Blue',  hex: '#4169B0' },
+    ],
+    images: [IMG.xi_14t, IMG.xi_14t_pro],
+  },
+
+  // ════════════════════════════════════════════════════════════
+  // INFINIX
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id: 'infinix-note-edge',
+    name: 'Infinix Note Edge',
+    brand: 'Infinix',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Infinix Note Edge is a bold mid-ranger with a 6.78" curved AMOLED display, 108MP camera, and a massive 5,000mAh battery with 68W fast charge. Designed for those who want premium aesthetics without the premium price.',
+    specs: [
+      { label: 'Display', value: '6.78" Curved AMOLED, 120Hz' },
+      { label: 'Chip', value: 'Helio G100 Ultimate' },
+      { label: 'RAM', value: '8GB / 12GB' },
+      { label: 'Rear Camera', value: '108MP + 13MP + 2MP' },
+      { label: 'Front Camera', value: '32MP' },
+      { label: 'Battery', value: '5,000mAh, 68W wired' },
+      { label: 'OS', value: 'Android 14, XOS 14' },
+    ],
+    storageVariants: [
+      { storage: '256GB+8GB',  price: 445000 },
+      { storage: '256GB+12GB', price: 495000 },
+    ],
+    colors: [
+      { name: 'Starfall Silver', hex: '#C8C8CC' },
+      { name: 'Bora Blue',       hex: '#4169B0' },
+      { name: 'Verdure Green',   hex: '#8BC34A' },
+      { name: 'Matte Black',     hex: '#1C1C1E' },
+    ],
+    images: [IMG.inf_note_edge, IMG.gp_dark],
+  },
+
+  {
+    id: 'infinix-note-60-pro',
+    name: 'Infinix Note 60 Pro',
+    brand: 'Infinix',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Infinix Note 60 Pro features a stunning 6.78" curved AMOLED display with 144Hz, MediaTek Helio G100 chipset, and a 64MP AI camera system. Its 5,000mAh battery with 68W charging keeps you powered all day.',
+    specs: [
+      { label: 'Display', value: '6.78" Curved AMOLED, 144Hz' },
+      { label: 'Chip', value: 'Helio G100' },
+      { label: 'RAM', value: '8GB / 16GB' },
+      { label: 'Rear Camera', value: '64MP + 2MP + AI' },
+      { label: 'Front Camera', value: '16MP' },
+      { label: 'Battery', value: '5,000mAh, 68W wired' },
+      { label: 'OS', value: 'Android 14, XOS 14' },
+    ],
+    storageVariants: [
+      { storage: '256GB+8GB',  price: 550000 },
+      { storage: '256GB+16GB', price: 595000 },
+    ],
+    colors: [
+      { name: 'Misty Gold',   hex: '#D4B896' },
+      { name: 'Bora Blue',    hex: '#4169B0' },
+      { name: 'Matte Black',  hex: '#1C1C1E' },
+      { name: 'Coral Orange', hex: '#E87040' },
+    ],
+    images: [IMG.inf_note60_pro, IMG.gp_dark],
+  },
+
+  // ════════════════════════════════════════════════════════════
+  // TECNO
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id: 'tecno-camon-40-pro',
+    name: 'Tecno Camon 40 Pro',
+    brand: 'Tecno',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Tecno Camon 40 Pro is built for portrait photography, featuring a 50MP RGBW front camera, a 6.78" curved AMOLED 120Hz display, and MediaTek Dimensity 7300 chipset. 5,000mAh battery with 45W fast charge.',
+    specs: [
+      { label: 'Display', value: '6.78" Curved AMOLED, 120Hz' },
+      { label: 'Chip', value: 'Dimensity 7300' },
+      { label: 'RAM', value: '8GB / 12GB' },
+      { label: 'Rear Camera', value: '50MP + 50MP + 2MP' },
+      { label: 'Front Camera', value: '50MP RGBW' },
+      { label: 'Battery', value: '5,000mAh, 45W wired' },
+      { label: 'OS', value: 'Android 15, HiOS 15' },
+    ],
+    storageVariants: [
+      { storage: '256GB+8GB',  price: 310000 },
+      { storage: '256GB+12GB', price: 360000 },
+    ],
+    colors: [
+      { name: 'Fiery Red',   hex: '#D32F2F' },
+      { name: 'Frost White', hex: '#F5F5F5' },
+      { name: 'Jet Black',   hex: '#1C1C1E' },
+    ],
+    images: [IMG.tecno_camon40, IMG.gp_dark],
+  },
+
+  // ════════════════════════════════════════════════════════════
+  // REDMI
+  // ════════════════════════════════════════════════════════════
+
+  {
+    id: 'redmi-note-14-pro',
+    name: 'Redmi Note 14 Pro',
+    brand: 'Redmi',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Redmi Note 14 Pro delivers a premium experience at mid-range pricing. A 6.67" curved OLED 120Hz display, Snapdragon 7s Gen 3, 200MP AI camera, and 5,500mAh battery with 90W HyperCharge make this a flagship killer.',
+    specs: [
+      { label: 'Display', value: '6.67" Curved OLED, 120Hz, 2K' },
+      { label: 'Chip', value: 'Snapdragon 7s Gen 3' },
+      { label: 'RAM', value: '8GB / 12GB' },
+      { label: 'Rear Camera', value: '200MP + 8MP UW + 2MP Macro' },
+      { label: 'Front Camera', value: '20MP' },
+      { label: 'Battery', value: '5,500mAh, 90W HyperCharge' },
+      { label: 'OS', value: 'Android 14, HyperOS' },
+      { label: 'Water Resistance', value: 'IP68' },
+    ],
+    storageVariants: [
+      { storage: '256GB+8GB',  price: 380000 },
+      { storage: '256GB+12GB', price: 430000 },
+    ],
+    colors: [
+      { name: 'Midnight Black', hex: '#1C1C1E' },
+      { name: 'Ocean Teal',     hex: '#2B817E' },
+      { name: 'Lavender Purple', hex: '#8870B0' },
+    ],
+    images: [IMG.redmi_note14, IMG.ss_dark],
+  },
+
+  {
+    id: 'redmi-a5',
+    name: 'Redmi A5',
+    brand: 'Redmi',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Redmi A5 is a clean, capable entry-level smartphone built for essentials. A 6.88" HD+ display, 50MP dual camera, 5,200mAh battery, and Android 15 out of the box — reliable everyday performance at an honest price.',
+    specs: [
+      { label: 'Display', value: '6.88" HD+ LCD, 90Hz' },
+      { label: 'Chip', value: 'Helio G81' },
+      { label: 'RAM', value: '3GB / 4GB / 6GB' },
+      { label: 'Rear Camera', value: '50MP + 2MP' },
+      { label: 'Front Camera', value: '5MP' },
+      { label: 'Battery', value: '5,200mAh, 10W wired' },
+      { label: 'OS', value: 'Android 15' },
+    ],
+    storageVariants: [
+      { storage: '64GB+3GB',  price: 75000 },
+      { storage: '128GB+4GB', price: 95000 },
+      { storage: '128GB+6GB', price: 115000 },
+    ],
+    colors: [
+      { name: 'Midnight Black', hex: '#1C1C1E' },
+      { name: 'Forest Green',   hex: '#3A6A3A' },
+      { name: 'Sandy Gold',     hex: '#D4B896' },
+    ],
+    images: [IMG.redmi_a5, IMG.ss_dark],
   },
 ];

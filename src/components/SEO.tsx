@@ -52,7 +52,7 @@ export default function SEO({ title, description, image, url }: SEOProps) {
     setMeta('twitter:image',       ogImage);
 
     return () => {
-      document.title = "Gabby's Gadget — Smart Modern Gadgets";
+      document.title = "Gabby's Gadget | Smart Modern Gadgets";
     };
   }, [fullTitle, desc, ogImage, pageUrl]);
 

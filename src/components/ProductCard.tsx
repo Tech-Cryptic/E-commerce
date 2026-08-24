@@ -116,26 +116,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </span>
         </div>
 
-        {/* Color dots */}
-        {colors.length > 1 && (
-          <div className="absolute top-4 right-4 flex gap-1 z-10">
-            {colors.slice(0, 4).map(c => (
-              <div
-                key={c.name}
-                title={c.name}
-                className="w-3 h-3 rounded-full border border-white/60 shadow-sm"
-                style={{ background: c.hex }}
-              />
-            ))}
-            {colors.length > 4 && (
-              <div className="w-3 h-3 rounded-full bg-gray-200 flex items-center justify-center">
-                <span className="text-[6px] font-bold text-gray-500">+{colors.length - 4}</span>
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* Add to Cart + Wishlist hover overlay */}
+        {/* Hover overlay for quick actions */}
         <div className="absolute bottom-0 left-0 w-full p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-gradient-to-t from-black/60 to-transparent z-10">
           <div className="flex gap-2">
             <button
@@ -166,9 +147,27 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
 
         <Link to={`/product/${id}`}>
-          <h3 className="font-bold text-foreground group-hover:text-[#1a3dc4] transition-colors line-clamp-1 mb-1">{name}</h3>
+          <h3 className="font-bold text-foreground group-hover:text-[#1a3dc4] transition-colors line-clamp-2 mb-1 leading-snug">{name}</h3>
         </Link>
-        <p className="text-xs text-muted-foreground mb-4">{category}</p>
+
+        {/* Color swatches row — prominent, below title */}
+        {colors.length > 0 && (
+          <div className="flex items-center gap-1.5 my-2 flex-wrap">
+            {colors.slice(0, 5).map(c => (
+              <div
+                key={c.name}
+                title={c.name}
+                className="w-4 h-4 rounded-full border-2 border-white shadow ring-1 ring-gray-200 hover:scale-125 transition-transform cursor-pointer"
+                style={{ background: c.hex }}
+              />
+            ))}
+            {colors.length > 5 && (
+              <span className="text-[10px] font-bold text-muted-foreground">+{colors.length - 5}</span>
+            )}
+          </div>
+        )}
+
+        <p className="text-[11px] text-muted-foreground mb-3">{category}</p>
 
         <div className="flex items-end justify-between">
           <div>

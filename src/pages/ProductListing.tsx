@@ -11,8 +11,9 @@ import SEO from '../components/SEO';
 type SortOption = 'default' | 'price-asc' | 'price-desc' | 'name-asc';
 
 const BRANDS = [
-  'Apple', 'Samsung', 'Google', 'Sony', 'MSI', 'ASUS', 'Dell', 'JBL',
-  'Lenovo', 'Harman Kardon', 'Google',
+  'Apple', 'Samsung', 'Google', 'Xiaomi', 'Infinix', 'Tecno', 'Redmi',
+  'Sony', 'MSI', 'ASUS', 'Dell', 'JBL', 'Lenovo', 'Harman Kardon',
+  'Itel', 'EcoFlow', 'Anker', 'Baseus',
 ].filter((v, i, a) => a.indexOf(v) === i);
 
 export default function ProductListing() {
@@ -31,12 +32,14 @@ export default function ProductListing() {
     const urlSearch   = params.get('search');
     const urlFilter   = params.get('filter');
     const urlCategory = params.get('category');
+    const urlBrand    = params.get('brand');
     if (urlSearch)           setSearchQuery(urlSearch);
     if (urlFilter === 'swap') setSelectedCondition('Swap');
     if (urlCategory)         setSelectedCategory(urlCategory);
+    if (urlBrand)            setSelectedBrands([urlBrand]);
   }, [location.search]);
 
-  const categories = ['All', 'Phones', 'Laptops', 'Gaming', 'Audio', 'Watches', 'Monitors', 'Tablets', 'Accessories'];
+  const categories = ['All', 'Phones', 'Laptops', 'Gaming', 'Audio', 'Watches', 'Monitors', 'Tablets', 'Power', 'Accessories'];
   const conditions = ['All', 'New', 'Used', 'Swap'];
 
   const sortLabels: Record<SortOption, string> = {

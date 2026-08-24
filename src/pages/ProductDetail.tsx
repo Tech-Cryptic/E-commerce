@@ -284,7 +284,7 @@ export default function ProductDetail() {
             {product.storageVariants.length > 0 && (
               <div>
                 <h3 className="text-sm font-bold text-foreground mb-3">
-                  Storage — <span className="text-[#1a3dc4]">{selectedVariant?.storage}</span>
+                  Storage: <span className="text-[#1a3dc4]">{selectedVariant?.storage}</span>
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {product.storageVariants.map((v, i) => (
@@ -324,7 +324,7 @@ export default function ProductDetail() {
             {product.colors.length > 0 && (
               <div>
                 <h3 className="text-sm font-bold text-foreground mb-3">
-                  Colour — <span className="text-[#1a3dc4]">{selectedColor?.name}</span>
+                  Colour: <span className="text-[#1a3dc4]">{selectedColor?.name}</span>
                 </h3>
                 <div className="flex flex-wrap gap-3">
                   {product.colors.map((c, i) => (

@@ -32,8 +32,8 @@ const ELECTRONICS: Product[] = [
       { name: 'Silver',      hex: '#C8C8CC' },
     ],
     images: [
-      'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1611186871525-15a38d3b8e5d?auto=format&fit=crop&q=80&w=800',
+      'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp16-spacblk-select-202310?wid=800&hei=800&fmt=jpeg&qlt=95',
+      'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp16-silver-select-202310?wid=800&hei=800&fmt=jpeg&qlt=95',
     ],
   },
   {
@@ -263,8 +263,8 @@ const ELECTRONICS: Product[] = [
       { name: 'Silver',          hex: '#C8C8CC' },
     ],
     images: [
-      'https://images.unsplash.com/photo-1632661674596-df8be070a5c5?auto=format&fit=crop&q=80&w=800',
-      'https://images.unsplash.com/photo-1675783853666-e7c4cc7eed80?auto=format&fit=crop&q=80&w=800',
+      'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pro-sierrablue-select?wid=800&hei=800&fmt=jpeg&qlt=95',
+      'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pro-alpinegreen-select?wid=800&hei=800&fmt=jpeg&qlt=95',
     ],
   },
   {

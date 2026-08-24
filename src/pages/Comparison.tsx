@@ -151,7 +151,7 @@ function SlotCard({
             >
               {storageOpts.map(v => (
                 <option key={v.storage} value={v.storage}>
-                  {v.storage}{v.price ? ` — ${formatPrice(v.price)}` : ' (POA)'}
+                  {v.storage}{v.price ? ` - ${formatPrice(v.price)}` : ' (POA)'}
                 </option>
               ))}
             </select>

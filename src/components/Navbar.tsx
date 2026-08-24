@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { ShoppingCart, User, Menu, X, Search, LogOut, Heart } from 'lucide-react';
+import { ShoppingCart, User, Menu, X, Search, LogOut, Heart, Instagram, MessageCircle } from 'lucide-react';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -67,6 +67,22 @@ const Navbar = () => {
   const firstName = currentUser?.fullName?.split(' ')[0] || '';
 
   return (
+    <>
+      {/* Announcement Bar */}
+      <div className="w-full bg-[#0a0a0a] text-white py-2 px-4 text-center text-xs font-semibold tracking-widest uppercase relative flex items-center justify-center gap-3">
+        <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623] animate-pulse inline-block" />
+        Best Prices Always &middot; Same-Day Delivery Within Lagos
+        <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623] animate-pulse inline-block" />
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 hidden md:flex items-center gap-3">
+          <a href="https://www.instagram.com/gabbysgadget" target="_blank" rel="noopener noreferrer" className="hover:text-[#f5a623] transition-colors">
+            <Instagram size={14} />
+          </a>
+          <a href="https://wa.me/2348132922551" target="_blank" rel="noopener noreferrer" className="hover:text-[#f5a623] transition-colors">
+            <MessageCircle size={14} />
+          </a>
+        </div>
+      </div>
+
     <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-md border-b border-primary/10">
       <nav className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
 
@@ -229,6 +245,7 @@ const Navbar = () => {
         </div>
       )}
     </header>
+    </>
   );
 };
 

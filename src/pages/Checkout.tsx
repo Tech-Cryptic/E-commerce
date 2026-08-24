@@ -197,6 +197,15 @@ export default function Checkout() {
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-6 py-12">
+        {/* Checkout Progress Breadcrumb */}
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-8">
+          <span className="text-muted-foreground/50">🛒 Shopping Cart</span>
+          <span className="text-muted-foreground/40">›</span>
+          <span className="text-foreground">Checkout Details</span>
+          <span className="text-muted-foreground/40">›</span>
+          <span className="text-muted-foreground/50">Order Complete</span>
+        </div>
+
         {/* header */}
         <div className="mb-10">
           <h1 className="text-4xl font-black text-foreground mb-2">Checkout</h1>

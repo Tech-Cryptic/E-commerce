@@ -56,8 +56,17 @@ const removeItem = (id: string) => {
       <Navbar />
       
       <main className="max-w-7xl mx-auto px-6 py-12">
+        {/* Checkout Progress Breadcrumb */}
+        <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-8">
+          <span className="text-foreground">🛒 Shopping Cart</span>
+          <span className="text-muted-foreground/40">›</span>
+          <span className="text-muted-foreground/50">Checkout Details</span>
+          <span className="text-muted-foreground/40">›</span>
+          <span className="text-muted-foreground/50">Order Complete</span>
+        </div>
+
         {/* Header */}
-        <div className="mb-12">
+        <div className="mb-10">
           <h1 className="text-4xl font-black text-foreground mb-2">Shopping Cart</h1>
           <p className="text-muted-foreground">
             {cartItems.length} {cartItems.length === 1 ? 'item' : 'items'} in your cart
@@ -210,6 +219,27 @@ const removeItem = (id: string) => {
                   <p className="text-xs text-muted-foreground">
                     ✓ 7-day return guarantee on all items
                   </p>
+                </div>
+
+                {/* Payment method logos */}
+                <div className="pt-2">
+                  <p className="text-[10px] text-muted-foreground uppercase tracking-widest mb-3 font-bold">We Accept</p>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {[
+                      { label: 'Visa', bg: '#1a1f71', color: 'white' },
+                      { label: 'MC', bg: '#eb001b', color: 'white' },
+                      { label: 'Bank Transfer', bg: '#f5f5f5', color: '#333' },
+                      { label: 'Pay on Delivery', bg: '#f5a623', color: 'white' },
+                    ].map(m => (
+                      <span
+                        key={m.label}
+                        className="px-2.5 py-1 rounded text-[10px] font-bold tracking-wide border"
+                        style={{ background: m.bg, color: m.color, borderColor: m.bg === '#f5f5f5' ? '#ddd' : 'transparent' }}
+                      >
+                        {m.label}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </motion.div>
