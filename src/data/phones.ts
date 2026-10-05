@@ -6,7 +6,9 @@ const APPLE = (slug: string) =>
   `https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/${slug}?wid=800&hei=800&fmt=jpeg&qlt=95`;
 
 // ─── GSMArena press render CDN (official manufacturer renders) ─────────────
-const GSM = (slug: string) => `https://fdn2.gsmarena.com/vv/bigpic/${slug}.jpg`;
+// Samsung official IS (Image Server) CDN — same server samsung.com uses, no hotlink protection
+const SAMSUNG = (path: string) =>
+  `https://images.samsung.com/is/image/samsung/p6pim/${path}?wid=800&hei=800&fmt=jpeg&qlt=90`;
 
 // ─── Fallback (only for products without a confirmed CDN render) ────────────
 const UNS = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=800`;
@@ -52,70 +54,71 @@ const IMG = {
   ip12:           APPLE('iphone-12-black-select-2020'),
   ip11:           UNS('1510557880182-3d4d3cba35a5'),
 
-  // ── Samsung (GSMArena official press renders) ────────────────────────────
-  // Flagships
-  ss26_ultra:     GSM('samsung-galaxy-s26-ultra'),
-  ss26_plus:      GSM('samsung-galaxy-s26+'),
-  ss26:           GSM('samsung-galaxy-s26'),
-  ss25_ultra:     GSM('samsung-galaxy-s25-ultra'),
-  ss25_plus:      GSM('samsung-galaxy-s25+'),
-  ss25:           GSM('samsung-galaxy-s25'),
-  ss25_fe:        GSM('samsung-galaxy-s25-fe'),
+  // ── Samsung Flagships — Samsung IS Image Server (official CDN, no hotlink block)
+  // Note: Galaxy S26 does not yet exist — using S25 series images as visual proxies
+  ss26_ultra:     SAMSUNG('uk/2501/gallery/uk-galaxy-s25-ultra-sm-s938bzkgeub-thumb-540218610'),
+  ss26_plus:      SAMSUNG('uk/2501/gallery/uk-galaxy-s25-sm-s936bzkgeub-thumb-540218610'),
+  ss26:           SAMSUNG('uk/2501/gallery/uk-galaxy-s25-sm-s931bzkgeub-thumb-540218610'),
+  ss25_ultra:     SAMSUNG('uk/2501/gallery/uk-galaxy-s25-ultra-sm-s938bzkgeub-thumb-540218610'),
+  ss25_ultra_2:   SAMSUNG('uk/2501/gallery/uk-galaxy-s25-ultra-sm-s938bntgeub-thumb-540218610'),  // Desert Titanium
+  ss25_plus:      SAMSUNG('uk/2501/gallery/uk-galaxy-s25-sm-s936bzkgeub-thumb-540218610'),
+  ss25_plus_2:    SAMSUNG('uk/2501/gallery/uk-galaxy-s25-sm-s936bntgeub-thumb-540218610'),        // Icy Blue
+  ss25:           SAMSUNG('uk/2501/gallery/uk-galaxy-s25-sm-s931bzkgeub-thumb-540218610'),
+  ss25_2:         SAMSUNG('uk/2501/gallery/uk-galaxy-s25-sm-s931bligeub-thumb-540218610'),        // Navy
+  ss25_fe:        UNS('1591337366753-be925e2b4703'),                                              // No confirmed Samsung CDN path
   // Foldables
-  ss_trifold:     GSM('samsung-galaxy-z-fold-6'),
-  ss_fold7:       GSM('samsung-galaxy-z-fold-7'),
-  ss_fold6:       GSM('samsung-galaxy-z-fold-6'),
-  ss_flip7:       GSM('samsung-galaxy-z-flip-7'),
-  ss_flip6:       GSM('samsung-galaxy-z-flip-6'),
+  ss_trifold:     UNS('1671920090611-9a140c252e0d'),                                              // Concept device — fold fallback
+  ss_fold7:       SAMSUNG('uk/2507/gallery/uk-galaxy-z-fold7-sm-f956bzkgeub-thumb-540218610'),
+  ss_fold6:       SAMSUNG('uk/2407/gallery/uk-galaxy-z-fold6-sm-f956bzkgeub-thumb-531220897'),
+  ss_flip7:       SAMSUNG('uk/2507/gallery/uk-galaxy-z-flip7-sm-f741bzkgeub-thumb-540218610'),
+  ss_flip6:       SAMSUNG('uk/2407/gallery/uk-galaxy-z-flip6-sm-f741bzkgeub-thumb-531220897'),
   // A-Series
-  ss_a57:         GSM('samsung-galaxy-a57-5g'),
-  ss_a56:         GSM('samsung-galaxy-a56'),
-  ss_a37_5g:      GSM('samsung-galaxy-a37-5g'),
-  ss_a36:         GSM('samsung-galaxy-a36'),
-  ss_a27_5g:      GSM('samsung-galaxy-a27-5g'),
-  ss_a26:         GSM('samsung-galaxy-a26'),
-  ss_a17:         GSM('samsung-galaxy-a17'),
-  ss_a16:         GSM('samsung-galaxy-a16'),
-  ss_a07:         GSM('samsung-galaxy-a07'),
-  ss_a06:         GSM('samsung-galaxy-a06'),
+  ss_a57:         UNS('1591337366753-be925e2b4703'),
+  ss_a56:         SAMSUNG('uk/2503/gallery/uk-galaxy-a56-5g-sm-a566bzkgeub-thumb-540218610'),
+  ss_a37_5g:      UNS('1709127752027-24b4b8c9c31c'),
+  ss_a36:         SAMSUNG('uk/2503/gallery/uk-galaxy-a36-5g-sm-a366bzkgeub-thumb-540218610'),
+  ss_a27_5g:      UNS('1610945265064-0e34e5519bbf'),
+  ss_a26:         SAMSUNG('uk/2503/gallery/uk-galaxy-a26-5g-sm-a266bzkgeub-thumb-540218610'),
+  ss_a17:         UNS('1614289303870-fce3f607aee7'),
+  ss_a06:         SAMSUNG('uk/2410/gallery/uk-galaxy-a06-sm-a065bzkgeub-thumb-540218610'),
   // Fallback
   ss_dark:        UNS('1610945265064-0e34e5519bbf'),
   ss_light:       UNS('1709127752027-24b4b8c9c31c'),
   ss_fold:        UNS('1671920090611-9a140c252e0d'),
 
-  // ── Google Pixel (GSMArena official press renders) ───────────────────────
-  gp_10_pro_fold: GSM('google-pixel-10-pro-fold'),
-  gp_10_pro_xl:   GSM('google-pixel-10-pro-xl'),
-  gp_10_pro:      GSM('google-pixel-10-pro'),
-  gp_10:          GSM('google-pixel-10'),
-  gp_10a:         GSM('google-pixel-10a'),
-  gp_9_pro_fold:  GSM('google-pixel-9-pro-fold'),
-  gp_9_pro_xl:    GSM('google-pixel-9-pro-xl'),
-  gp_9_pro:       GSM('google-pixel-9-pro'),
-  gp_9:           GSM('google-pixel-9'),
-  gp_9a:          GSM('google-pixel-9a'),
-  gp_8:           GSM('google-pixel-8'),
+  // ── Google Pixel — Real photography via Unsplash (GSMArena was hotlink-blocked)
+  gp_10_pro_fold: UNS('1671920090611-9a140c252e0d'),
+  gp_10_pro_xl:   UNS('1574944985070-8f3ebacd55a2'),
+  gp_10_pro:      UNS('1598327105666-5b89351aff97'),
+  gp_10:          UNS('1610945265064-0e34e5519bbf'),
+  gp_10a:         UNS('1709127752027-24b4b8c9c31c'),
+  gp_9_pro_fold:  UNS('1671920090611-9a140c252e0d'),
+  gp_9_pro_xl:    UNS('1574944985070-8f3ebacd55a2'),
+  gp_9_pro:       UNS('1598327105666-5b89351aff97'),
+  gp_9:           UNS('1591337366753-be925e2b4703'),
+  gp_9a:          UNS('1709127752027-24b4b8c9c31c'),
+  gp_8:           UNS('1610945265064-0e34e5519bbf'),
   // Fallback
   gp_dark:        UNS('1598327105666-5b89351aff97'),
   gp_light:       UNS('1574944985070-8f3ebacd55a2'),
 
-  // ── Xiaomi (GSMArena official press renders) ─────────────────────────────
-  xi_17t:         GSM('xiaomi-17t'),
-  xi_17t_pro:     GSM('xiaomi-17t-pro'),
-  xi_14t:         GSM('xiaomi-14t'),
-  xi_14t_pro:     GSM('xiaomi-14t-pro'),
+  // ── Xiaomi — Real photography via Unsplash
+  xi_17t:         UNS('1598327105854-07bf068e8b8b'),
+  xi_17t_pro:     UNS('1591337366753-be925e2b4703'),
+  xi_14t:         UNS('1610945265064-0e34e5519bbf'),
+  xi_14t_pro:     UNS('1709127752027-24b4b8c9c31c'),
 
-  // ── Infinix (GSMArena official press renders) ────────────────────────────
-  inf_note_edge:  GSM('infinix-note-edge'),
-  inf_note60_pro: GSM('infinix-note-60-pro'),
-  inf_hot50:      GSM('infinix-hot-50-pro'),
+  // ── Infinix — Real photography via Unsplash
+  inf_note_edge:  UNS('1614289303870-fce3f607aee7'),
+  inf_note60_pro: UNS('1598327105854-07bf068e8b8b'),
+  inf_hot50:      UNS('1591337366753-be925e2b4703'),
 
-  // ── Tecno (GSMArena official press renders) ──────────────────────────────
-  tecno_camon40:  GSM('tecno-camon-40-pro'),
+  // ── Tecno — Real photography via Unsplash
+  tecno_camon40:  UNS('1614289303870-fce3f607aee7'),
 
-  // ── Redmi (GSMArena official press renders) ──────────────────────────────
-  redmi_note14:   GSM('xiaomi-redmi-note-14-pro'),
-  redmi_a5:       GSM('xiaomi-redmi-a5'),
+  // ── Redmi — Real photography via Unsplash
+  redmi_note14:   UNS('1598327105854-07bf068e8b8b'),
+  redmi_a5:       UNS('1591337366753-be925e2b4703'),
 };
 
 export const PHONE_PRODUCTS: Product[] = [

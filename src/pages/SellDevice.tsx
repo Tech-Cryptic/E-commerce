@@ -14,6 +14,7 @@ import {
   MessageCircle,
   ChevronDown,
 } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 const DEVICE_TYPES = [
   { label: 'Smartphone', icon: Smartphone },
@@ -53,7 +54,7 @@ export default function SellDevice() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedDevice || !selectedCondition || !formData.brand || !formData.model || !formData.name || !formData.phone) {
-      alert('Please fill in all required fields.');
+      toast.error('Please fill in all required fields.');
       return;
     }
     setLoading(true);
@@ -128,7 +129,7 @@ export default function SellDevice() {
         <div className="mb-10">
           <h1 className="text-4xl font-black text-foreground mb-2">Sell or Trade In Your Device</h1>
           <p className="text-gray-500 text-sm">
-            Get an instant valuation for your gadget. Fill in the details below and our team will contact you within 24 hours.
+            Get a competitive valuation for your gadget. Fill in the details below and our team will contact you within 24 hours.
           </p>
         </div>
 

@@ -4,6 +4,7 @@ import API_URL from '../config/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { ShieldCheck, Lock } from 'lucide-react';
+import { toast } from 'react-toastify';
 
 interface CartItem {
   id: string;
@@ -105,11 +106,11 @@ export default function Checkout() {
 
   const handlePayment = () => {
     if (!formData.address || !formData.city || !formData.state) {
-      alert('Please fill in your delivery address, city and state.');
+      toast.error('Please fill in your delivery address, city and state.');
       return;
     }
     if (cartItems.length === 0) {
-      alert('Your cart is empty.');
+      toast.error('Your cart is empty.');
       return;
     }
 
@@ -405,7 +406,10 @@ export default function Checkout() {
                   </button>
 
                   <p className="text-center text-xs text-gray-400 mt-3">
-                    By placing this order you agree to our terms of service
+                    By placing this order you agree to our{' '}
+                    <Link to="/privacy" className="text-[#1a3dc4] underline hover:text-[#1532a8]">
+                      Terms of Service & Privacy Policy
+                    </Link>
                   </p>
                 </>
               )}

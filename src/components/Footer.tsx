@@ -34,11 +34,11 @@ const Footer = () => {
         <div>
           <h3 className="text-[#f5a623] font-bold mb-6 uppercase tracking-wider text-sm">Categories</h3>
           <ul className="space-y-4 text-gray-400 text-sm">
-            <li><a href="/products?cat=phones" className="hover:text-white transition-colors">iPhones & Samsung</a></li>
-            <li><a href="/products?cat=laptops" className="hover:text-white transition-colors">Laptops & Workstations</a></li>
-            <li><a href="/products?cat=gaming" className="hover:text-white transition-colors">Games & Consoles</a></li>
-            <li><a href="/products?cat=audio" className="hover:text-white transition-colors">Speakers & Headsets</a></li>
-            <li><a href="/products?cat=accessories" className="hover:text-white transition-colors">iWatches & Accessories</a></li>
+            <li><Link to="/products?category=Phones" className="hover:text-white transition-colors">iPhones & Samsung</Link></li>
+            <li><Link to="/products?category=Laptops" className="hover:text-white transition-colors">Laptops & Workstations</Link></li>
+            <li><Link to="/products?category=Gaming" className="hover:text-white transition-colors">Games & Consoles</Link></li>
+            <li><Link to="/products?category=Audio" className="hover:text-white transition-colors">Speakers & Headsets</Link></li>
+            <li><Link to="/products?category=Watches" className="hover:text-white transition-colors">Smartwatches & Accessories</Link></li>
           </ul>
         </div>
 
@@ -46,12 +46,12 @@ const Footer = () => {
         <div>
           <h3 className="text-[#f5a623] font-bold mb-6 uppercase tracking-wider text-sm">Company</h3>
           <ul className="space-y-4 text-gray-400 text-sm">
-            <li><a href="/about" className="hover:text-white transition-colors">About Us</a></li>
+            <li><Link to="/about" className="hover:text-white transition-colors">About Us</Link></li>
             <li><Link to="/sell" className="hover:text-white transition-colors">Sell Your Gadget</Link></li>
             <li><Link to="/wishlist" className="hover:text-white transition-colors">My Wishlist</Link></li>
             <li><Link to="/track-order" className="hover:text-white transition-colors">Track My Order</Link></li>
-            <li><a href="/swap-policy" className="hover:text-white transition-colors">Swap Policy</a></li>
-            <li><a href="/privacy" className="hover:text-white transition-colors">Privacy Policy</a></li>
+            <li><Link to="/sell" className="hover:text-white transition-colors">Swap Policy</Link></li>
+            <li><Link to="/privacy" className="hover:text-white transition-colors">Privacy Policy</Link></li>
           </ul>
         </div>
 
@@ -61,39 +61,32 @@ const Footer = () => {
           <ul className="space-y-4 text-gray-400 text-sm">
             <li className="flex items-center gap-3">
               <Phone size={18} className="text-[#1a3dc4]" />
-              <span>08132922551</span>
+              <a href="tel:08132922551" className="hover:text-white transition-colors">08132922551</a>
             </li>
             <li className="flex items-center gap-3">
               <Mail size={18} className="text-[#1a3dc4]" />
-              <span>gabbysgadget@gmail.com</span>
+              <a href="mailto:gabbysgadget@gmail.com" className="hover:text-white transition-colors">gabbysgadget@gmail.com</a>
             </li>
             <li className="flex items-center gap-3">
               <Instagram size={18} className="text-[#1a3dc4]" />
-              <span>@gabbysgadget</span>
+              <a href="https://www.instagram.com/gabbysgadget" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">@gabbysgadget</a>
             </li>
             <li className="flex items-start gap-3">
               <MapPin size={18} className="text-[#1a3dc4] mt-1" />
-              <span>Lagos, Nigeria</span>
+              <span>Computer Village / Ikeja, Lagos, Nigeria</span>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-6 mt-20 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-        <p>© 2026 Gabby's Gadget. All rights reserved.</p>
+        <p>© {new Date().getFullYear()} Gabby's Gadget. All rights reserved.</p>
         <div className="flex gap-6 items-center">
           <span>Designed for Tech Enthusiasts</span>
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse" />
             <span>Systems Operational</span>
           </div>
-          <Link
-            to="/admin"
-            className="text-gray-700 hover:text-gray-400 transition-colors"
-            title="Admin"
-          >
-            ⚙
-          </Link>
         </div>
       </div>
     </footer>

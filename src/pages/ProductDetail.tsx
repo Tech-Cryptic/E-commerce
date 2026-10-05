@@ -20,33 +20,60 @@ function isLight(hex: string): boolean {
 
 export default function ProductDetail() {
   const { id } = useParams();
+  const product = ALL_PRODUCTS.find(p => p.id === id);
+
   const [quantity, setQuantity] = useState(1);
   const [selectedStorageIndex, setSelectedStorageIndex] = useState(0);
   const [selectedColorIndex, setSelectedColorIndex] = useState(0);
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [wishlisted, setWishlisted] = useState(() => {
+    if (!product) return false;
     const wl = JSON.parse(localStorage.getItem('gg_wishlist') || '[]');
-    return wl.some((i: any) => i.id === (ALL_PRODUCTS.find(p => p.id === id) || ALL_PRODUCTS[0]).id);
+    return wl.some((i: any) => i.id === product.id);
   });
 
   // Review state
   interface Review { author: string; rating: number; text: string; date: string; }
-  const storageKey = `gg_reviews_${id}`;
   const [reviews, setReviews] = useState<Review[]>(() => JSON.parse(localStorage.getItem(`gg_reviews_${id}`) || '[]'));
   const [reviewForm, setReviewForm] = useState({ author: '', rating: 5, text: '' });
   const [reviewOpen, setReviewOpen] = useState(false);
 
-  const product = ALL_PRODUCTS.find(p => p.id === id) || ALL_PRODUCTS[0];
-  const related = ALL_PRODUCTS
-    .filter(p => p.category === product.category && p.id !== product.id)
-    .slice(0, 3);
-
   // ── Recently Viewed tracking ─────────────────────────
   useEffect(() => {
+    if (!product) return;
     const key = 'gg_recently_viewed';
     const existing: string[] = JSON.parse(localStorage.getItem(key) || '[]');
     const updated = [product.id, ...existing.filter(i => i !== product.id)].slice(0, 8);
     localStorage.setItem(key, JSON.stringify(updated));
-  }, [product.id]);
+  }, [product?.id]);
+
+  if (!product) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <Navbar />
+        <main className="max-w-xl mx-auto px-6 py-28 text-center flex-1 flex flex-col items-center justify-center">
+          <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+            <ShoppingCart size={36} className="text-gray-400" />
+          </div>
+          <h1 className="text-3xl font-black text-foreground mb-3">Gadget Not Found</h1>
+          <p className="text-gray-500 mb-8 text-sm max-w-md">
+            The gadget you are looking for may have been swapped, sold out, or moved to another section.
+          </p>
+          <Link
+            to="/products"
+            className="px-8 py-3.5 bg-[#1a3dc4] text-white font-bold rounded-xl hover:bg-[#1a3dc4]/90 transition-all text-sm shadow-lg shadow-[#1a3dc4]/20"
+          >
+            Explore All Gadgets
+          </Link>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  const related = ALL_PRODUCTS
+    .filter(p => p.category === product.category && p.id !== product.id)
+    .slice(0, 3);
 
   const recentlyViewedIds: string[] = JSON.parse(localStorage.getItem('gg_recently_viewed') || '[]');
   const recentlyViewed = recentlyViewedIds
@@ -56,15 +83,10 @@ export default function ProductDetail() {
     .slice(0, 4) as typeof ALL_PRODUCTS;
 
   // ── Social share ─────────────────────────────────────
-  const shareUrl = window.location.href;
+  const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
   const shareText = `Check out ${product.name} at Gabby's Gadget! ${shareUrl}`;
   const waShare  = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
   const twShare  = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
-
-  // Active image cycles through available images when a colour is selected
-  const activeImage = product.images.length > 1
-    ? selectedColorIndex % product.images.length
-    : 0;
 
   const selectedVariant = product.storageVariants[selectedStorageIndex];
   const selectedColor   = product.colors[selectedColorIndex];
@@ -76,11 +98,17 @@ export default function ProductDetail() {
 
   const handleColorSelect = (ci: number) => {
     setSelectedColorIndex(ci);
+    if (product.images.length > ci) {
+      setSelectedImageIndex(ci);
+    }
   };
+
+  const activeImage = product.images[selectedImageIndex] || product.images[0];
 
   const handleAddToCart = () => {
     if (!currentPrice) {
-      toast.info('Please contact us for pricing on this variant.', { position: 'top-right' });
+      const waMsg = encodeURIComponent(`Hi Gabby's Gadget! I would like to inquire about the price and availability of ${product.name} (${selectedVariant?.storage || 'Base model'}).`);
+      window.open(`https://wa.me/2348132922551?text=${waMsg}`, '_blank');
       return;
     }
     const existing = JSON.parse(localStorage.getItem('gg_cart') || '[]');
@@ -94,7 +122,7 @@ export default function ProductDetail() {
         id: cartId,
         name: `${product.name} ${selectedVariant.storage}${selectedColor ? ` (${selectedColor.name})` : ''}`,
         price: currentPrice,
-        image: product.images[activeImage] || product.images[0],
+        image: activeImage,
         brand: product.brand,
         condition: product.condition,
         quantity,
@@ -166,9 +194,13 @@ export default function ProductDetail() {
               style={{ background: `linear-gradient(135deg, ${tintHex}18 0%, ${tintBg} 100%)` }}
             >
               <img
-                key={activeImage}
-                src={product.images[activeImage]}
+                key={selectedImageIndex}
+                src={activeImage}
                 alt={product.name}
+                onError={(e) => {
+                  e.currentTarget.onerror = null;
+                  e.currentTarget.src = 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=800';
+                }}
                 className="w-full h-full object-contain transition-all duration-500 animate-fadeIn"
               />
             </div>
@@ -179,17 +211,25 @@ export default function ProductDetail() {
                 {product.images.map((img, i) => (
                   <button
                     key={i}
-                    onClick={() => setSelectedColorIndex(i % product.colors.length)}
+                    onClick={() => setSelectedImageIndex(i)}
                     className={`aspect-square rounded-xl border-2 overflow-hidden p-3 transition-all ${
-                      activeImage === i
+                      selectedImageIndex === i
                         ? 'border-[#1a3dc4] shadow-md shadow-[#1a3dc4]/20'
                         : 'border-primary/5 hover:border-[#1a3dc4]/50'
                     }`}
                     style={{
-                      background: activeImage === i ? tintBg : undefined,
+                      background: selectedImageIndex === i ? tintBg : undefined,
                     }}
                   >
-                    <img src={img} alt={`${product.name} view ${i + 1}`} className="w-full h-full object-contain" />
+                    <img
+                      src={img}
+                      alt={`${product.name} view ${i + 1}`}
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        e.currentTarget.src = 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=800';
+                      }}
+                      className="w-full h-full object-contain"
+                    />
                   </button>
                 ))}
               </div>
@@ -255,7 +295,9 @@ export default function ProductDetail() {
               <div className="flex items-center gap-1 text-[#f5a623]">
                 {[1,2,3,4,5].map(i => <Star key={i} size={16} fill="currentColor" />)}
               </div>
-              <span className="text-sm text-muted-foreground">(128 Reviews)</span>
+              <span className="text-sm text-muted-foreground">
+                {reviews.length > 0 ? `(${reviews.length} Verified Review${reviews.length !== 1 ? 's' : ''})` : '(4.9 · Rated by Customers)'}
+              </span>
             </div>
 
             {/* Price — animated on storage change */}
@@ -303,20 +345,11 @@ export default function ProductDetail() {
                       <span className={`text-[10px] font-semibold mt-0.5 ${
                         selectedStorageIndex === i ? 'text-white/80' : v.price ? 'text-[#1a3dc4]' : 'text-gray-400'
                       }`}>
-                        {v.price
-                          ? (i === 0 || !basePrice
-                              ? formatPrice(v.price)
-                              : `+${formatPrice(v.price - basePrice!)}`)
-                          : 'POA'}
+                        {v.price ? formatPrice(v.price) : 'POA'}
                       </span>
                     </button>
                   ))}
                 </div>
-                {product.storageVariants.length > 1 && basePrice && (
-                  <p className="text-[11px] text-muted-foreground mt-2">
-                    * Prices shown relative to base ({product.storageVariants[0].storage})
-                  </p>
-                )}
               </div>
             )}
 
@@ -370,7 +403,7 @@ export default function ProductDetail() {
                 className="flex-1 bg-[#1a3dc4] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-3 hover:bg-[#1a3dc4]/90 transition-all hover:scale-[1.02] shadow-xl shadow-primary/20"
               >
                 <ShoppingCart size={20} />
-                {currentPrice ? 'Add to Cart' : 'Contact for Price'}
+                {currentPrice ? 'Add to Cart' : 'Chat on WhatsApp for Price'}
               </button>
               <button
                 onClick={handleCompare}
@@ -412,22 +445,22 @@ export default function ProductDetail() {
               <div className="flex items-center gap-3">
                 <ShieldCheck className="text-[#1a3dc4]" size={24} />
                 <div className="text-xs">
-                  <p className="font-bold">1 Year Warranty</p>
-                  <p className="text-muted-foreground">Official coverage</p>
+                  <p className="font-bold">{product.condition === 'New' ? '1 Year Warranty' : 'Verified Quality'}</p>
+                  <p className="text-muted-foreground">{product.condition === 'New' ? 'Official coverage' : 'Tested & Guaranteed'}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Truck className="text-[#1a3dc4]" size={24} />
                 <div className="text-xs">
                   <p className="font-bold">Free Delivery</p>
-                  <p className="text-muted-foreground">Within Lagos</p>
+                  <p className="text-muted-foreground">On orders over ₦500k</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <RotateCcw className="text-[#1a3dc4]" size={24} />
                 <div className="text-xs">
-                  <p className="font-bold">7-Day Return</p>
-                  <p className="text-muted-foreground">Easy exchange</p>
+                  <p className="font-bold">7-Day Guarantee</p>
+                  <p className="text-muted-foreground">Easy exchange policy</p>
                 </div>
               </div>
             </div>

@@ -18,6 +18,8 @@ import OrderTracking from './src/pages/OrderTracking.tsx';
 import SellDevice from './src/pages/SellDevice.tsx';
 import Wishlist from './src/pages/Wishlist.tsx';
 import Admin from './src/pages/Admin.tsx';
+import About from './src/pages/About.tsx';
+import Privacy from './src/pages/Privacy.tsx';
 import NotFound from './src/pages/NotFound.tsx';
 import ScrollToTop from './src/components/ScrollToTop.tsx';
 
@@ -63,6 +65,10 @@ const App: React.FC = () => {
             <Route path="/track-order" element={<OrderTracking />} />
             <Route path="/sell" element={<SellDevice />} />
             <Route path="/wishlist" element={<Wishlist />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/about-us" element={<About />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Privacy />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

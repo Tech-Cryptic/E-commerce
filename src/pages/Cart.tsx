@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { Trash2, Plus, Minus, ArrowRight, ShoppingBag } from 'lucide-react';
@@ -17,6 +17,7 @@ interface CartItem {
 }
 
 export default function Cart() {
+  const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     const saved = localStorage.getItem('gg_cart');
     return saved ? JSON.parse(saved) : [];
@@ -190,12 +191,9 @@ const removeItem = (id: string) => {
       const loggedIn = localStorage.getItem('gg_logged_in');
       if (loggedIn !== 'true') {
         localStorage.setItem('gg_redirect', '/checkout');
-        toast.info('Please sign in to checkout.', { position: 'top-right', autoClose: 2000 });
-        setTimeout(() => {
-          window.location.href = '/login';
-        }, 2000);
+        navigate('/login');
       } else {
-        window.location.href = '/checkout';
+        navigate('/checkout');
       }
     }}
     className="w-full bg-[#1a3dc4] text-white py-4 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-[#1a3dc4]/90 transition-all hover:scale-[1.02] shadow-xl shadow-primary/20"

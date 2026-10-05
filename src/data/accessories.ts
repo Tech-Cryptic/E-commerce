@@ -5,6 +5,9 @@ const APPLE = (slug: string) =>
 
 const UNS = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=800`;
 const GSM = (slug: string) => `https://fdn2.gsmarena.com/vv/bigpic/${slug}.jpg`;
+// Samsung IS Image Server — same CDN as samsung.com (no hotlink block)
+const SAMSUNG_ACC = (path: string) =>
+  `https://images.samsung.com/is/image/samsung/p6pim/${path}?wid=800&hei=800&fmt=jpeg&qlt=90`;
 
 const IMG = {
   // Apple Tablets
@@ -28,11 +31,11 @@ const IMG = {
   airpods:       UNS('1588423771073-b8903fead85b'),       // fallback
   airpods2:      UNS('1631083955925-4f7086a2bf74'),       // fallback
   airpodsmax:    UNS('1546435770-a3e426bf472b'),          // fallback
-  // Samsung watches + buds
-  ss_watch:      GSM('samsung-galaxy-watch-7'),
-  ss_buds:       GSM('samsung-galaxy-buds-3-pro'),
-  // Google Pixel Watch
-  gp_watch:      GSM('google-pixel-watch-3'),
+  // Samsung watches + buds — Samsung IS Image Server (official CDN)
+  ss_watch:      SAMSUNG_ACC('uk/2407/gallery/uk-galaxy-watch7-sm-l305fzaaeub-thumb-531220897'),
+  ss_buds:       SAMSUNG_ACC('uk/2407/gallery/uk-galaxy-buds3-pro-sm-r630nzaabtu-thumb-531220897'),
+  // Google Pixel Watch — Unsplash real photography (Google CDN requires auth)
+  gp_watch:      UNS('1598327105666-5b89351aff97'),
   // Computers / Gaming
   laptop:        UNS('1517336714731-489689fd1ca8'),
   ps5:           UNS('1606813907291-d86efa9b94db'),
