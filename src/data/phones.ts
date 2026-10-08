@@ -1,4 +1,5 @@
 import type { Product } from './types';
+import { TECNO_PHONE_PRODUCTS } from './tecnoPhones';
 
 // ─── Apple Store CDN helper ────────────────────────────────────────────────
 // Apple's publicly accessible product render CDN
@@ -1586,36 +1587,10 @@ export const PHONE_PRODUCTS: Product[] = [
   },
 
   // ════════════════════════════════════════════════════════════
-  // TECNO
+  // TECNO (56 Official Models extracted from https://www.tecno-mobile.com/phones/product-list/)
   // ════════════════════════════════════════════════════════════
 
-  {
-    id: 'tecno-camon-40-pro',
-    name: 'Tecno Camon 40 Pro',
-    brand: 'Tecno',
-    category: 'Phones',
-    condition: 'New',
-    description: 'The Tecno Camon 40 Pro is built for portrait photography, featuring a 50MP RGBW front camera, a 6.78" curved AMOLED 120Hz display, and MediaTek Dimensity 7300 chipset. 5,000mAh battery with 45W fast charge.',
-    specs: [
-      { label: 'Display', value: '6.78" Curved AMOLED, 120Hz' },
-      { label: 'Chip', value: 'Dimensity 7300' },
-      { label: 'RAM', value: '8GB / 12GB' },
-      { label: 'Rear Camera', value: '50MP + 50MP + 2MP' },
-      { label: 'Front Camera', value: '50MP RGBW' },
-      { label: 'Battery', value: '5,000mAh, 45W wired' },
-      { label: 'OS', value: 'Android 15, HiOS 15' },
-    ],
-    storageVariants: [
-      { storage: '256GB+8GB',  price: 310000 },
-      { storage: '256GB+12GB', price: 360000 },
-    ],
-    colors: [
-      { name: 'Fiery Red',   hex: '#D32F2F' },
-      { name: 'Frost White', hex: '#F5F5F5' },
-      { name: 'Jet Black',   hex: '#1C1C1E' },
-    ],
-    images: [IMG.tecno_camon40, IMG.gp_dark],
-  },
+  ...TECNO_PHONE_PRODUCTS,
 
   // ════════════════════════════════════════════════════════════
   // REDMI
