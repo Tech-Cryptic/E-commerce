@@ -14,6 +14,84 @@ const SAMSUNG = (path: string) =>
 // ─── Fallback (only for products without a confirmed CDN render) ────────────
 const UNS = (id: string) => `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=80&w=800`;
 
+// ─── Local icecat image paths (served from /public/images/) ────────────────
+// These are the actual product photos we have downloaded locally.
+// Format: /images/<brand>/<model>/<color>/01.jpg
+const LOCAL = {
+  // iPhones — models with local images
+  ip16_pm_black:      '/images/iphones/iphone-16-pro-max/black/01.jpg',
+  ip16_pm_black2:     '/images/iphones/iphone-16-pro-max/black-2/01.jpg',
+  ip16_pm_white:      '/images/iphones/iphone-16-pro-max/white/01.jpg',
+  ip16_black:         '/images/iphones/iphone-16/black/01.jpg',
+  ip16_blue:          '/images/iphones/iphone-16/blue/01.jpg',
+  ip16_pink:          '/images/iphones/iphone-16/pink/01.jpg',
+  ip16_white:         '/images/iphones/iphone-16/white/01.jpg',
+  ip15_pm_black:      '/images/iphones/iphone-15-pro-max/black/01.jpg',
+  ip15_pm_blue:       '/images/iphones/iphone-15-pro-max/blue/01.jpg',
+  ip15_pm_white:      '/images/iphones/iphone-15-pro-max/white/01.jpg',
+  ip15_pm_natural:    '/images/iphones/iphone-15-pro-max/variant-2/01.jpg',
+  ip15_p_black:       '/images/iphones/iphone-15-pro/black/01.jpg',
+  ip15_p_blue:        '/images/iphones/iphone-15-pro/blue/01.jpg',
+  ip15_p_white:       '/images/iphones/iphone-15-pro/white/01.jpg',
+  ip15_p_natural:     '/images/iphones/iphone-15-pro/variant-2/01.jpg',
+  ip15_black:         '/images/iphones/iphone-15/black/01.jpg',
+  ip15_blue:          '/images/iphones/iphone-15/blue/01.jpg',
+  ip15_green:         '/images/iphones/iphone-15/green/01.jpg',
+  ip15_pink:          '/images/iphones/iphone-15/pink/01.jpg',
+  ip15_yellow:        '/images/iphones/iphone-15/yellow/01.jpg',
+  ip14_pm_black:      '/images/iphones/iphone-14-pro-max/black/01.jpg',
+  ip14_pm_gold:       '/images/iphones/iphone-14-pro-max/gold/01.jpg',
+  ip14_pm_purple:     '/images/iphones/iphone-14-pro-max/purple/01.jpg',
+  ip14_pm_silver:     '/images/iphones/iphone-14-pro-max/silver/01.jpg',
+  ip14_p_black:       '/images/iphones/iphone-14-pro/black/01.jpg',
+  ip14_p_purple:      '/images/iphones/iphone-14-pro/purple/01.jpg',
+  ip14_black:         '/images/iphones/iphone-14/black/01.jpg',
+  ip14_purple:        '/images/iphones/iphone-14/purple/01.jpg',
+  ip14_red:           '/images/iphones/iphone-14/red/01.jpg',
+  ip14_white:         '/images/iphones/iphone-14/white/01.jpg',
+  ip14_yellow:        '/images/iphones/iphone-14/yellow/01.jpg',
+  ip13_black:         '/images/iphones/iphone-13/black/01.jpg',
+  ip13_blue:          '/images/iphones/iphone-13/blue/01.jpg',
+  ip13_pink:          '/images/iphones/iphone-13/pink/01.jpg',
+  ip13_white:         '/images/iphones/iphone-13/white/01.jpg',
+  ip13_p_green:       '/images/iphones/iphone-13-pro/green/01.jpg',
+  ip12_black:         '/images/iphones/iphone-12/black/01.jpg',
+  ip12_blue:          '/images/iphones/iphone-12/blue/01.jpg',
+  ip12_green:         '/images/iphones/iphone-12/green/01.jpg',
+  ip12_red:           '/images/iphones/iphone-12/red/01.jpg',
+  ip12_white:         '/images/iphones/iphone-12/white/01.jpg',
+  ip12_pro_blue:      '/images/iphones/iphone-12-pro/blue/01.jpg',
+  ip12_pro_graphite:  '/images/iphones/iphone-12-pro/graphite/01.jpg',
+  ip12_pro_silver:    '/images/iphones/iphone-12-pro/silver/01.jpg',
+  ip12_pm_blue:       '/images/iphones/iphone-12-pro-max/blue/01.jpg',
+  ip12_pm_graphite:   '/images/iphones/iphone-12-pro-max/graphite/01.jpg',
+  ip11_p_green:       '/images/iphones/iphone-11-pro/green/01.jpg',
+  ip11_p_grey:        '/images/iphones/iphone-11-pro/grey/01.jpg',
+  ip11_pm_grey:       '/images/iphones/iphone-11-pro-max/grey/01.jpg',
+  ipx_black:          '/images/iphones/iphone-x/black/01.jpg',
+  ipx_silver:         '/images/iphones/iphone-x/variant-3/01.jpg',
+
+  // Samsung A-series — models with local images
+  ss_a16_black:       '/images/samsung/galaxy-a16/black/01.jpg',
+  ss_a16_blue:        '/images/samsung/galaxy-a16/blue/01.jpg',
+  ss_a16_green:       '/images/samsung/galaxy-a16/light-green/01.jpg',
+  ss_a16_gold:        '/images/samsung/galaxy-a16/gold/01.jpg',
+  ss_a17_black:       '/images/samsung/galaxy-a17/black/01.jpg',
+  ss_a17_blue:        '/images/samsung/galaxy-a17/blue/01.jpg',
+  ss_a18_black:       '/images/samsung/galaxy-a18/black/01.jpg',
+  ss_a18_blue:        '/images/samsung/galaxy-a18/blue/01.jpg',
+  ss_a18_silver:      '/images/samsung/galaxy-a18/silver/01.jpg',
+  ss_a26_black:       '/images/samsung/galaxy-a26/black/01.jpg',
+  ss_a26_white:       '/images/samsung/galaxy-a26/white/01.jpg',
+  ss_a26_mint:        '/images/samsung/galaxy-a26/mint/01.jpg',
+  ss_a27_black:       '/images/samsung/galaxy-a27/black/01.jpg',
+  ss_a27_blue:        '/images/samsung/galaxy-a27/blue/01.jpg',
+  ss_a27_pink:        '/images/samsung/galaxy-a27/pink/01.jpg',
+  ss_a34_graphite:    '/images/samsung/galaxy-a34/graphite/01.jpg',
+  ss_a34_silver:      '/images/samsung/galaxy-a34/silver/01.jpg',
+  ss_a34_violet:      '/images/samsung/galaxy-a34/violet/01.jpg',
+};
+
 // ─── Per-model official product images ────────────────────────────────────
 const IMG = {
   // ── Apple iPhones (Apple Store CDN — official renders) ──────────────────
@@ -26,34 +104,34 @@ const IMG = {
   ip17_air_2:     APPLE('iphone-17-air-finish-select-202509-6-5inch-skyblue'),
   ip17:           APPLE('iphone-17-finish-select-202509-6-3inch-black'),
   ip17_2:         APPLE('iphone-17-finish-select-202509-6-3inch-ultramarine'),
-  // iPhone 16 series
-  ip16_pro_max:   APPLE('iphone-16-pro-max-finish-select-202409-6-9inch-blacktitanium'),
-  ip16_pro_max_2: APPLE('iphone-16-pro-max-finish-select-202409-6-9inch-desertTitanium'),
+  // iPhone 16 series — use local images as primary
+  ip16_pro_max:   LOCAL.ip16_pm_black,
+  ip16_pro_max_2: LOCAL.ip16_pm_white,
   ip16_pro:       APPLE('iphone-16-pro-finish-select-202409-6-3inch-blacktitanium'),
   ip16_pro_2:     APPLE('iphone-16-pro-finish-select-202409-6-3inch-naturaltitanium'),
   ip16_plus:      APPLE('iphone-16-plus-finish-select-202409-6-7inch-ultramarine'),
   ip16_plus_2:    APPLE('iphone-16-plus-finish-select-202409-6-7inch-black'),
-  ip16:           APPLE('iphone-16-finish-select-202409-6-1inch-ultramarine'),
-  ip16_2:         APPLE('iphone-16-finish-select-202409-6-1inch-black'),
-  // iPhone 15 series
-  ip15_pro_max:   APPLE('iphone-15-pro-max-black-titanium-select'),
-  ip15_pro_max_2: APPLE('iphone-15-pro-max-natural-titanium-select'),
-  ip15_pro:       APPLE('iphone-15-pro-black-titanium-select'),
-  ip15_pro_2:     APPLE('iphone-15-pro-natural-titanium-select'),
+  ip16:           LOCAL.ip16_black,
+  ip16_2:         LOCAL.ip16_blue,
+  // iPhone 15 series — use local images as primary
+  ip15_pro_max:   LOCAL.ip15_pm_black,
+  ip15_pro_max_2: LOCAL.ip15_pm_white,
+  ip15_pro:       LOCAL.ip15_p_black,
+  ip15_pro_2:     LOCAL.ip15_p_white,
   ip15_plus:      APPLE('iphone-15-plus-black-select'),
   ip15_plus_2:    APPLE('iphone-15-plus-blue-select'),
-  ip15:           APPLE('iphone-15-black-select'),
-  ip15_2:         APPLE('iphone-15-blue-select'),
-  // iPhone 14 / 13 series (older)
-  ip14_pro_max:   APPLE('iphone-14-pro-max-deep-purple-select'),
-  ip14_pro:       APPLE('iphone-14-pro-deep-purple-select'),
+  ip15:           LOCAL.ip15_black,
+  ip15_2:         LOCAL.ip15_blue,
+  // iPhone 14 / 13 series
+  ip14_pro_max:   LOCAL.ip14_pm_black,
+  ip14_pro:       LOCAL.ip14_p_black,
   ip14_plus:      APPLE('iphone-14-plus-midnight-select'),
-  ip14:           APPLE('iphone-14-midnight-select'),
+  ip14:           LOCAL.ip14_black,
   ip13_pro_max:   APPLE('iphone-13-pro-max-alpinegreen-select'),
-  ip13_pro:       APPLE('iphone-13-pro-sierrablue-select'),
-  ip13:           APPLE('iphone-13-midnight-select'),
-  ip12:           APPLE('iphone-12-black-select-2020'),
-  ip11:           UNS('1510557880182-3d4d3cba35a5'),
+  ip13_pro:       LOCAL.ip13_p_green,
+  ip13:           LOCAL.ip13_black,
+  ip12:           LOCAL.ip12_black,
+  ip11:           LOCAL.ip11_p_grey,
 
   // ── Samsung Flagships — Samsung IS Image Server (official CDN, no hotlink block)
   // Note: Galaxy S26 does not yet exist — using S25 series images as visual proxies
@@ -73,14 +151,16 @@ const IMG = {
   ss_fold6:       SAMSUNG('uk/2407/gallery/uk-galaxy-z-fold6-sm-f956bzkgeub-thumb-531220897'),
   ss_flip7:       SAMSUNG('uk/2507/gallery/uk-galaxy-z-flip7-sm-f741bzkgeub-thumb-540218610'),
   ss_flip6:       SAMSUNG('uk/2407/gallery/uk-galaxy-z-flip6-sm-f741bzkgeub-thumb-531220897'),
-  // A-Series
+  // A-Series — using local icecat images where available
   ss_a57:         UNS('1591337366753-be925e2b4703'),
   ss_a56:         SAMSUNG('uk/2503/gallery/uk-galaxy-a56-5g-sm-a566bzkgeub-thumb-540218610'),
   ss_a37_5g:      UNS('1709127752027-24b4b8c9c31c'),
   ss_a36:         SAMSUNG('uk/2503/gallery/uk-galaxy-a36-5g-sm-a366bzkgeub-thumb-540218610'),
-  ss_a27_5g:      UNS('1610945265064-0e34e5519bbf'),
-  ss_a26:         SAMSUNG('uk/2503/gallery/uk-galaxy-a26-5g-sm-a266bzkgeub-thumb-540218610'),
-  ss_a17:         UNS('1614289303870-fce3f607aee7'),
+  ss_a27_5g:      LOCAL.ss_a27_black,
+  ss_a26:         LOCAL.ss_a26_black,
+  ss_a17:         LOCAL.ss_a17_black,
+  ss_a16:         LOCAL.ss_a16_black,
+  ss_a07:         UNS('1614289303870-fce3f607aee7'),
   ss_a06:         SAMSUNG('uk/2410/gallery/uk-galaxy-a06-sm-a065bzkgeub-thumb-540218610'),
   // Fallback
   ss_dark:        UNS('1610945265064-0e34e5519bbf'),
@@ -121,6 +201,7 @@ const IMG = {
   redmi_note14:   UNS('1598327105854-07bf068e8b8b'),
   redmi_a5:       UNS('1591337366753-be925e2b4703'),
 };
+
 
 export const PHONE_PRODUCTS: Product[] = [
 
@@ -284,12 +365,16 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '1TB',   price: null },
     ],
     colors: [
-      { name: 'Black Titanium',   hex: '#2B2B2B' },
-      { name: 'Desert Titanium',  hex: '#C9A87C' },
-      { name: 'Natural Titanium', hex: '#8C8A8E' },
-      { name: 'White Titanium',   hex: '#EDEAE4' },
+      { name: 'Black Titanium',   hex: '#2B2B2B', image: '/images/iphones/iphone-16-pro-max/black/01.jpg' },
+      { name: 'Desert Titanium',  hex: '#C9A87C', image: '/images/iphones/iphone-16-pro-max/black-2/01.jpg' },
+      { name: 'Natural Titanium', hex: '#8C8A8E', image: '/images/iphones/iphone-16-pro-max/white/01.jpg' },
+      { name: 'White Titanium',   hex: '#EDEAE4', image: '/images/iphones/iphone-16-pro-max/white/01.jpg' },
     ],
-    images: [IMG.ip16_pro_max, IMG.ip16_pro_max_2],
+    images: [
+      '/images/iphones/iphone-16-pro-max/black/01.jpg',
+      '/images/iphones/iphone-16-pro-max/black-2/01.jpg',
+      '/images/iphones/iphone-16-pro-max/white/01.jpg',
+    ],
   },
 
   {
@@ -385,13 +470,18 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '512GB', price: 1320000 },
     ],
     colors: [
-      { name: 'Ultramarine', hex: '#4169B0' },
+      { name: 'Ultramarine', hex: '#4169B0', image: '/images/iphones/iphone-16/blue/01.jpg' },
       { name: 'Teal',        hex: '#2B817E' },
-      { name: 'Pink',        hex: '#F4B8C0' },
-      { name: 'White',       hex: '#FAFAF8' },
-      { name: 'Black',       hex: '#1C1C1E' },
+      { name: 'Pink',        hex: '#F4B8C0', image: '/images/iphones/iphone-16/pink/01.jpg' },
+      { name: 'White',       hex: '#FAFAF8', image: '/images/iphones/iphone-16/white/01.jpg' },
+      { name: 'Black',       hex: '#1C1C1E', image: '/images/iphones/iphone-16/black/01.jpg' },
     ],
-    images: [IMG.ip16, IMG.ip16_2],
+    images: [
+      '/images/iphones/iphone-16/black/01.jpg',
+      '/images/iphones/iphone-16/blue/01.jpg',
+      '/images/iphones/iphone-16/pink/01.jpg',
+      '/images/iphones/iphone-16/white/01.jpg',
+    ],
   },
 
   {
@@ -419,12 +509,17 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '1TB',   price: null    },
     ],
     colors: [
-      { name: 'Black Titanium',   hex: '#2B2B2B' },
-      { name: 'Blue Titanium',    hex: '#4A6D8F' },
-      { name: 'Natural Titanium', hex: '#8C8A8E' },
-      { name: 'White Titanium',   hex: '#EDEAE4' },
+      { name: 'Black Titanium',   hex: '#2B2B2B', image: '/images/iphones/iphone-15-pro-max/black/01.jpg' },
+      { name: 'Blue Titanium',    hex: '#4A6D8F', image: '/images/iphones/iphone-15-pro-max/blue/01.jpg' },
+      { name: 'Natural Titanium', hex: '#8C8A8E', image: '/images/iphones/iphone-15-pro-max/variant-2/01.jpg' },
+      { name: 'White Titanium',   hex: '#EDEAE4', image: '/images/iphones/iphone-15-pro-max/white/01.jpg' },
     ],
-    images: [IMG.ip15_pro_max, IMG.ip15_pro_max_2],
+    images: [
+      '/images/iphones/iphone-15-pro-max/black/01.jpg',
+      '/images/iphones/iphone-15-pro-max/blue/01.jpg',
+      '/images/iphones/iphone-15-pro-max/variant-2/01.jpg',
+      '/images/iphones/iphone-15-pro-max/white/01.jpg',
+    ],
   },
 
   {
@@ -452,12 +547,17 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '512GB', price: 1500000 },
     ],
     colors: [
-      { name: 'Black Titanium',   hex: '#2B2B2B' },
-      { name: 'Blue Titanium',    hex: '#4A6D8F' },
-      { name: 'Natural Titanium', hex: '#8C8A8E' },
-      { name: 'White Titanium',   hex: '#EDEAE4' },
+      { name: 'Black Titanium',   hex: '#2B2B2B', image: '/images/iphones/iphone-15-pro/black/01.jpg' },
+      { name: 'Blue Titanium',    hex: '#4A6D8F', image: '/images/iphones/iphone-15-pro/blue/01.jpg' },
+      { name: 'Natural Titanium', hex: '#8C8A8E', image: '/images/iphones/iphone-15-pro/variant-2/01.jpg' },
+      { name: 'White Titanium',   hex: '#EDEAE4', image: '/images/iphones/iphone-15-pro/white/01.jpg' },
     ],
-    images: [IMG.ip15_pro, IMG.ip15_pro_2],
+    images: [
+      '/images/iphones/iphone-15-pro/black/01.jpg',
+      '/images/iphones/iphone-15-pro/blue/01.jpg',
+      '/images/iphones/iphone-15-pro/variant-2/01.jpg',
+      '/images/iphones/iphone-15-pro/white/01.jpg',
+    ],
   },
 
   {
@@ -517,13 +617,230 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '256GB', price: 1000000 },
     ],
     colors: [
-      { name: 'Black',  hex: '#1C1C1E' },
-      { name: 'Blue',   hex: '#6B97C2' },
-      { name: 'Green',  hex: '#4A7C59' },
-      { name: 'Yellow', hex: '#F5D97F' },
-      { name: 'Pink',   hex: '#F4A7C0' },
+      { name: 'Black',  hex: '#1C1C1E', image: '/images/iphones/iphone-15/black/01.jpg' },
+      { name: 'Blue',   hex: '#6B97C2', image: '/images/iphones/iphone-15/blue/01.jpg' },
+      { name: 'Green',  hex: '#4A7C59', image: '/images/iphones/iphone-15/green/01.jpg' },
+      { name: 'Yellow', hex: '#F5D97F', image: '/images/iphones/iphone-15/yellow/01.jpg' },
+      { name: 'Pink',   hex: '#F4A7C0', image: '/images/iphones/iphone-15/pink/01.jpg' },
     ],
-    images: [IMG.ip15, IMG.ip15_2],
+    images: [
+      '/images/iphones/iphone-15/black/01.jpg',
+      '/images/iphones/iphone-15/blue/01.jpg',
+      '/images/iphones/iphone-15/green/01.jpg',
+      '/images/iphones/iphone-15/yellow/01.jpg',
+      '/images/iphones/iphone-15/pink/01.jpg',
+    ],
+  },
+
+  {
+    id: 'iphone-14-pro-max',
+    name: 'iPhone 14 Pro Max',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'Used',
+    description: 'UK Used iPhone 14 Pro Max featuring Dynamic Island, the A16 Bionic chip, and Apple\'s 48MP Pro camera system with Photonic Engine. With its 6.7-inch Super Retina XDR Always-On display, it remains one of the most capable premium iPhones available.',
+    specs: [
+      { label: 'Display', value: '6.7" Super Retina XDR OLED, 120Hz ProMotion' },
+      { label: 'Chip', value: 'Apple A16 Bionic (4nm)' },
+      { label: 'RAM', value: '6GB LPDDR5' },
+      { label: 'Rear Camera', value: '48MP Main + 12MP UW + 12MP 3x Telephoto' },
+      { label: 'Front Camera', value: '12MP TrueDepth with AF' },
+      { label: 'Battery', value: '4,323mAh — up to 29 hrs video' },
+      { label: 'Charging', value: '20W wired · MagSafe wireless' },
+      { label: 'OS', value: 'iOS 16 (upgradable to 19)' },
+      { label: 'Water Resistance', value: 'IP68' },
+      { label: 'Weight', value: '240g' },
+    ],
+    storageVariants: [
+      { storage: '128GB', price: 950000  },
+      { storage: '256GB', price: 1050000 },
+      { storage: '512GB', price: 1200000 },
+      { storage: '1TB',   price: 1350000 },
+    ],
+    colors: [
+      { name: 'Space Black',  hex: '#232325', image: '/images/iphones/iphone-14-pro-max/black/01.jpg' },
+      { name: 'Deep Purple',  hex: '#4A3B52', image: '/images/iphones/iphone-14-pro-max/purple/01.jpg' },
+      { name: 'Gold',         hex: '#EADBC8', image: '/images/iphones/iphone-14-pro-max/gold/01.jpg' },
+      { name: 'Silver',       hex: '#F1F2ED', image: '/images/iphones/iphone-14-pro-max/silver/01.jpg' },
+    ],
+    images: [
+      '/images/iphones/iphone-14-pro-max/black/01.jpg',
+      '/images/iphones/iphone-14-pro-max/purple/01.jpg',
+      '/images/iphones/iphone-14-pro-max/gold/01.jpg',
+      '/images/iphones/iphone-14-pro-max/silver/01.jpg',
+    ],
+  },
+
+  {
+    id: 'iphone-14-pro',
+    name: 'iPhone 14 Pro',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'Used',
+    description: 'UK Used iPhone 14 Pro brings Dynamic Island, A16 Bionic performance, and a 48MP Pro camera system into a compact 6.1-inch form. Features Always-On display, Crash Detection, and Emergency SOS.',
+    specs: [
+      { label: 'Display', value: '6.1" Super Retina XDR OLED, 120Hz ProMotion' },
+      { label: 'Chip', value: 'Apple A16 Bionic' },
+      { label: 'RAM', value: '6GB LPDDR5' },
+      { label: 'Rear Camera', value: '48MP Main + 12MP UW + 12MP 3x Telephoto' },
+      { label: 'Front Camera', value: '12MP TrueDepth' },
+      { label: 'Battery', value: '3,200mAh — up to 23 hrs video' },
+      { label: 'OS', value: 'iOS 16 (upgradable to 19)' },
+      { label: 'Weight', value: '206g' },
+    ],
+    storageVariants: [
+      { storage: '128GB', price: 820000 },
+      { storage: '256GB', price: 900000 },
+      { storage: '512GB', price: 1050000 },
+    ],
+    colors: [
+      { name: 'Space Black', hex: '#232325', image: '/images/iphones/iphone-14-pro/black/01.jpg' },
+      { name: 'Deep Purple', hex: '#4A3B52', image: '/images/iphones/iphone-14-pro/purple/01.jpg' },
+    ],
+    images: [
+      '/images/iphones/iphone-14-pro/black/01.jpg',
+      '/images/iphones/iphone-14-pro/purple/01.jpg',
+    ],
+  },
+
+  {
+    id: 'iphone-14',
+    name: 'iPhone 14',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'Used',
+    description: 'UK Used iPhone 14 with a durable ceramic shield front, 6.1-inch Super Retina XDR display, enhanced 12MP dual camera system with Photonic Engine, and all-day battery life.',
+    specs: [
+      { label: 'Display', value: '6.1" Super Retina XDR OLED, 60Hz' },
+      { label: 'Chip', value: 'Apple A15 Bionic (5-core GPU)' },
+      { label: 'RAM', value: '6GB' },
+      { label: 'Rear Camera', value: '12MP Main + 12MP Ultrawide' },
+      { label: 'Front Camera', value: '12MP TrueDepth' },
+      { label: 'Battery', value: '3,279mAh — up to 20 hrs video' },
+      { label: 'OS', value: 'iOS 16 (upgradable to 19)' },
+      { label: 'Weight', value: '172g' },
+    ],
+    storageVariants: [
+      { storage: '128GB', price: 650000 },
+      { storage: '256GB', price: 730000 },
+    ],
+    colors: [
+      { name: 'Midnight',    hex: '#1C2024', image: '/images/iphones/iphone-14/black/01.jpg' },
+      { name: 'Purple',      hex: '#E5DDEA', image: '/images/iphones/iphone-14/purple/01.jpg' },
+      { name: 'PRODUCT(RED)',hex: '#E11C2A', image: '/images/iphones/iphone-14/red/01.jpg' },
+      { name: 'Starlight',   hex: '#FAF7F2', image: '/images/iphones/iphone-14/white/01.jpg' },
+      { name: 'Yellow',      hex: '#FEEB83', image: '/images/iphones/iphone-14/yellow/01.jpg' },
+    ],
+    images: [
+      '/images/iphones/iphone-14/black/01.jpg',
+      '/images/iphones/iphone-14/purple/01.jpg',
+      '/images/iphones/iphone-14/red/01.jpg',
+      '/images/iphones/iphone-14/white/01.jpg',
+      '/images/iphones/iphone-14/yellow/01.jpg',
+    ],
+  },
+
+  {
+    id: 'iphone-13',
+    name: 'iPhone 13',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'Used',
+    description: 'UK Used iPhone 13 features Apple\'s A15 Bionic chip, cinematic mode for video, improved battery performance, and a vibrant 6.1-inch OLED display. Great value and legendary reliability.',
+    specs: [
+      { label: 'Display', value: '6.1" Super Retina XDR OLED' },
+      { label: 'Chip', value: 'Apple A15 Bionic' },
+      { label: 'RAM', value: '4GB' },
+      { label: 'Rear Camera', value: '12MP Wide + 12MP Ultrawide' },
+      { label: 'Front Camera', value: '12MP TrueDepth' },
+      { label: 'Battery', value: '3,240mAh — up to 19 hrs video' },
+      { label: 'OS', value: 'iOS 15 (upgradable to 19)' },
+      { label: 'Weight', value: '174g' },
+    ],
+    storageVariants: [
+      { storage: '128GB', price: 530000 },
+      { storage: '256GB', price: 610000 },
+    ],
+    colors: [
+      { name: 'Midnight',  hex: '#1C2024', image: '/images/iphones/iphone-13/black/01.jpg' },
+      { name: 'Blue',      hex: '#275878', image: '/images/iphones/iphone-13/blue/01.jpg' },
+      { name: 'Pink',      hex: '#FBE2DD', image: '/images/iphones/iphone-13/pink/01.jpg' },
+      { name: 'Starlight', hex: '#FAF7F2', image: '/images/iphones/iphone-13/white/01.jpg' },
+    ],
+    images: [
+      '/images/iphones/iphone-13/black/01.jpg',
+      '/images/iphones/iphone-13/blue/01.jpg',
+      '/images/iphones/iphone-13/pink/01.jpg',
+      '/images/iphones/iphone-13/white/01.jpg',
+    ],
+  },
+
+  {
+    id: 'iphone-12-pro-max',
+    name: 'iPhone 12 Pro Max',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'Used',
+    description: 'UK Used iPhone 12 Pro Max features a 6.7-inch Super Retina XDR display, sensor-shift optical image stabilization, A14 Bionic chip, and surgical-grade stainless steel frame.',
+    specs: [
+      { label: 'Display', value: '6.7" Super Retina XDR OLED' },
+      { label: 'Chip', value: 'Apple A14 Bionic' },
+      { label: 'RAM', value: '6GB' },
+      { label: 'Rear Camera', value: '12MP Wide + 12MP UW + 12MP Telephoto + LiDAR' },
+      { label: 'Front Camera', value: '12MP TrueDepth' },
+      { label: 'Battery', value: '3,687mAh' },
+      { label: 'OS', value: 'iOS 14 (upgradable to 19)' },
+      { label: 'Weight', value: '228g' },
+    ],
+    storageVariants: [
+      { storage: '128GB', price: 520000 },
+      { storage: '256GB', price: 590000 },
+    ],
+    colors: [
+      { name: 'Pacific Blue', hex: '#2C4957', image: '/images/iphones/iphone-12-pro-max/blue/01.jpg' },
+      { name: 'Graphite',     hex: '#514F4D', image: '/images/iphones/iphone-12-pro-max/graphite/01.jpg' },
+    ],
+    images: [
+      '/images/iphones/iphone-12-pro-max/blue/01.jpg',
+      '/images/iphones/iphone-12-pro-max/graphite/01.jpg',
+    ],
+  },
+
+  {
+    id: 'iphone-12',
+    name: 'iPhone 12',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'Used',
+    description: 'UK Used iPhone 12 introduced 5G and MagSafe to the iPhone lineup. Powered by the A14 Bionic with an edge-to-edge OLED display and aerospace-grade aluminum edges.',
+    specs: [
+      { label: 'Display', value: '6.1" Super Retina XDR OLED' },
+      { label: 'Chip', value: 'Apple A14 Bionic' },
+      { label: 'RAM', value: '4GB' },
+      { label: 'Rear Camera', value: '12MP Wide + 12MP Ultrawide' },
+      { label: 'Front Camera', value: '12MP TrueDepth' },
+      { label: 'Battery', value: '2,815mAh' },
+      { label: 'OS', value: 'iOS 14 (upgradable to 19)' },
+      { label: 'Weight', value: '164g' },
+    ],
+    storageVariants: [
+      { storage: '64GB',  price: 380000 },
+      { storage: '128GB', price: 430000 },
+    ],
+    colors: [
+      { name: 'Black',        hex: '#1F2020', image: '/images/iphones/iphone-12/black/01.jpg' },
+      { name: 'Blue',         hex: '#023859', image: '/images/iphones/iphone-12/blue/01.jpg' },
+      { name: 'Green',        hex: '#D9E9D9', image: '/images/iphones/iphone-12/green/01.jpg' },
+      { name: 'PRODUCT(RED)', hex: '#D81F26', image: '/images/iphones/iphone-12/red/01.jpg' },
+      { name: 'White',        hex: '#F7F7F7', image: '/images/iphones/iphone-12/white/01.jpg' },
+    ],
+    images: [
+      '/images/iphones/iphone-12/black/01.jpg',
+      '/images/iphones/iphone-12/blue/01.jpg',
+      '/images/iphones/iphone-12/green/01.jpg',
+      '/images/iphones/iphone-12/red/01.jpg',
+      '/images/iphones/iphone-12/white/01.jpg',
+    ],
   },
 
   // ════════════════════════════════════════════════════════════
@@ -1010,11 +1327,15 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '256GB+6GB', price: 330000 },
     ],
     colors: [
-      { name: 'Awesome Mint',   hex: '#A8D8C8' },
-      { name: 'Awesome Black',  hex: '#1C1C1E' },
-      { name: 'Awesome White',  hex: '#F5F5F5' },
+      { name: 'Awesome Mint',   hex: '#A8D8C8', image: '/images/samsung/galaxy-a26/mint/01.jpg' },
+      { name: 'Awesome Black',  hex: '#1C1C1E', image: '/images/samsung/galaxy-a26/black/01.jpg' },
+      { name: 'Awesome White',  hex: '#F5F5F5', image: '/images/samsung/galaxy-a26/white/01.jpg' },
     ],
-    images: [IMG.ss_a26, IMG.ss_light],
+    images: [
+      '/images/samsung/galaxy-a26/mint/01.jpg',
+      '/images/samsung/galaxy-a26/black/01.jpg',
+      '/images/samsung/galaxy-a26/white/01.jpg',
+    ],
   },
 
   {
@@ -1025,7 +1346,7 @@ export const PHONE_PRODUCTS: Product[] = [
     condition: 'New',
     description: 'The Galaxy A27 5G brings fast 5G connectivity to an accessible price point. A 6.5-inch Super AMOLED 90Hz display, Dimensity 6100+ chipset, and a capable 50MP camera system make everyday use seamless and enjoyable.',
     specs: [
-      { label: 'Display', value: '6.5\" FHD+ Super AMOLED, 90Hz' },
+      { label: 'Display', value: '6.5" FHD+ Super AMOLED, 90Hz' },
       { label: 'Chip', value: 'Dimensity 6100+' },
       { label: 'RAM', value: '6GB / 8GB' },
       { label: 'Rear Camera', value: '50MP + 5MP + 2MP Macro' },
@@ -1039,11 +1360,48 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '256GB+8GB', price: 355000 },
     ],
     colors: [
-      { name: 'Awesome Black', hex: '#1C1C1E' },
-      { name: 'Awesome Blue',  hex: '#4169B0' },
-      { name: 'Awesome White', hex: '#F5F5F5' },
+      { name: 'Awesome Black', hex: '#1C1C1E', image: '/images/samsung/galaxy-a27/black/01.jpg' },
+      { name: 'Awesome Blue',  hex: '#4169B0', image: '/images/samsung/galaxy-a27/blue/01.jpg' },
+      { name: 'Awesome Pink',  hex: '#F4B8C0', image: '/images/samsung/galaxy-a27/pink/01.jpg' },
     ],
-    images: [IMG.ss_a27_5g, IMG.ss_light],
+    images: [
+      '/images/samsung/galaxy-a27/black/01.jpg',
+      '/images/samsung/galaxy-a27/blue/01.jpg',
+      '/images/samsung/galaxy-a27/pink/01.jpg',
+    ],
+  },
+
+  {
+    id: 'samsung-a34',
+    name: 'Samsung Galaxy A34 5G',
+    brand: 'Samsung',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Galaxy A34 5G brings a vivid 6.6-inch 120Hz Super AMOLED display, Dimensity 1080 processor, and a versatile 48MP OIS camera in an IP67 water-resistant build.',
+    specs: [
+      { label: 'Display', value: '6.6" FHD+ Super AMOLED, 120Hz' },
+      { label: 'Chip', value: 'MediaTek Dimensity 1080' },
+      { label: 'RAM', value: '6GB / 8GB' },
+      { label: 'Rear Camera', value: '48MP OIS + 8MP UW + 5MP Macro' },
+      { label: 'Front Camera', value: '13MP' },
+      { label: 'Battery', value: '5,000mAh, 25W wired' },
+      { label: 'OS', value: 'Android 14, One UI 6.1' },
+      { label: 'Water Resistance', value: 'IP67' },
+    ],
+    storageVariants: [
+      { storage: '128GB+6GB', price: 290000 },
+      { storage: '256GB+8GB', price: 340000 },
+    ],
+    colors: [
+      { name: 'Awesome Graphite', hex: '#2B2B2B', image: '/images/samsung/galaxy-a34/graphite/01.jpg' },
+      { name: 'Awesome Silver',   hex: '#C8C8CC', image: '/images/samsung/galaxy-a34/silver/01.jpg' },
+      { name: 'Awesome Violet',   hex: '#8C70A0', image: '/images/samsung/galaxy-a34/violet/01.jpg' },
+    ],
+    images: [
+      '/images/samsung/galaxy-a34/graphite/01.jpg',
+      '/images/samsung/galaxy-a34/silver/01.jpg',
+      '/images/samsung/galaxy-a34/violet/01.jpg',
+    ],
   },
 
   {
@@ -1068,11 +1426,15 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '256GB+8GB', price: 290000 },
     ],
     colors: [
-      { name: 'Black', hex: '#1C1C1E' },
-      { name: 'Blue',  hex: '#4169B0' },
-      { name: 'White', hex: '#F5F5F5' },
+      { name: 'Black', hex: '#1C1C1E', image: '/images/samsung/galaxy-a17/black/01.jpg' },
+      { name: 'Blue',  hex: '#4169B0', image: '/images/samsung/galaxy-a17/blue/01.jpg' },
+      { name: 'Grey',  hex: '#8C8C8E', image: '/images/samsung/galaxy-a17/grey/01.jpg' },
     ],
-    images: [IMG.ss_a17, IMG.ss_light],
+    images: [
+      '/images/samsung/galaxy-a17/black/01.jpg',
+      '/images/samsung/galaxy-a17/blue/01.jpg',
+      '/images/samsung/galaxy-a17/grey/01.jpg',
+    ],
   },
 
   {
@@ -1097,12 +1459,19 @@ export const PHONE_PRODUCTS: Product[] = [
       { storage: '256GB+8GB', price: 290000 },
     ],
     colors: [
-      { name: 'Black',       hex: '#1C1C1E' },
-      { name: 'Dark Green',  hex: '#1A3A2A' },
-      { name: 'Gold Silver', hex: '#D4B896' },
-      { name: 'Blue Black',  hex: '#1A2240' },
+      { name: 'Black',       hex: '#1C1C1E', image: '/images/samsung/galaxy-a16/black/01.jpg' },
+      { name: 'Light Green', hex: '#4A7C59', image: '/images/samsung/galaxy-a16/light-green/01.jpg' },
+      { name: 'Gold',        hex: '#D4B896', image: '/images/samsung/galaxy-a16/gold/01.jpg' },
+      { name: 'Blue',        hex: '#1A2240', image: '/images/samsung/galaxy-a16/blue/01.jpg' },
+      { name: 'White',       hex: '#F5F5F5', image: '/images/samsung/galaxy-a16/white/01.jpg' },
     ],
-    images: [IMG.ss_a16, IMG.ss_light],
+    images: [
+      '/images/samsung/galaxy-a16/black/01.jpg',
+      '/images/samsung/galaxy-a16/light-green/01.jpg',
+      '/images/samsung/galaxy-a16/gold/01.jpg',
+      '/images/samsung/galaxy-a16/blue/01.jpg',
+      '/images/samsung/galaxy-a16/white/01.jpg',
+    ],
   },
 
   {

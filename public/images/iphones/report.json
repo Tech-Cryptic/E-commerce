@@ -1,0 +1,513 @@
+[
+  {
+    "model": "xr",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "xs",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "xs max",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "x",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "variant-1",
+        "images": 1,
+        "source": "eSTUFF Apple iPhone X Privacy Clear screen protector 1 pc(s)"
+      },
+      {
+        "colour": "black",
+        "images": 3,
+        "source": "eSTUFF Iphone X Soft Eco wallet mobile phone case Wallet case Black"
+      },
+      {
+        "colour": "variant-3",
+        "images": 5,
+        "source": "eSTUFF Iphone X Eco wallet mobile phone case Wallet case"
+      },
+      {
+        "colour": "black-2",
+        "images": 4,
+        "source": "eSTUFF Iphone X Leather wallet mobile phone case Wallet case Black"
+      },
+      {
+        "colour": "variant-5",
+        "images": 4,
+        "source": "eSTUFF Iphone X Leather wallet mobile phone case Wallet case Brown"
+      }
+    ]
+  },
+  {
+    "model": "11",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "11 pro",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "grey",
+        "images": 8,
+        "source": "Forza Refurbished Apple iPhone 11 Pro 14.7 cm (5.8\") Dual SIM iOS 13 4G 512 GB Grey"
+      },
+      {
+        "colour": "green",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 11 Pro 14.7 cm (5.8\") Dual SIM iOS 13 4G 512 GB Green"
+      }
+    ]
+  },
+  {
+    "model": "11 pro max",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "grey",
+        "images": 8,
+        "source": "Forza Refurbished Apple iPhone 11 Pro Max 16.5 cm (6.5\") Dual SIM iOS 13 4G 64 GB Grey"
+      }
+    ]
+  },
+  {
+    "model": "12",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "white",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 12 (Refurbished) A 15.5 cm (6.1\") Dual SIM iOS 17 64 GB White"
+      },
+      {
+        "colour": "white-2",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 12 (Refurbished) C 15.5 cm (6.1\") Dual SIM iOS 17 128 GB White"
+      },
+      {
+        "colour": "green",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 12 (Refurbished) B 15.5 cm (6.1\") Dual SIM iOS 17 128 GB Green"
+      },
+      {
+        "colour": "white-3",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 12 (Refurbished) B 15.5 cm (6.1\") Dual SIM iOS 17 128 GB White"
+      },
+      {
+        "colour": "green-2",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 12 (Refurbished) A 15.5 cm (6.1\") Dual SIM iOS 17 128 GB Green"
+      },
+      {
+        "colour": "red",
+        "images": 5,
+        "source": "Forza Refurbished Apple iPhone 12 15.5 cm (6.1\") Dual SIM iOS 17 5G 256 GB Red"
+      },
+      {
+        "colour": "white-4",
+        "images": 5,
+        "source": "Forza Refurbished Apple iPhone 12 15.5 cm (6.1\") Dual SIM iOS 17 5G 256 GB White"
+      },
+      {
+        "colour": "blue",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 12 (Refurbished) A 15.5 cm (6.1\") Dual SIM iOS 17 64 GB Blue"
+      },
+      {
+        "colour": "green-3",
+        "images": 5,
+        "source": "Forza Refurbished iPhone 12 15.5 cm (6.1\") Dual SIM iOS 14 5G 256 GB Green"
+      },
+      {
+        "colour": "black",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 12 (Refurbished) C 15.5 cm (6.1\") Dual SIM iOS 17 64 GB Black"
+      }
+    ]
+  },
+  {
+    "model": "12 pro",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "blue",
+        "images": 4,
+        "source": "Forza Refurbished iPhone 12 Pro 15.5 cm (6.1\") Dual SIM iOS 14 5G 512 GB Blue"
+      },
+      {
+        "colour": "graphite",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 12 Pro 15.5 cm (6.1\") Dual SIM iOS 14 5G 512 GB Graphite"
+      },
+      {
+        "colour": "silver",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 12 Pro 15.5 cm (6.1\") Dual SIM iOS 14 5G 512 GB Silver"
+      }
+    ]
+  },
+  {
+    "model": "12 pro max",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "graphite",
+        "images": 5,
+        "source": "Forza Refurbished Apple iPhone 12 Pro Max 17 cm (6.7\") Dual SIM iOS 14 5G 512 GB Graphite"
+      },
+      {
+        "colour": "blue",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 12 Pro Max 17 cm (6.7\") Dual SIM iOS 14 5G 512 GB Blue"
+      }
+    ]
+  },
+  {
+    "model": "13",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "white",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 13 (Refurbished) Grade A 15.5 cm (6.1\") Dual SIM iOS 17 5G 128 GB White"
+      },
+      {
+        "colour": "white-2",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 13 (Refurbished) B 15.5 cm (6.1\") Dual SIM iOS 17 5G 128 GB White"
+      },
+      {
+        "colour": "black",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 13 (Refurbished) Grade A 13.7 cm (5.4\") Dual SIM iOS 17 5G 128 GB Black"
+      },
+      {
+        "colour": "black-2",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 13 (Refurbished) Grade С 15.5 cm (6.1\") Dual SIM iOS 17 5G 128 GB Black"
+      },
+      {
+        "colour": "blue",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 13 15.5 cm (6.1\") Dual SIM iOS 15 5G 256 GB Blue"
+      },
+      {
+        "colour": "pink",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 13 15.5 cm (6.1\") Dual SIM iOS 15 5G 512 GB Pink"
+      },
+      {
+        "colour": "white-3",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 13 15.5 cm (6.1\") Dual SIM iOS 15 5G 512 GB White"
+      }
+    ]
+  },
+  {
+    "model": "13 pro",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "green",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 13 Pro 15.5 cm (6.1\") Dual SIM iOS 15 5G 1 TB Green"
+      }
+    ]
+  },
+  {
+    "model": "13 pro max",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "14",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "black",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 14 (Refurbished) Grade A 15.5 cm (6.1\") Dual SIM iOS 17 5G 128 GB Black"
+      },
+      {
+        "colour": "black-2",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 14 (Refurbished) Grade B 15.5 cm (6.1\") Dual SIM iOS 17 5G 128 GB Black"
+      },
+      {
+        "colour": "white",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 14 (Refurbished) B 15.5 cm (6.1\") Dual SIM iOS 17 5G 128 GB White"
+      },
+      {
+        "colour": "black-3",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 14 15.5 cm (6.1\") Dual SIM iOS 16 5G 128 GB Black"
+      },
+      {
+        "colour": "black-4",
+        "images": 3,
+        "source": "Forza Refurbished Apple iPhone 14 15.5 cm (6.1\") Dual SIM iOS 16 5G 256 GB Black"
+      },
+      {
+        "colour": "red",
+        "images": 7,
+        "source": "Forza Refurbished Apple iPhone 14 15.5 cm (6.1\") Dual SIM iOS 16 5G 256 GB Red"
+      },
+      {
+        "colour": "yellow",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 14 15.5 cm (6.1\") Dual SIM iOS 16 5G 128 GB Yellow"
+      },
+      {
+        "colour": "white-2",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 14 (Refurbished) A 15.5 cm (6.1\") Dual SIM iOS 17 128 GB White"
+      },
+      {
+        "colour": "black-5",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 14 (Refurbished) C 15.5 cm (6.1\") Dual SIM iOS 17 128 GB Black"
+      },
+      {
+        "colour": "purple",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 14 15.5 cm (6.1\") Dual SIM iOS 16 5G 512 GB Purple"
+      }
+    ]
+  },
+  {
+    "model": "14 pro",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "purple",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 14 Pro 15.5 cm (6.1\") Dual SIM iOS 16 5G 512 GB Purple"
+      },
+      {
+        "colour": "black",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 14 Pro 15.5 cm (6.1\") Dual SIM iOS 16 5G 512 GB Black"
+      }
+    ]
+  },
+  {
+    "model": "14 pro max",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "black",
+        "images": 6,
+        "source": "Forza Refurbished iPhone 14 Pro Max 17 cm (6.7\") Dual SIM iOS 16 5G 512 GB Black"
+      },
+      {
+        "colour": "silver",
+        "images": 6,
+        "source": "Forza Refurbished iPhone 14 Pro Max 17 cm (6.7\") Dual SIM iOS 16 5G 128 GB Silver"
+      },
+      {
+        "colour": "gold",
+        "images": 7,
+        "source": "Forza Refurbished iPhone 14 Pro Max 17 cm (6.7\") Dual SIM iOS 16 5G 512 GB Gold"
+      },
+      {
+        "colour": "purple",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 14 Pro Max 17 cm (6.7\") Dual SIM iOS 16 5G 512 GB Purple"
+      }
+    ]
+  },
+  {
+    "model": "15",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "blue",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Blue"
+      },
+      {
+        "colour": "green",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Green"
+      },
+      {
+        "colour": "pink",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Pink"
+      },
+      {
+        "colour": "yellow",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Yellow"
+      },
+      {
+        "colour": "black",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 256 GB Black"
+      },
+      {
+        "colour": "black-2",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Black"
+      },
+      {
+        "colour": "pink-2",
+        "images": 7,
+        "source": "Forza Refurbished iPhone 15 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 256 GB Pink"
+      },
+      {
+        "colour": "blue-2",
+        "images": 6,
+        "source": "Forza Refurbished iPhone 15 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 256 GB Blue"
+      },
+      {
+        "colour": "black-3",
+        "images": 1,
+        "source": "upcycle it Apple iPhone 15 (Refurbished) B 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Black"
+      }
+    ]
+  },
+  {
+    "model": "15 pro",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "blue",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 Pro 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Blue"
+      },
+      {
+        "colour": "variant-2",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 Pro 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Titanium"
+      },
+      {
+        "colour": "white",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 Pro 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 256 GB Titanium, White"
+      },
+      {
+        "colour": "black",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 15 Pro 15.5 cm (6.1\") Dual SIM iOS 17 5G USB Type-C 128 GB Titanium, Black"
+      }
+    ]
+  },
+  {
+    "model": "15 pro max",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "white",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 Pro Max 17 cm (6.7\") Dual SIM iOS 17 5G USB Type-C 256 GB White"
+      },
+      {
+        "colour": "variant-2",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 Pro Max 17 cm (6.7\") Dual SIM iOS 17 5G USB Type-C 256 GB Titanium"
+      },
+      {
+        "colour": "blue",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 Pro Max 17 cm (6.7\") Dual SIM iOS 17 5G USB Type-C 256 GB Titanium, Blue"
+      },
+      {
+        "colour": "black",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 15 Pro Max 17 cm (6.7\") Dual SIM iOS 17 5G USB Type-C 256 GB Titanium, Black"
+      }
+    ]
+  },
+  {
+    "model": "16",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "white",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 16 15.5 cm (6.1\") Dual SIM iOS 18 5G USB Type-C 128 GB White"
+      },
+      {
+        "colour": "pink",
+        "images": 6,
+        "source": "Forza Refurbished Apple iPhone 16 15.5 cm (6.1\") Dual SIM iOS 18 5G USB Type-C 128 GB Pink"
+      },
+      {
+        "colour": "black",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 16 15.5 cm (6.1\") Dual SIM iOS 18 5G USB Type-C 128 GB Black"
+      },
+      {
+        "colour": "blue",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 16 15.5 cm (6.1\") Dual SIM iOS 18 5G USB Type-C 256 GB Blue"
+      }
+    ]
+  },
+  {
+    "model": "16 pro",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "16 pro max",
+    "status": "ok",
+    "variants": [
+      {
+        "colour": "black",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 16 Pro Max 17.5 cm (6.9\") Dual SIM iOS 18 5G USB Type-C 512 GB Black"
+      },
+      {
+        "colour": "black-2",
+        "images": 6,
+        "source": "Forza Refurbished iPhone 16 Pro Max 17.5 cm (6.9\") Dual SIM iOS 18 5G USB Type-C 256 GB Black"
+      },
+      {
+        "colour": "white",
+        "images": 1,
+        "source": "Forza Refurbished iPhone 16 Pro Max 17.5 cm (6.9\") Dual SIM iOS 18 5G USB Type-C 512 GB White"
+      }
+    ]
+  },
+  {
+    "model": "17",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "17 pro",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "17 pro max",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "18",
+    "status": "not in index",
+    "variants": []
+  },
+  {
+    "model": "18 pro",
+    "status": "no images",
+    "variants": []
+  },
+  {
+    "model": "18 pro max",
+    "status": "no images",
+    "variants": []
+  }
+]

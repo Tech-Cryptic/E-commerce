@@ -26,9 +26,7 @@ const brands = [
   'EcoFlow', 'Anker', 'Baseus', 'Itel',
 ];
 
-// ─── Hero slides — gradient backgrounds (no photos yet) ────────────────────
-// Images will be added once the right product shots are sourced.
-// Each slide has a rich, branded gradient background.
+// ─── Hero slides — full-bleed branded banners with real phone photography ────
 const heroSlides = [
   {
     badge: '🔥 Nigeria\'s #1 Tech Destination',
@@ -38,11 +36,12 @@ const heroSlides = [
     ctaTo: '/products',
     ctaSecLabel: 'Sell Your Device',
     ctaSecTo: '/sell',
-    // Deep navy → electric blue gradient
     bg: 'linear-gradient(135deg, #060d1f 0%, #0f1f4a 45%, #1a3dc4 100%)',
     accentColor: '#1a3dc4',
-    // Decorative radial highlight
     glow: 'radial-gradient(ellipse at 70% 50%, rgba(26,61,196,0.45) 0%, transparent 65%)',
+    // iPhone 16 Pro Max — Black Titanium (from local icecat downloads)
+    phoneImage: '/images/iphones/iphone-16-pro-max/black/01.jpg',
+    phoneAlt: 'iPhone 16 Pro Max Black Titanium',
   },
   {
     badge: '💰 Best Trade-In Rates in Lagos',
@@ -52,10 +51,12 @@ const heroSlides = [
     ctaTo: '/sell',
     ctaSecLabel: 'Browse New Arrivals',
     ctaSecTo: '/products',
-    // Rich dark amber / gold gradient
     bg: 'linear-gradient(135deg, #1a0d00 0%, #3d2000 50%, #7a4200 100%)',
     accentColor: '#f5a623',
     glow: 'radial-gradient(ellipse at 70% 50%, rgba(245,166,35,0.35) 0%, transparent 65%)',
+    // Samsung Galaxy S25 Ultra via Samsung CDN
+    phoneImage: 'https://images.samsung.com/is/image/samsung/p6pim/uk/2501/gallery/uk-galaxy-s25-ultra-sm-s938bzkgeub-thumb-540218610?wid=800&hei=800&fmt=jpeg&qlt=90',
+    phoneAlt: 'Samsung Galaxy S25 Ultra',
   },
   {
     badge: '📱 Compare Before You Buy',
@@ -65,10 +66,12 @@ const heroSlides = [
     ctaTo: '/compare',
     ctaSecLabel: 'Browse All',
     ctaSecTo: '/products',
-    // Deep purple / violet gradient
     bg: 'linear-gradient(135deg, #0d0118 0%, #250d42 50%, #4c1d95 100%)',
     accentColor: '#8b5cf6',
     glow: 'radial-gradient(ellipse at 70% 50%, rgba(139,92,246,0.4) 0%, transparent 65%)',
+    // iPhone 15 Pro — Black Titanium (local icecat image)
+    phoneImage: '/images/iphones/iphone-15-pro/black/01.jpg',
+    phoneAlt: 'iPhone 15 Pro Black Titanium',
   },
 ];
 
@@ -216,7 +219,7 @@ export default function Home() {
       />
 
       <main>
-        {/* ── HERO: Full-Bleed Gradient Banner (images to be added later) ────────── */}
+        {/* ── HERO: Full-Bleed Gradient Banner with Phone Photography ────────── */}
         <section className="relative w-full overflow-hidden" style={{ height: '92vh', minHeight: 540 }}>
           <AnimatePresence mode="wait">
             <motion.div
@@ -228,7 +231,7 @@ export default function Home() {
               className="absolute inset-0"
               style={{ background: slide.bg }}
             >
-              {/* Decorative radial glow — gives depth without an image */}
+              {/* Decorative radial glow */}
               <div className="absolute inset-0" style={{ background: slide.glow }} />
               {/* Subtle grid texture overlay */}
               <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: 'repeating-linear-gradient(0deg,#fff 0,#fff 1px,transparent 1px,transparent 60px),repeating-linear-gradient(90deg,#fff 0,#fff 1px,transparent 1px,transparent 60px)' }} />
@@ -237,7 +240,30 @@ export default function Home() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Text overlay — bottom-left anchored, like editorial magazine spreads */}
+          {/* Phone image — right side, large and dramatic */}
+          <AnimatePresence mode="wait">
+            {slide.phoneImage && (
+              <motion.div
+                key={`phone-${heroIndex}`}
+                initial={{ opacity: 0, x: 60, scale: 0.95 }}
+                animate={{ opacity: 1, x: 0, scale: 1 }}
+                exit={{ opacity: 0, x: 40, scale: 0.95 }}
+                transition={{ duration: 0.7, delay: 0.15, ease: 'easeOut' }}
+                className="absolute right-0 bottom-0 z-10 hidden md:flex items-end justify-center"
+                style={{ width: '42%', height: '90%', pointerEvents: 'none' }}
+              >
+                <img
+                  src={slide.phoneImage}
+                  alt={slide.phoneAlt}
+                  className="h-full w-auto object-contain object-bottom drop-shadow-2xl"
+                  style={{ filter: 'drop-shadow(0 32px 64px rgba(0,0,0,0.7))' }}
+                  onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Text overlay — bottom-left anchored */}
           <AnimatePresence mode="wait">
             <motion.div
               key={`text-${heroIndex}`}
@@ -248,11 +274,17 @@ export default function Home() {
               className="absolute inset-0 flex items-end pb-20 z-10"
             >
               <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
-                <div className="max-w-2xl">
-                  {/* Badge pill */}
-                  <span className="inline-block px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest mb-5 border border-white/20 text-white/90 bg-white/10 backdrop-blur-sm">
+                <div className="max-w-2xl md:max-w-xl lg:max-w-2xl">
+                  {/* Badge */}
+                  <motion.span
+                    initial={{ opacity: 0, y: 12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: 0.2 }}
+                    className="inline-block text-xs font-bold px-3 py-1.5 rounded-full mb-4 text-white/90"
+                    style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.18)' }}
+                  >
                     {slide.badge}
-                  </span>
+                  </motion.span>
 
                   {/* Main headline */}
                   <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-[1.05] mb-4 tracking-tight"

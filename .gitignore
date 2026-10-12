@@ -5,3 +5,5 @@ backend/__pycache__/
 backend/store.db
 *.pyc
 .env
+images/icecat-images/
+backend/static/images/

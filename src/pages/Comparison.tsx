@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { ShoppingCart, ArrowRight, GitCompareArrows, ChevronDown, X, Plus, BarChart3 } from 'lucide-react';
+import { ShoppingCart, ArrowRight, GitCompareArrows, ChevronDown, X, Plus } from 'lucide-react';
 import { toast } from 'react-toastify';
 import { APPLE_COMPARE, SAMSUNG_COMPARE, PIXEL_COMPARE } from '../data/comparePhones';
 import type { ComparePhone } from '../data/types';
@@ -244,9 +244,6 @@ export default function Comparison() {
 
         {/* Header */}
         <div className="text-center">
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-[#1a3dc4]/10 text-[#1a3dc4] rounded-full text-xs font-bold uppercase tracking-wider mb-4">
-            <BarChart3 size={13} /> Side-by-Side Compare
-          </span>
           <h1 className="text-4xl md:text-5xl font-black text-foreground mb-3">Compare Phones</h1>
           <p className="text-muted-foreground max-w-lg mx-auto text-sm">
             Pick up to 3 devices using the slots below, then hit <strong>Compare</strong> to see a full spec breakdown.

@@ -1,27 +1,44 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import '@radix-ui/themes/styles.css';
 import { Theme } from '@radix-ui/themes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Home from './src/pages/Home.tsx';
-import ProductListing from './src/pages/ProductListing.tsx';
-import ProductDetail from './src/pages/ProductDetail.tsx';
-import Cart from './src/pages/Cart.tsx';
-import Login from './src/pages/Login.tsx';
-import Signup from './src/pages/Signup.tsx';
-import Checkout from './src/pages/Checkout.tsx';
-import Account from './src/pages/Account.tsx';
-import Comparison from './src/pages/Comparison.tsx';
-import OrderConfirmation from './src/pages/OrderConfirmation.tsx';
-import OrderTracking from './src/pages/OrderTracking.tsx';
-import SellDevice from './src/pages/SellDevice.tsx';
-import Wishlist from './src/pages/Wishlist.tsx';
-import Admin from './src/pages/Admin.tsx';
-import About from './src/pages/About.tsx';
-import Privacy from './src/pages/Privacy.tsx';
-import NotFound from './src/pages/NotFound.tsx';
 import ScrollToTop from './src/components/ScrollToTop.tsx';
+
+// ── Eagerly load only the home page (critical path) ─────────────────────────
+import Home from './src/pages/Home.tsx';
+
+// ── Lazy-load all other routes — code-split & downloaded only on navigation ──
+const ProductListing    = lazy(() => import('./src/pages/ProductListing.tsx'));
+const ProductDetail     = lazy(() => import('./src/pages/ProductDetail.tsx'));
+const Cart              = lazy(() => import('./src/pages/Cart.tsx'));
+const Login             = lazy(() => import('./src/pages/Login.tsx'));
+const Signup            = lazy(() => import('./src/pages/Signup.tsx'));
+const Checkout          = lazy(() => import('./src/pages/Checkout.tsx'));
+const Account           = lazy(() => import('./src/pages/Account.tsx'));
+const Comparison        = lazy(() => import('./src/pages/Comparison.tsx'));
+const OrderConfirmation = lazy(() => import('./src/pages/OrderConfirmation.tsx'));
+const OrderTracking     = lazy(() => import('./src/pages/OrderTracking.tsx'));
+const SellDevice        = lazy(() => import('./src/pages/SellDevice.tsx'));
+const Wishlist          = lazy(() => import('./src/pages/Wishlist.tsx'));
+const Admin             = lazy(() => import('./src/pages/Admin.tsx'));
+const About             = lazy(() => import('./src/pages/About.tsx'));
+const Privacy           = lazy(() => import('./src/pages/Privacy.tsx'));
+const NotFound          = lazy(() => import('./src/pages/NotFound.tsx'));
+
+// ── Minimal page-level loading fallback ─────────────────────────────────────
+function PageLoader() {
+  return (
+    <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f9fafb' }}>
+      <div style={{ textAlign: 'center' }}>
+        <div style={{ width: 48, height: 48, borderRadius: '50%', border: '4px solid #e5e7eb', borderTopColor: '#1a3dc4', animation: 'spin 0.7s linear infinite', margin: '0 auto 16px' }} />
+        <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+        <p style={{ color: '#6b7280', fontSize: 14, fontWeight: 600 }}>Loading…</p>
+      </div>
+    </div>
+  );
+}
 
 // Floating WhatsApp button shown on every page
 function WhatsAppButton() {
@@ -51,27 +68,29 @@ const App: React.FC = () => {
       <Router>
         <ScrollToTop />
         <main className="min-h-screen font-sans">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/products" element={<ProductListing />} />
-            <Route path="/product/:id" element={<ProductDetail />} />
-            <Route path="/cart" element={<Cart />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/checkout" element={<Checkout />} />
-            <Route path="/account" element={<Account />} />
-            <Route path="/compare" element={<Comparison />} />
-            <Route path="/order-confirmation" element={<OrderConfirmation />} />
-            <Route path="/track-order" element={<OrderTracking />} />
-            <Route path="/sell" element={<SellDevice />} />
-            <Route path="/wishlist" element={<Wishlist />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/about-us" element={<About />} />
-            <Route path="/privacy" element={<Privacy />} />
-            <Route path="/terms" element={<Privacy />} />
-            <Route path="/admin" element={<Admin />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/"                   element={<Home />} />
+              <Route path="/products"           element={<ProductListing />} />
+              <Route path="/product/:id"        element={<ProductDetail />} />
+              <Route path="/cart"               element={<Cart />} />
+              <Route path="/login"              element={<Login />} />
+              <Route path="/signup"             element={<Signup />} />
+              <Route path="/checkout"           element={<Checkout />} />
+              <Route path="/account"            element={<Account />} />
+              <Route path="/compare"            element={<Comparison />} />
+              <Route path="/order-confirmation" element={<OrderConfirmation />} />
+              <Route path="/track-order"        element={<OrderTracking />} />
+              <Route path="/sell"               element={<SellDevice />} />
+              <Route path="/wishlist"           element={<Wishlist />} />
+              <Route path="/about"              element={<About />} />
+              <Route path="/about-us"           element={<About />} />
+              <Route path="/privacy"            element={<Privacy />} />
+              <Route path="/terms"              element={<Privacy />} />
+              <Route path="/admin"              element={<Admin />} />
+              <Route path="*"                   element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </main>
         <WhatsAppButton />
         <ToastContainer

@@ -77,9 +77,7 @@ const Navbar = () => {
     <>
       {/* ── Announcement bar ─────────────────────────────────────────────── */}
       <div className="w-full bg-[#0a0a0a] text-white py-2 px-4 text-center text-[11px] font-semibold tracking-widest uppercase flex items-center justify-center gap-2">
-        <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623] animate-pulse inline-block" />
         BEST PRICES ALWAYS · Same-Day Delivery Within Lagos
-        <span className="w-1.5 h-1.5 rounded-full bg-[#f5a623] animate-pulse inline-block" />
         {/* Social icons — desktop only */}
         <div className="absolute right-4 hidden md:flex items-center gap-3">
           <a href="https://www.instagram.com/gabbysgadget" target="_blank" rel="noopener noreferrer" className="hover:text-[#f5a623] transition-colors">

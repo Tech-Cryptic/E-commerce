@@ -96,14 +96,28 @@ export default function ProductDetail() {
   const tintHex = selectedColor?.hex ?? '#F9FAFB';
   const tintBg  = `${tintHex}22`; // ~13% opacity
 
+  const [customColorImage, setCustomColorImage] = useState<string | null>(null);
+
   const handleColorSelect = (ci: number) => {
     setSelectedColorIndex(ci);
-    if (product.images.length > ci) {
-      setSelectedImageIndex(ci);
+    const color = product.colors[ci];
+    if (color?.image) {
+      const imgIdx = product.images.indexOf(color.image);
+      if (imgIdx !== -1) {
+        setSelectedImageIndex(imgIdx);
+        setCustomColorImage(null);
+      } else {
+        setCustomColorImage(color.image);
+      }
+    } else {
+      setCustomColorImage(null);
+      if (product.images.length > ci) {
+        setSelectedImageIndex(ci);
+      }
     }
   };
 
-  const activeImage = product.images[selectedImageIndex] || product.images[0];
+  const activeImage = customColorImage || product.images[selectedImageIndex] || product.colors[selectedColorIndex]?.image || product.images[0];
 
   const handleAddToCart = () => {
     if (!currentPrice) {
@@ -211,9 +225,9 @@ export default function ProductDetail() {
                 {product.images.map((img, i) => (
                   <button
                     key={i}
-                    onClick={() => setSelectedImageIndex(i)}
+                    onClick={() => { setSelectedImageIndex(i); setCustomColorImage(null); }}
                     className={`aspect-square rounded-xl border-2 overflow-hidden p-3 transition-all ${
-                      selectedImageIndex === i
+                      selectedImageIndex === i && !customColorImage
                         ? 'border-[#1a3dc4] shadow-md shadow-[#1a3dc4]/20'
                         : 'border-primary/5 hover:border-[#1a3dc4]/50'
                     }`}
