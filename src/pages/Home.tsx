@@ -275,17 +275,6 @@ export default function Home() {
             >
               <div className="max-w-7xl mx-auto px-6 md:px-12 w-full">
                 <div className="max-w-2xl md:max-w-xl lg:max-w-2xl">
-                  {/* Badge */}
-                  <motion.span
-                    initial={{ opacity: 0, y: 12 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4, delay: 0.2 }}
-                    className="inline-block text-xs font-bold px-3 py-1.5 rounded-full mb-4 text-white/90"
-                    style={{ background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.18)' }}
-                  >
-                    {slide.badge}
-                  </motion.span>
-
                   {/* Main headline */}
                   <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white leading-[1.05] mb-4 tracking-tight"
                     style={{ textShadow: '0 2px 24px rgba(0,0,0,0.5)' }}>
