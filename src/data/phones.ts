@@ -1,5 +1,6 @@
 import type { Product } from './types';
 import { TECNO_PHONE_PRODUCTS } from './tecnoPhones';
+import { REDMI_PHONE_PRODUCTS } from './redmiPhones';
 
 // ─── Apple Store CDN helper ────────────────────────────────────────────────
 // Apple's publicly accessible product render CDN
@@ -2000,64 +2001,8 @@ export const PHONE_PRODUCTS: Product[] = [
   ...TECNO_PHONE_PRODUCTS,
 
   // ════════════════════════════════════════════════════════════
-  // REDMI
+  // REDMI (20 Official Models from https://www.mi.com/global/product-list/phone/redmi/)
   // ════════════════════════════════════════════════════════════
 
-  {
-    id: 'redmi-note-14-pro',
-    name: 'Redmi Note 14 Pro',
-    brand: 'Redmi',
-    category: 'Phones',
-    condition: 'New',
-    description: 'The Redmi Note 14 Pro delivers a premium experience at mid-range pricing. A 6.67" curved OLED 120Hz display, Snapdragon 7s Gen 3, 200MP AI camera, and 5,500mAh battery with 90W HyperCharge make this a flagship killer.',
-    specs: [
-      { label: 'Display', value: '6.67" Curved OLED, 120Hz, 2K' },
-      { label: 'Chip', value: 'Snapdragon 7s Gen 3' },
-      { label: 'RAM', value: '8GB / 12GB' },
-      { label: 'Rear Camera', value: '200MP + 8MP UW + 2MP Macro' },
-      { label: 'Front Camera', value: '20MP' },
-      { label: 'Battery', value: '5,500mAh, 90W HyperCharge' },
-      { label: 'OS', value: 'Android 14, HyperOS' },
-      { label: 'Water Resistance', value: 'IP68' },
-    ],
-    storageVariants: [
-      { storage: '256GB+8GB',  price: 380000 },
-      { storage: '256GB+12GB', price: 430000 },
-    ],
-    colors: [
-      { name: 'Midnight Black', hex: '#1C1C1E' },
-      { name: 'Ocean Teal',     hex: '#2B817E' },
-      { name: 'Lavender Purple', hex: '#8870B0' },
-    ],
-    images: [IMG.redmi_note14, IMG.ss_dark],
-  },
-
-  {
-    id: 'redmi-a5',
-    name: 'Redmi A5',
-    brand: 'Redmi',
-    category: 'Phones',
-    condition: 'New',
-    description: 'The Redmi A5 is a clean, capable entry-level smartphone built for essentials. A 6.88" HD+ display, 50MP dual camera, 5,200mAh battery, and Android 15 out of the box — reliable everyday performance at an honest price.',
-    specs: [
-      { label: 'Display', value: '6.88" HD+ LCD, 90Hz' },
-      { label: 'Chip', value: 'Helio G81' },
-      { label: 'RAM', value: '3GB / 4GB / 6GB' },
-      { label: 'Rear Camera', value: '50MP + 2MP' },
-      { label: 'Front Camera', value: '5MP' },
-      { label: 'Battery', value: '5,200mAh, 10W wired' },
-      { label: 'OS', value: 'Android 15' },
-    ],
-    storageVariants: [
-      { storage: '64GB+3GB',  price: 75000 },
-      { storage: '128GB+4GB', price: 95000 },
-      { storage: '128GB+6GB', price: 115000 },
-    ],
-    colors: [
-      { name: 'Midnight Black', hex: '#1C1C1E' },
-      { name: 'Forest Green',   hex: '#3A6A3A' },
-      { name: 'Sandy Gold',     hex: '#D4B896' },
-    ],
-    images: [IMG.redmi_a5, IMG.ss_dark],
-  },
+  ...REDMI_PHONE_PRODUCTS,
 ];
