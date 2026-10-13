@@ -85,7 +85,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           alt={name}
           onError={(e) => {
             e.currentTarget.onerror = null;
-            e.currentTarget.src = 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=800';
+            e.currentTarget.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'><rect width='200' height='200' rx='24' fill='%23f1f5f9'/><rect x='60' y='28' width='80' height='144' rx='18' stroke='%2394a3b8' stroke-width='4' fill='%23ffffff'/><circle cx='100' cy='154' r='4' fill='%2364748b'/><rect x='86' y='40' width='28' height='4' rx='2' fill='%2394a3b8'/></svg>";
           }}
           className="w-full h-full object-contain p-5 group-hover:scale-105 transition-transform duration-400"
         />

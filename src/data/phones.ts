@@ -81,6 +81,10 @@ const LOCAL = {
   ss_a18_black:       '/images/samsung/galaxy-a18/black/01.jpg',
   ss_a18_blue:        '/images/samsung/galaxy-a18/blue/01.jpg',
   ss_a18_silver:      '/images/samsung/galaxy-a18/silver/01.jpg',
+  // Additional multi-image sets for gallery (02-09 variants)
+  ss_a18_black_02:    '/images/samsung/galaxy-a18/black/02.jpg',
+  ss_a18_blue_02:     '/images/samsung/galaxy-a18/blue/02.jpg',
+  ss_a18_silver_02:   '/images/samsung/galaxy-a18/silver/02.jpg',
   ss_a26_black:       '/images/samsung/galaxy-a26/black/01.jpg',
   ss_a26_white:       '/images/samsung/galaxy-a26/white/01.jpg',
   ss_a26_mint:        '/images/samsung/galaxy-a26/mint/01.jpg',
@@ -366,8 +370,8 @@ export const PHONE_PRODUCTS: Product[] = [
     ],
     colors: [
       { name: 'Black Titanium',   hex: '#2B2B2B', image: '/images/iphones/iphone-16-pro-max/black/01.jpg' },
-      { name: 'Desert Titanium',  hex: '#C9A87C', image: '/images/iphones/iphone-16-pro-max/black-2/01.jpg' },
-      { name: 'Natural Titanium', hex: '#8C8A8E', image: '/images/iphones/iphone-16-pro-max/white/01.jpg' },
+      { name: 'Desert Titanium',  hex: '#C9A87C' },
+      { name: 'Natural Titanium', hex: '#8C8A8E', image: '/images/iphones/iphone-16-pro-max/black-2/01.jpg' },
       { name: 'White Titanium',   hex: '#EDEAE4', image: '/images/iphones/iphone-16-pro-max/white/01.jpg' },
     ],
     images: [
@@ -1471,6 +1475,40 @@ export const PHONE_PRODUCTS: Product[] = [
       '/images/samsung/galaxy-a16/gold/01.jpg',
       '/images/samsung/galaxy-a16/blue/01.jpg',
       '/images/samsung/galaxy-a16/white/01.jpg',
+    ],
+  },
+
+  {
+    id: 'samsung-a18',
+    name: 'Samsung Galaxy A18',
+    brand: 'Samsung',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Galaxy A18 brings a bright 6.7-inch Super AMOLED display, a 50MP triple camera, and a 5,000mAh battery with 25W fast charging to an entry-level price point. A versatile everyday smartphone with Samsung\'s signature build quality and 4 years of OS updates.',
+    specs: [
+      { label: 'Display', value: '6.7" HD+ Super AMOLED, 90Hz' },
+      { label: 'Chip', value: 'Helio G85 / Exynos 850' },
+      { label: 'RAM', value: '4GB / 6GB / 8GB' },
+      { label: 'Rear Camera', value: '50MP + 5MP UW + 2MP Macro' },
+      { label: 'Front Camera', value: '13MP' },
+      { label: 'Battery', value: '5,000mAh, 25W wired' },
+      { label: 'OS', value: 'Android 15, One UI 7.0' },
+    ],
+    storageVariants: [
+      { storage: '128GB+4GB', price: 185000 },
+      { storage: '128GB+6GB', price: 210000 },
+      { storage: '256GB+8GB', price: 250000 },
+    ],
+    colors: [
+      { name: 'Black',  hex: '#1C1C1E', image: '/images/samsung/galaxy-a18/black/01.jpg' },
+      { name: 'Blue',   hex: '#3A5A8A', image: '/images/samsung/galaxy-a18/blue/01.jpg' },
+      { name: 'Silver', hex: '#C0C0C8', image: '/images/samsung/galaxy-a18/silver/01.jpg' },
+    ],
+    images: [
+      '/images/samsung/galaxy-a18/black/01.jpg',
+      '/images/samsung/galaxy-a18/black/02.jpg',
+      '/images/samsung/galaxy-a18/blue/01.jpg',
+      '/images/samsung/galaxy-a18/silver/01.jpg',
     ],
   },
 

@@ -92,22 +92,16 @@ export default function ProductDetail() {
   const selectedColor   = product.colors[selectedColorIndex];
   const currentPrice    = selectedVariant?.price ?? null;
 
-  // Tint colour for the image container background
-  const tintHex = selectedColor?.hex ?? '#F9FAFB';
-  const tintBg  = `${tintHex}22`; // ~13% opacity
-
   const [customColorImage, setCustomColorImage] = useState<string | null>(null);
 
   const handleColorSelect = (ci: number) => {
     setSelectedColorIndex(ci);
     const color = product.colors[ci];
     if (color?.image) {
+      setCustomColorImage(color.image);
       const imgIdx = product.images.indexOf(color.image);
       if (imgIdx !== -1) {
         setSelectedImageIndex(imgIdx);
-        setCustomColorImage(null);
-      } else {
-        setCustomColorImage(color.image);
       }
     } else {
       setCustomColorImage(null);
@@ -117,7 +111,7 @@ export default function ProductDetail() {
     }
   };
 
-  const activeImage = customColorImage || product.images[selectedImageIndex] || product.colors[selectedColorIndex]?.image || product.images[0];
+  const activeImage = customColorImage || product.colors[selectedColorIndex]?.image || product.images[selectedImageIndex] || product.images[0];
 
   const handleAddToCart = () => {
     if (!currentPrice) {
@@ -203,19 +197,17 @@ export default function ProductDetail() {
           {/* ── Image Gallery ─────────────────────────────────── */}
           <div className="space-y-4">
             {/* Main image with colour-tinted background */}
-            <div
-              className="aspect-square rounded-3xl border border-primary/5 overflow-hidden p-10 transition-all duration-500"
-              style={{ background: `linear-gradient(135deg, ${tintHex}18 0%, ${tintBg} 100%)` }}
-            >
+            {/* Main product photo frame with clean neutral background */}
+            <div className="aspect-square rounded-3xl border border-gray-100 bg-gray-50/80 dark:bg-zinc-900/60 overflow-hidden p-8 flex items-center justify-center shadow-sm transition-all duration-300">
               <img
-                key={selectedImageIndex}
+                key={activeImage}
                 src={activeImage}
                 alt={product.name}
                 onError={(e) => {
                   e.currentTarget.onerror = null;
-                  e.currentTarget.src = 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=800';
+                  e.currentTarget.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'><rect width='200' height='200' rx='24' fill='%23f1f5f9'/><rect x='60' y='28' width='80' height='144' rx='18' stroke='%2394a3b8' stroke-width='4' fill='%23ffffff'/><circle cx='100' cy='154' r='4' fill='%2364748b'/><rect x='86' y='40' width='28' height='4' rx='2' fill='%2394a3b8'/></svg>";
                 }}
-                className="w-full h-full object-contain transition-all duration-500 animate-fadeIn"
+                className="w-full h-full object-contain transition-all duration-300 animate-fadeIn"
               />
             </div>
 
@@ -225,22 +217,19 @@ export default function ProductDetail() {
                 {product.images.map((img, i) => (
                   <button
                     key={i}
-                    onClick={() => { setSelectedImageIndex(i); setCustomColorImage(null); }}
-                    className={`aspect-square rounded-xl border-2 overflow-hidden p-3 transition-all ${
-                      selectedImageIndex === i && !customColorImage
+                    onClick={() => { setSelectedImageIndex(i); setCustomColorImage(img); }}
+                    className={`aspect-square rounded-xl border-2 overflow-hidden p-3 transition-all bg-white dark:bg-zinc-800 ${
+                      activeImage === img
                         ? 'border-[#1a3dc4] shadow-md shadow-[#1a3dc4]/20'
-                        : 'border-primary/5 hover:border-[#1a3dc4]/50'
+                        : 'border-gray-100 hover:border-[#1a3dc4]/50'
                     }`}
-                    style={{
-                      background: selectedImageIndex === i ? tintBg : undefined,
-                    }}
                   >
                     <img
                       src={img}
                       alt={`${product.name} view ${i + 1}`}
                       onError={(e) => {
                         e.currentTarget.onerror = null;
-                        e.currentTarget.src = 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=80&w=800';
+                        e.currentTarget.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200' fill='none'><rect width='200' height='200' rx='24' fill='%23f1f5f9'/><rect x='60' y='28' width='80' height='144' rx='18' stroke='%2394a3b8' stroke-width='4' fill='%23ffffff'/><circle cx='100' cy='154' r='4' fill='%2364748b'/><rect x='86' y='40' width='28' height='4' rx='2' fill='%2394a3b8'/></svg>";
                       }}
                       className="w-full h-full object-contain"
                     />
