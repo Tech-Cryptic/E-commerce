@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { ShoppingCart, ArrowRight, GitCompareArrows, ChevronDown, X, Plus } from 'lucide-react';
 import { toast } from 'react-toastify';
-import { APPLE_COMPARE, SAMSUNG_COMPARE, PIXEL_COMPARE } from '../data/comparePhones';
+import { APPLE_COMPARE, SAMSUNG_COMPARE, PIXEL_COMPARE, ALL_COMPARE_PHONES } from '../data/comparePhones';
 import type { ComparePhone } from '../data/types';
 import { formatPrice } from '../data/types';
 
@@ -184,6 +184,33 @@ function SlotCard({
 export default function Comparison() {
   const [slots, setSlots]       = useState<Slot[]>([emptySlot(), emptySlot()]);
   const [compared, setCompared] = useState(false);
+
+  useEffect(() => {
+    let stored: any[] = [];
+    try {
+      stored = JSON.parse(localStorage.getItem('gg_compare') || '[]');
+    } catch {
+      stored = [];
+    }
+    if (!Array.isArray(stored) || stored.length === 0) return;
+
+    const resolved: Slot[] = [];
+    for (const item of stored.slice(0, 3)) {
+      const phone = ALL_COMPARE_PHONES.find(p => p.id === item.id)
+        ?? ALL_COMPARE_PHONES.find(p => p.id === `cmp-${item.id}`)
+        ?? ALL_COMPARE_PHONES.find(p =>
+          `${p.brand} ${p.model}`.toLowerCase() === `${item.brand ?? ''} ${item.name ?? ''}`.trim().toLowerCase())
+        ?? ALL_COMPARE_PHONES.find(p => (item.name ?? '').toLowerCase().includes(p.model.toLowerCase()));
+      if (!phone) continue;
+      const brandIndex = BRAND_OPTIONS.findIndex(b => b.brand === phone.brand);
+      if (brandIndex < 0) continue;
+      resolved.push({ brandIndex, phone, storage: phone.storageOptions[0]?.storage ?? null, colorIndex: 0 });
+    }
+
+    if (resolved.length) {
+      setSlots([...resolved, ...Array.from({ length: Math.max(0, 2 - resolved.length) }, emptySlot)]);
+    }
+  }, []);
 
   const updateSlot = (i: number, updated: Slot) =>
     setSlots(prev => prev.map((s, idx) => (idx === i ? updated : s)));

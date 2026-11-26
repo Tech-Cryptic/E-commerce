@@ -1,10 +1,14 @@
+import os
+import secrets
+from datetime import timedelta
+
 from flask import Flask, send_from_directory, jsonify
 from flask_cors import CORS
+
 from database import create_tables
 from auth import auth_bp
 from orders import orders_bp
 from sell import sell_bp
-import os
 
 # Path to the static folder (built React app)
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
@@ -12,8 +16,15 @@ STATIC_DIR = os.path.join(BASE_DIR, 'static')
 
 app = Flask(__name__, static_folder=STATIC_DIR, static_url_path='')
 
-# Use a strong secret key from env in production
-app.secret_key = os.environ.get('SECRET_KEY', 'gabbys-gadget-secret-key-2025')
+# Never ship a fallback secret: without SECRET_KEY, use an ephemeral random key
+# so old sessions simply expire when the process restarts.
+app.secret_key = os.environ.get('SECRET_KEY') or secrets.token_hex(32)
+app.config.update(
+    SESSION_COOKIE_HTTPONLY=True,
+    SESSION_COOKIE_SAMESITE='Lax',
+    SESSION_COOKIE_SECURE=os.environ.get('COOKIE_SECURE', '').lower() in ('1', 'true', 'yes'),
+    PERMANENT_SESSION_LIFETIME=timedelta(days=7),
+)
 
 # ── CORS ─────────────────────────────────────────────────────────────────────
 # Allow localhost dev + any Render-hosted frontend

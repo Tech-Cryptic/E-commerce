@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import API_URL from '../config/api';
+import { apiFetch } from '../config/api';
 import {
   LayoutDashboard, Package, Users, Smartphone,
   TrendingUp, RefreshCw, LogOut, ChevronDown,
   CheckCircle, Truck, Clock, XCircle, ArrowRight, Eye
 } from 'lucide-react';
-
-const ADMIN_PASSWORD = 'gabby2025admin';
 
 const formatPrice = (n: number) =>
   new Intl.NumberFormat('en-NG', { style: 'currency', currency: 'NGN', maximumFractionDigits: 0 }).format(n);
@@ -38,55 +36,89 @@ export default function Admin() {
   const [loading, setLoading] = useState(false);
   const [updating, setUpdating] = useState<number | null>(null);
 
-  const login = () => {
-    if (pw === ADMIN_PASSWORD) {
+  const loadData = async () => {
+    setLoading(true);
+    try {
+      const res = await apiFetch('/api/admin/stats');
+      if (res.status === 401 || res.status === 403) {
+        setAuthed(false);
+        setData(null);
+        return;
+      }
+      const json = await res.json();
+      if (!res.ok) {
+        setData(null);
+        return;
+      }
+      setData(json);
       setAuthed(true);
-      sessionStorage.setItem('gg_admin', '1');
-      loadData();
-    } else {
-      setPwError('Incorrect password.');
+    } catch {
+      setData(null);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const login = async () => {
+    setPwError('');
+    setLoading(true);
+    try {
+      const res = await apiFetch('/api/admin/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: pw }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        setPwError(json.error || 'Incorrect admin password.');
+        return;
+      }
+      setPw('');
+      await loadData();
+    } catch {
+      setPwError('Unable to reach server. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (sessionStorage.getItem('gg_admin') === '1') {
-      setAuthed(true);
-      loadData();
-    }
+    loadData();
   }, []);
-
-  const loadData = async () => {
-    setLoading(true);
-    try {
-      const res = await fetch(`${API_URL}/api/admin/stats`);
-      const json = await res.json();
-      setData(json);
-    } catch {
-      setData(null);
-    }
-    setLoading(false);
-  };
 
   const updateStatus = async (orderId: number, status: string) => {
     setUpdating(orderId);
     try {
-      await fetch(`${API_URL}/api/orders/${orderId}/status`, {
+      const res = await apiFetch(`/api/orders/${orderId}/status`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
       });
+      if (!res.ok) {
+        await loadData();
+        return;
+      }
       setData((prev: any) => ({
         ...prev,
         orders: prev.orders.map((o: any) =>
           o.id === orderId ? { ...o, status } : o
         ),
       }));
-    } catch { /* ignore */ }
-    setUpdating(null);
+    } catch {
+      await loadData();
+    } finally {
+      setUpdating(null);
+    }
   };
 
-  const logout = () => {
-    sessionStorage.removeItem('gg_admin');
+  const logout = async () => {
+    try {
+      await apiFetch('/api/admin/logout', { method: 'POST' });
+    } catch {
+      // ignore
+    }
+    setAuthed(false);
+    setData(null);
     navigate('/');
   };
 
@@ -117,9 +149,10 @@ export default function Admin() {
           />
           <button
             onClick={login}
-            className="w-full py-3 bg-[#1a3dc4] text-white font-bold rounded-xl hover:bg-[#1a3dc4]/90 transition-all"
+            disabled={loading}
+            className="w-full py-3 bg-[#1a3dc4] text-white font-bold rounded-xl hover:bg-[#1a3dc4]/90 transition-all disabled:opacity-50"
           >
-            Enter Admin Panel
+            {loading ? 'Signing in…' : 'Enter Admin Panel'}
           </button>
           <Link to="/" className="block text-center text-gray-500 text-xs mt-4 hover:text-gray-300 transition-colors">
             ← Back to store

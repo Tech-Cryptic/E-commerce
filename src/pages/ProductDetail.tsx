@@ -34,7 +34,15 @@ export default function ProductDetail() {
 
   // Review state
   interface Review { author: string; rating: number; text: string; date: string; }
-  const [reviews, setReviews] = useState<Review[]>(() => JSON.parse(localStorage.getItem(`gg_reviews_${id}`) || '[]'));
+  const readReviews = (): Review[] => {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(`gg_reviews_${id}`) || '[]');
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  };
+  const [reviews, setReviews] = useState<Review[]>(readReviews);
   const [reviewForm, setReviewForm] = useState({ author: '', rating: 5, text: '' });
   const [reviewOpen, setReviewOpen] = useState(false);
 
@@ -560,7 +568,7 @@ export default function ProductDetail() {
                     };
                     const updated = [newReview, ...reviews];
                     setReviews(updated);
-                    localStorage.setItem(storageKey, JSON.stringify(updated));
+                    localStorage.setItem(`gg_reviews_${id}`, JSON.stringify(updated));
                     setReviewForm({ author: '', rating: 5, text: '' });
                     setReviewOpen(false);
                     toast.success('Review submitted!', { position: 'top-right', autoClose: 2000 });

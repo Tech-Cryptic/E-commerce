@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "catalog": "node scripts/generate-catalog.mjs",
+    "build": "npm run catalog && vite build",
     "lint": "eslint .",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -28,6 +30,7 @@
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
+    "esbuild": "^0.27.7",
     "postcss": "^8.4.49",
     "typescript": "~5.8.3"
   }

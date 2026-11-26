@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { apiFetch } from '../config/api';
 import { ShoppingCart, User, Menu, X, Search, LogOut, Heart, Instagram, MessageCircle } from 'lucide-react';
 
 const Navbar = () => {
@@ -54,7 +55,12 @@ const Navbar = () => {
     };
   }, [location]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await apiFetch('/api/logout', { method: 'POST' });
+    } catch {
+      // Clear local state even if the server is unreachable
+    }
     localStorage.removeItem('gg_logged_in');
     localStorage.removeItem('gg_current_user');
     setCurrentUser(null);

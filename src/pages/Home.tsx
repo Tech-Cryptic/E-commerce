@@ -81,30 +81,48 @@ const heroSlides = [
 const feedBanners = [
   {
     brand: 'Apple',
-    title: 'iPhone 16 Series',
-    sub: 'The most advanced iPhone yet.',
-    image: 'https://images.unsplash.com/photo-1697388754524-ceef2ea1d7d8?auto=format&fit=crop&q=90&w=600&h=400',
+    title: 'iPhone 18 Pro Max',
+    sub: 'A20 Pro. Variable aperture. 3 000 nits.',
+    image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-18-pro-finish-select-202609-6-9inch-black?wid=600&hei=400&fmt=jpeg&qlt=90',
     bg: '#1d1d1f',
     textColor: '#f5f5f7',
     to: '/products?category=Phones&brand=Apple',
   },
   {
+    brand: 'Apple',
+    title: 'iPhone 18 Pro',
+    sub: 'Compact. Powerful. Pro.',
+    image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-18-pro-finish-select-202609-6-3inch-glacier?wid=600&hei=400&fmt=jpeg&qlt=90',
+    bg: '#1a2d3d',
+    textColor: '#f5f5f7',
+    to: '/products?category=Phones&brand=Apple',
+  },
+  {
+    brand: 'Apple',
+    title: 'iPhone Duo',
+    sub: 'Apple\'s first foldable. Titanium. 7.6-inch inner screen.',
+    image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-duo-finish-select-202610-7-6inch-nightsky?wid=600&hei=400&fmt=jpeg&qlt=90',
+    bg: '#0d1a2e',
+    textColor: '#f5f5f7',
+    to: '/products?category=Phones&brand=Apple',
+  },
+  {
+    brand: 'Google',
+    title: 'Pixel 11 Pro',
+    sub: 'Tensor G5. The smartest Pixel yet.',
+    image: 'https://images.unsplash.com/photo-1574944985070-8f3ebacd55a2?auto=format&fit=crop&q=90&w=600&h=400',
+    bg: '#174ea6',
+    textColor: '#ffffff',
+    to: '/products?category=Phones&brand=Google',
+  },
+  {
     brand: 'Samsung',
-    title: 'Galaxy S25 Ultra',
-    sub: 'Intelligence. Reimagined.',
+    title: 'Galaxy S26 Ultra',
+    sub: 'Intelligence. Redefined for 2026.',
     image: 'https://images.samsung.com/is/image/samsung/p6pim/uk/2501/gallery/uk-galaxy-s25-ultra-sm-s938bzkgeub-thumb-540218610?wid=600&hei=400&fmt=jpeg&qlt=90',
     bg: '#1a2342',
     textColor: '#ffffff',
     to: '/products?category=Phones&brand=Samsung',
-  },
-  {
-    brand: 'Google',
-    title: 'Pixel 9 Pro',
-    sub: 'AI-powered photography.',
-    image: 'https://images.unsplash.com/photo-1698861493965-f7f6f4e87f4f?auto=format&fit=crop&q=90&w=600&h=400',
-    bg: '#174ea6',
-    textColor: '#ffffff',
-    to: '/products?category=Phones&brand=Google',
   },
   {
     brand: 'Samsung',
@@ -125,15 +143,6 @@ const feedBanners = [
     to: '/products?category=Audio',
   },
   {
-    brand: 'Xiaomi',
-    title: 'Redmi Note 15 Pro',
-    sub: 'Pro camera. Smart price.',
-    image: 'https://images.unsplash.com/photo-1598327105666-5b89351aff97?auto=format&fit=crop&q=90&w=600&h=400',
-    bg: '#ff6900',
-    textColor: '#ffffff',
-    to: '/products?category=Phones&brand=Xiaomi',
-  },
-  {
     brand: 'Apple',
     title: 'MacBook Pro M4',
     sub: 'Built for what\'s next.',
@@ -141,15 +150,6 @@ const feedBanners = [
     bg: '#1d1d1f',
     textColor: '#f5f5f7',
     to: '/products?category=Laptops&brand=Apple',
-  },
-  {
-    brand: 'Infinix',
-    title: 'Hot 50 Series',
-    sub: 'Big screen. Bigger value.',
-    image: 'https://images.unsplash.com/photo-1591337676887-a217a6970a8a?auto=format&fit=crop&q=90&w=600&h=400',
-    bg: '#e63946',
-    textColor: '#ffffff',
-    to: '/products?category=Phones&brand=Infinix',
   },
 ];
 
@@ -171,14 +171,25 @@ export default function Home() {
   const feedRef = useRef<HTMLDivElement>(null);
 
   const newArrivals = ALL_PRODUCTS.filter(p => p.condition === 'New').slice(0, 8);
-  // 'Popular' = highest-priced items (premium = most sought-after) mixed across conditions
-  const popularItems = [...ALL_PRODUCTS]
+
+  // 'Popular on Gabby's' — pin the latest flagship heroes first (iPhone 18 Pro Max, 18 Pro, Duo,
+  // Pixel 11 Pro, S26 Ultra), then fill with highest-priced in-stock items.
+  const PINNED_IDS = [
+    'iphone-18-pro-max', 'iphone-18-pro', 'iphone-duo',
+    'pixel-11-pro', 'pixel-11',
+    'samsung-s26-ultra', 'samsung-s26-plus',
+  ];
+  const pinned = PINNED_IDS
+    .map(id => ALL_PRODUCTS.find(p => p.id === id))
+    .filter(Boolean) as typeof ALL_PRODUCTS;
+  const rest = [...ALL_PRODUCTS]
+    .filter(p => !PINNED_IDS.includes(p.id))
     .sort((a, b) => {
       const aPrice = a.storageVariants[0]?.price ?? 0;
       const bPrice = b.storageVariants[0]?.price ?? 0;
       return bPrice - aPrice;
-    })
-    .slice(0, 8);
+    });
+  const popularItems = [...pinned, ...rest].slice(0, 8);
   const CARDS_PER_VIEW = 4;
 
   const nextHero = () => setHeroIndex(i => (i + 1) % heroSlides.length);
@@ -540,8 +551,8 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex justify-between items-end mb-10">
               <div>
-                <h2 className="text-3xl font-black text-foreground mb-1">Popular on Gabby's.</h2>
-                <p className="text-muted-foreground text-sm">Customer favourites & top-rated picks</p>
+                <h2 className="text-3xl font-black text-foreground mb-1">Popular on Gabby's Gadget.</h2>
+                <p className="text-muted-foreground text-sm">iPhone 18 Pro, 18 Pro Max, iPhone Duo &amp; customer favourites</p>
               </div>
               <div className="flex items-center gap-3">
                 <button

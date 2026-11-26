@@ -10,6 +10,14 @@ Setup:
 
 Usage:
   from email_service import send_order_confirmation, send_sell_confirmation
+
+Security notes:
+  - MAIL_USER and MAIL_PASS MUST be set via environment variables
+  - Never commit real credentials to version control
+  - Email sending is rate-unlimited in this basic implementation;
+    production should add send-rate throttling
+  - Email content is HTML-only; no plain-text fallback (consider adding one
+    for better deliverability and spam avoidance)
 """
 
 import os
@@ -23,7 +31,14 @@ STORE_NAME = "Gabby's Gadget"
 
 
 def _send(to: str, subject: str, html: str) -> bool:
-    """Send an HTML email. Returns True on success."""
+    """Send an HTML email. Returns True on success.
+
+    Educational:
+      - Credentials are read from env vars, never hardcoded
+      - SMTP_SSL connection on port 465 is the secure approach
+      - Failed sends are logged (not raised) so they don't break app flow
+      - In production, add rate limiting & retries via a queue (e.g. Celery)
+    """
     if not MAIL_USER or not MAIL_PASS:
         print('[email_service] MAIL_USER / MAIL_PASS not set — skipping email.')
         return False
@@ -55,7 +70,7 @@ def send_order_confirmation(customer_email: str, customer_name: str,
 
     items_html = ''.join(
         f'<tr>'
-        f'<td style="padding:8px 0;font-size:13px;">{i.get("name","")}</td>'
+        f'<td style="padding:8px 0;font-size:13px;">{i.get("name", "")}</td>'
         f'<td style="padding:8px 0;font-size:13px;text-align:center;">{i.get("quantity",1)}</td>'
         f'<td style="padding:8px 0;font-size:13px;text-align:right;">{fmt(i.get("price",0)*i.get("quantity",1))}</td>'
         f'</tr>'
@@ -131,7 +146,7 @@ def send_order_confirmation(customer_email: str, customer_name: str,
 
 # ── Sell/Trade-in Confirmation ──────────────────────────
 def send_sell_confirmation(customer_email: str, customer_name: str,
-                            device: str, brand: str, model: str) -> bool:
+                           device: str, brand: str, model: str) -> bool:
     html = f"""
     <!DOCTYPE html>
     <html>

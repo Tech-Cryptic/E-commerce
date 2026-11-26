@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, ArrowRightLeft, Heart } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { toast } from 'react-toastify';
@@ -11,6 +11,7 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const navigate = useNavigate();
   const { id, name, brand, category, condition, images, storageVariants, colors } = product;
 
   const minPrice = getMinPrice(product);
@@ -26,6 +27,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    if (!cartPrice) {
+      toast.info('Please choose a variant on the product page to get a price.', { position: 'top-right', autoClose: 2500 });
+      navigate(`/product/${id}`);
+      return;
+    }
     const existing = JSON.parse(localStorage.getItem('gg_cart') || '[]');
     const index = existing.findIndex((item: any) => item.id === id);
     if (index > -1) {
@@ -95,11 +101,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           {condition === 'New' && (
             <span className="bg-black text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
               New
-            </span>
-          )}
-          {condition === 'UK Used' && (
-            <span className="bg-black text-white text-[10px] font-black px-3 py-1 rounded-full uppercase tracking-wider">
-              UK Used
             </span>
           )}
           {condition === 'Used' && (

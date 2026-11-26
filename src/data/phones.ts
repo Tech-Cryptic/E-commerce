@@ -100,6 +100,15 @@ const LOCAL = {
 // ─── Per-model official product images ────────────────────────────────────
 const IMG = {
   // ── Apple iPhones (Apple Store CDN — official renders) ──────────────────
+  // iPhone 18 series — Apple CDN slugs from the 2026 launch
+  ip18_pro_max:   APPLE('iphone-18-pro-finish-select-202609-6-9inch-black'),
+  ip18_pro_max_2: APPLE('iphone-18-pro-finish-select-202609-6-9inch-glacier'),
+  ip18_pro_max_3: APPLE('iphone-18-pro-finish-select-202609-6-9inch-burgundy'),
+  ip18_pro:       APPLE('iphone-18-pro-finish-select-202609-6-3inch-black'),
+  ip18_pro_2:     APPLE('iphone-18-pro-finish-select-202609-6-3inch-glacier'),
+  ip18_pro_3:     APPLE('iphone-18-pro-finish-select-202609-6-3inch-burgundy'),
+  ip18_duo:       APPLE('iphone-duo-finish-select-202610-7-6inch-nightsky'),
+  ip18_duo_2:     APPLE('iphone-duo-finish-select-202610-7-6inch-starwhite'),
   // iPhone 17 series
   ip17_pro_max:   APPLE('iphone-17-pro-max-finish-select-202509-6-9inch-blacktitanium'),
   ip17_pro_max_2: APPLE('iphone-17-pro-max-finish-select-202509-6-9inch-desertTitanium'),
@@ -173,6 +182,10 @@ const IMG = {
   ss_fold:        UNS('1671920090611-9a140c252e0d'),
 
   // ── Google Pixel — Real photography via Unsplash (GSMArena was hotlink-blocked)
+  gp_11_pro:      UNS('1574944985070-8f3ebacd55a2'),
+  gp_11_pro_2:    UNS('1698861493965-f7f6f4e87f4f'),
+  gp_11:          UNS('1598327105666-5b89351aff97'),
+  gp_11_2:        UNS('1610945265064-0e34e5519bbf'),
   gp_10_pro_fold: UNS('1671920090611-9a140c252e0d'),
   gp_10_pro_xl:   UNS('1574944985070-8f3ebacd55a2'),
   gp_10_pro:      UNS('1598327105666-5b89351aff97'),
@@ -213,6 +226,107 @@ export const PHONE_PRODUCTS: Product[] = [
   // ════════════════════════════════════════════════════════════
   // APPLE iPHONES
   // ════════════════════════════════════════════════════════════
+
+  // ── iPhone 18 Series (September 2026) ──────────────────────
+  {
+    id: 'iphone-18-pro-max',
+    name: 'iPhone 18 Pro Max',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The iPhone 18 Pro Max — Apple\'s most powerful iPhone ever. The A20 Pro chip (2nm), a stunning 6.9-inch ProMotion OLED display hitting 3,000 nits, and a 48MP Fusion camera with true variable aperture (ƒ/1.48–ƒ/4.0) redefine what a smartphone camera can do. Vapor chamber cooling ensures sustained Apple Intelligence performance all day.',
+    specs: [
+      { label: 'Display',          value: '6.9″ Super Retina XDR OLED, 1–120Hz ProMotion, 3 000 nits peak' },
+      { label: 'Chip',             value: 'Apple A20 Pro (2nm) · 6-core CPU · 7-core GPU' },
+      { label: 'RAM',              value: '12 GB LPDDR5X' },
+      { label: 'Rear Camera',      value: '48MP Fusion (ƒ/1.48–ƒ/4.0 variable) + 48MP UW + 48MP 5× Telephoto' },
+      { label: 'Front Camera',     value: '12MP TrueDepth Center Stage' },
+      { label: 'Battery',          value: '~5 391 mAh — all-day with vapor chamber cooling' },
+      { label: 'Charging',         value: '30W wired · MagSafe wireless · Qi2' },
+      { label: 'OS',               value: 'iOS 20' },
+      { label: 'Water Resistance', value: 'IP68 (6 m, 30 min)' },
+      { label: 'Frame',            value: 'Aluminium unibody · Ceramic Shield 2 front glass' },
+    ],
+    storageVariants: [
+      { storage: '256GB', price: null },
+      { storage: '512GB', price: null },
+      { storage: '1TB',   price: null },
+      { storage: '2TB',   price: null },
+    ],
+    colors: [
+      { name: 'Black',    hex: '#1C1C1E' },
+      { name: 'Glacier',  hex: '#B8D4E8' },
+      { name: 'Burgundy', hex: '#6B1E2F' },
+      { name: 'Silver',   hex: '#E8E6E0' },
+    ],
+    images: [IMG.ip18_pro_max, IMG.ip18_pro_max_2, IMG.ip18_pro_max_3],
+  },
+
+  {
+    id: 'iphone-18-pro',
+    name: 'iPhone 18 Pro',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The iPhone 18 Pro packs the full A20 Pro powerhouse into a sleek 6.3-inch body. Variable aperture camera, 3 000-nit ProMotion display, Ceramic Shield 2, and all-day battery — the compact Pro choice for September 2026.',
+    specs: [
+      { label: 'Display',          value: '6.3″ Super Retina XDR OLED, 1–120Hz ProMotion, 3 000 nits peak' },
+      { label: 'Chip',             value: 'Apple A20 Pro (2nm) · 6-core CPU · 7-core GPU' },
+      { label: 'RAM',              value: '12 GB LPDDR5X' },
+      { label: 'Rear Camera',      value: '48MP Fusion (ƒ/1.48–ƒ/4.0 variable) + 48MP UW + 48MP 5× Telephoto' },
+      { label: 'Front Camera',     value: '12MP TrueDepth Center Stage' },
+      { label: 'Battery',          value: '~3 900 mAh — all-day' },
+      { label: 'Charging',         value: '30W wired · MagSafe wireless · Qi2' },
+      { label: 'OS',               value: 'iOS 20' },
+      { label: 'Water Resistance', value: 'IP68 (6 m, 30 min)' },
+      { label: 'Frame',            value: 'Aluminium unibody · Ceramic Shield 2 front glass' },
+    ],
+    storageVariants: [
+      { storage: '256GB', price: null },
+      { storage: '512GB', price: null },
+      { storage: '1TB',   price: null },
+    ],
+    colors: [
+      { name: 'Black',    hex: '#1C1C1E' },
+      { name: 'Glacier',  hex: '#B8D4E8' },
+      { name: 'Burgundy', hex: '#6B1E2F' },
+      { name: 'Silver',   hex: '#E8E6E0' },
+    ],
+    images: [IMG.ip18_pro, IMG.ip18_pro_2, IMG.ip18_pro_3],
+  },
+
+  {
+    id: 'iphone-duo',
+    name: 'iPhone Duo',
+    brand: 'Apple',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The iPhone Duo is Apple\'s very first foldable iPhone — a book-style masterpiece crafted from grade 5 titanium. A 7.6-inch inner Super Retina XDR display unfolds to a near creaseless canvas while the 5.4-inch outer screen keeps you connected when closed. Powered by the A20 Pro chip, it ships with iOS 20.1 rebuilt for multitasking.',
+    specs: [
+      { label: 'Inner Display',    value: '7.6″ Super Retina XDR foldable OLED, 120Hz, 3 000 nits, nano-texture' },
+      { label: 'Outer Display',    value: '5.4″ Super Retina XDR OLED, 120Hz Always-On' },
+      { label: 'Chip',             value: 'Apple A20 Pro (2nm) · 6-core CPU · 7-core GPU' },
+      { label: 'RAM',              value: '12 GB LPDDR5X' },
+      { label: 'Rear Camera',      value: '48MP Fusion Main + 48MP Ultra Wide (2× optical-quality telephoto)' },
+      { label: 'Front Camera',     value: '12MP Under-display Center Stage' },
+      { label: 'Battery',          value: '4 883 mAh dual-cell · vapor chamber thermal management' },
+      { label: 'Charging',         value: '30W wired · MagSafe wireless · Qi2' },
+      { label: 'OS',               value: 'iOS 20.1 (multitasking Split View dock)' },
+      { label: 'Frame',            value: 'Grade 5 titanium · precision hinge · IP48' },
+    ],
+    storageVariants: [
+      { storage: '256GB', price: null },
+      { storage: '512GB', price: null },
+      { storage: '1TB',   price: null },
+      { storage: '2TB',   price: null },
+    ],
+    colors: [
+      { name: 'Night Sky',   hex: '#1A1A2E' },
+      { name: 'Star White',  hex: '#F5F0EA' },
+    ],
+    images: [IMG.ip18_duo, IMG.ip18_duo_2],
+  },
+
 
   {
     id: 'iphone-17-pro-max',
@@ -1571,6 +1685,72 @@ export const PHONE_PRODUCTS: Product[] = [
   // ════════════════════════════════════════════════════════════
   // GOOGLE PIXEL
   // ════════════════════════════════════════════════════════════
+
+  // ── Pixel 11 Series (August 2026) ────────────────────────
+  {
+    id: 'pixel-11-pro',
+    name: 'Google Pixel 11 Pro',
+    brand: 'Google',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Google Pixel 11 Pro raises the bar for AI-powered smartphone photography. The Tensor G5 chip runs Google\'s most advanced on-device AI models, while the triple camera system — with the new 50MP main sensor and variable zoom Telephoto — captures stunning detail in any light.',
+    specs: [
+      { label: 'Display',          value: '6.5″ LTPO OLED, 1–120Hz, 3 000 nits peak, Always-On' },
+      { label: 'Chip',             value: 'Google Tensor G5 · Mali-G715 GPU' },
+      { label: 'RAM',              value: '16 GB LPDDR5X' },
+      { label: 'Rear Camera',      value: '50MP main + 48MP UW + 48MP 5× telephoto with auto-zoom' },
+      { label: 'Front Camera',     value: '15MP autofocus' },
+      { label: 'Battery',          value: '5 000 mAh — 72-hr Extreme Battery Saver' },
+      { label: 'Charging',         value: '45W wired · 23W wireless · Reverse wireless' },
+      { label: 'OS',               value: 'Android 17' },
+      { label: 'Water Resistance', value: 'IP68' },
+    ],
+    storageVariants: [
+      { storage: '128GB', price: null },
+      { storage: '256GB', price: null },
+      { storage: '512GB', price: null },
+      { storage: '1TB',   price: null },
+    ],
+    colors: [
+      { name: 'Obsidian',  hex: '#1C1C1E' },
+      { name: 'Porcelain', hex: '#F0EDE8' },
+      { name: 'Hazel',     hex: '#5C6840' },
+      { name: 'Rose',      hex: '#D4688A' },
+    ],
+    images: [IMG.gp_11_pro, IMG.gp_11_pro_2],
+  },
+
+  {
+    id: 'pixel-11',
+    name: 'Google Pixel 11',
+    brand: 'Google',
+    category: 'Phones',
+    condition: 'New',
+    description: 'The Google Pixel 11 makes flagship AI photography affordable. Tensor G5, a 50MP main camera, Android 17, and seven years of updates — a pure Google experience that gets smarter every day.',
+    specs: [
+      { label: 'Display',          value: '6.3″ OLED, 60–120Hz, 2 700 nits peak, Always-On' },
+      { label: 'Chip',             value: 'Google Tensor G5 · Mali-G715 GPU' },
+      { label: 'RAM',              value: '12 GB LPDDR5X' },
+      { label: 'Rear Camera',      value: '50MP main (ƒ/1.68) + 12MP UW' },
+      { label: 'Front Camera',     value: '15MP autofocus' },
+      { label: 'Battery',          value: '4 700 mAh' },
+      { label: 'Charging',         value: '30W wired · 18W wireless' },
+      { label: 'OS',               value: 'Android 17' },
+      { label: 'Water Resistance', value: 'IP68' },
+    ],
+    storageVariants: [
+      { storage: '128GB', price: null },
+      { storage: '256GB', price: null },
+    ],
+    colors: [
+      { name: 'Obsidian',    hex: '#1C1C1E' },
+      { name: 'Porcelain',   hex: '#F0EDE8' },
+      { name: 'Peony',       hex: '#D4688A' },
+      { name: 'Wintergreen', hex: '#3A6A5A' },
+    ],
+    images: [IMG.gp_11, IMG.gp_11_2],
+  },
+
 
   {
     id: 'pixel-10-pro-fold',

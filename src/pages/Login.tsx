@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import API_URL from '../config/api';
+import { apiFetch } from '../config/api';
 import { Eye, EyeOff, MessageCircle, ArrowRight } from 'lucide-react';
 
 export default function Login() {
@@ -95,7 +95,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const response = await fetch(`${API_URL}/api/login`, {
+      const response = await apiFetch('/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -128,18 +128,29 @@ export default function Login() {
     }
   };
 
-  const handleGuestCheckout = () => {
-    const guestUser = {
-      id: 'guest_' + Date.now(),
-      fullName: 'Guest Shopper',
-      email: formData.email || 'guest@gabbysgadget.com',
-      phone: '',
-      isGuest: true,
-    };
-    localStorage.setItem('gg_logged_in', 'true');
-    localStorage.setItem('gg_current_user', JSON.stringify(guestUser));
-    localStorage.removeItem('gg_redirect');
-    navigate('/checkout');
+  const handleGuestCheckout = async () => {
+    setError('');
+    setLoading(true);
+    try {
+      const response = await apiFetch('/api/guest', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: formData.email }),
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        setError(data.error || 'Guest checkout is unavailable. Please try again.');
+        return;
+      }
+      localStorage.setItem('gg_logged_in', 'true');
+      localStorage.setItem('gg_current_user', JSON.stringify(data.user));
+      localStorage.removeItem('gg_redirect');
+      navigate('/checkout');
+    } catch {
+      setError('Unable to reach server. Please try again.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

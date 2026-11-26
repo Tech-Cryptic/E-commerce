@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import API_URL from '../config/api';
+import { apiFetch } from '../config/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import {
@@ -53,13 +53,17 @@ export default function SellDevice() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedDevice || !selectedCondition || !formData.brand || !formData.model || !formData.name || !formData.phone) {
+    if (!selectedDevice || !selectedCondition || !formData.brand || !formData.model || !formData.name || !formData.phone || !formData.email) {
       toast.error('Please fill in all required fields.');
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      toast.error('Please enter a valid email address.');
       return;
     }
     setLoading(true);
     try {
-      await fetch(`${API_URL}/api/sell`, {
+      const res = await apiFetch('/api/sell', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -70,15 +74,20 @@ export default function SellDevice() {
           storage:     formData.storage,
           name:        formData.name,
           phone:       formData.phone,
-          email:       formData.email,
+          email:       formData.email.trim(),
           notes:       formData.notes,
         }),
       });
-    } catch {
-      // backend unavailable — still show success
+      const result = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(result.error || 'Could not submit your request. Please try again.');
+      }
+      setSubmitted(true);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Could not submit your request. Please try again.');
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
-    setSubmitted(true);
   };
 
   const waMessage = encodeURIComponent(
@@ -272,6 +281,18 @@ export default function SellDevice() {
                   value={formData.phone}
                   onChange={handleChange}
                   placeholder="e.g. 08012345678"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a3dc4] focus:ring-1 focus:ring-[#1a3dc4] transition-all"
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1 block">Email Address *</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="you@example.com"
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#1a3dc4] focus:ring-1 focus:ring-[#1a3dc4] transition-all"
                   required
                 />

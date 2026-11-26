@@ -13,6 +13,12 @@ services:
         value: /data
       - key: FRONTEND_URL
         value: https://gabbys-gadget.onrender.com   # update after frontend deploys
+      - key: ADMIN_PASSWORD
+        sync: false   # set this manually in Render dashboard
+      - key: PAYSTACK_SECRET_KEY
+        sync: false   # set this manually in Render dashboard
+      - key: COOKIE_SECURE
+        value: "true"
       - key: MAIL_USER
         sync: false   # set this manually in Render dashboard
       - key: MAIL_PASS

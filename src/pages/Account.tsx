@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import API_URL from '../config/api';
+import { apiFetch } from '../config/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import {
@@ -47,7 +47,7 @@ export default function Account() {
     // ── Load orders: backend first, merge with localStorage ──
     const localOrders: Order[] = JSON.parse(localStorage.getItem('gg_orders') || '[]');
 
-    fetch(`${API_URL}/api/orders/${parsedUser.id}`)
+    apiFetch(`/api/orders/${parsedUser.id}`)
       .then(r => r.json())
       .then((backendOrders: any[]) => {
         // Normalise backend shape to match frontend shape
@@ -70,7 +70,12 @@ export default function Account() {
       });
   }, [navigate]);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await apiFetch('/api/logout', { method: 'POST' });
+    } catch {
+      // Clear local state even if the server is unreachable
+    }
     localStorage.removeItem('gg_logged_in');
     localStorage.removeItem('gg_current_user');
     localStorage.removeItem('gg_cart');

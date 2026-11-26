@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import API_URL from '../config/api';
+import { apiFetch } from '../config/api';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import { ShieldCheck, Lock } from 'lucide-react';
@@ -16,6 +16,28 @@ interface CartItem {
   condition: string;
 }
 
+interface CheckoutQuote {
+  quoteToken: string;
+  reference: string;
+  amountKobo: number;
+  items: CartItem[];
+  subtotal: number;
+  shipping: number;
+  tax: number;
+  discount: number;
+  promoCode: string;
+  total: number;
+}
+
+function safeParse<T>(value: string | null, fallback: T): T {
+  if (!value) return fallback;
+  try {
+    return JSON.parse(value) as T;
+  } catch {
+    return fallback;
+  }
+}
+
 export default function Checkout() {
   const navigate = useNavigate();
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -25,6 +47,8 @@ export default function Checkout() {
   const [promoInput, setPromoInput] = useState('');
   const [promoMessage, setPromoMessage] = useState('');
   const [promoError, setPromoError] = useState('');
+  const [quote, setQuote] = useState<CheckoutQuote | null>(null);
+  const [quoteError, setQuoteError] = useState('');
   const [formData, setFormData] = useState({
     fullName: '',
     email: '',
@@ -33,6 +57,19 @@ export default function Checkout() {
     city: '',
     state: '',
   });
+
+  const requestQuote = async (items: CartItem[], code: string): Promise<CheckoutQuote> => {
+    const res = await apiFetch('/api/checkout/quote', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items, promoCode: code }),
+    });
+    const result = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      throw new Error(result.error || 'Could not calculate your total. Please try again.');
+    }
+    return result as CheckoutQuote;
+  };
 
   useEffect(() => {
     const loggedIn = localStorage.getItem('gg_logged_in');
@@ -44,7 +81,11 @@ export default function Checkout() {
       return;
     }
 
-    const parsedUser = JSON.parse(user);
+    const parsedUser = safeParse<any>(user, null);
+    if (!parsedUser) {
+      navigate('/login');
+      return;
+    }
     setCurrentUser(parsedUser);
 
     setFormData(prev => ({
@@ -54,11 +95,30 @@ export default function Checkout() {
       phone: parsedUser.phone || '',
     }));
 
-    const cart = localStorage.getItem('gg_cart');
-    if (cart) {
-      setCartItems(JSON.parse(cart));
-    }
+    setCartItems(safeParse<CartItem[]>(localStorage.getItem('gg_cart'), []));
   }, [navigate]);
+
+  useEffect(() => {
+    if (!currentUser || cartItems.length === 0) {
+      setQuote(null);
+      return;
+    }
+    let active = true;
+    requestQuote(cartItems, promoCode)
+      .then(result => {
+        if (active) {
+          setQuote(result);
+          setQuoteError('');
+        }
+      })
+      .catch(error => {
+        if (active) {
+          setQuote(null);
+          setQuoteError(error instanceof Error ? error.message : 'Could not calculate your total.');
+        }
+      });
+    return () => { active = false; };
+  }, [currentUser, cartItems, promoCode]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -97,6 +157,13 @@ export default function Checkout() {
   const effectiveShipping = promoData?.type === 'freeship' ? 0 : shippingFee;
   const total = subtotal + effectiveShipping + tax - discount;
 
+  const displaySubtotal = quote?.subtotal ?? subtotal;
+  const displayShipping = quote?.shipping ?? effectiveShipping;
+  const displayTax = quote?.tax ?? tax;
+  const displayDiscount = quote?.discount ?? discount;
+  const displayTotal = quote?.total ?? total;
+  const displayPromoCode = quote?.promoCode || promoCode;
+
   const formatPrice = (price: number) =>
     new Intl.NumberFormat('en-NG', {
       style: 'currency',
@@ -104,9 +171,13 @@ export default function Checkout() {
       maximumFractionDigits: 0,
     }).format(price);
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
     if (!formData.address || !formData.city || !formData.state) {
       toast.error('Please fill in your delivery address, city and state.');
+      return;
+    }
+    if (!formData.email) {
+      toast.error('Please enter your email address.');
       return;
     }
     if (cartItems.length === 0) {
@@ -115,78 +186,96 @@ export default function Checkout() {
     }
 
     setLoading(true);
+    const deliveryAddress = `${formData.address}, ${formData.city}, ${formData.state}`;
 
-    const script = document.createElement('script');
-    script.src = 'https://js.paystack.co/v1/inline.js';
-    script.onload = () => {
+    let activeQuote: CheckoutQuote;
+    try {
+      activeQuote = await requestQuote(cartItems, promoCode);
+      setQuote(activeQuote);
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Could not calculate your total.');
+      setLoading(false);
+      return;
+    }
+
+    const openPaystack = () => {
       const handler = (window as any).PaystackPop.setup({
         key: import.meta.env.VITE_PAYSTACK_KEY,
         email: formData.email,
-        amount: Math.round(total * 100),
+        amount: activeQuote.amountKobo,
         currency: 'NGN',
-        ref: 'GG-' + Date.now(),
+        ref: activeQuote.reference,
         metadata: {
           custom_fields: [
             { display_name: 'Customer Name', value: formData.fullName },
             { display_name: 'Phone', value: formData.phone },
-            { display_name: 'Delivery Address', value: `${formData.address}, ${formData.city}, ${formData.state}` },
+            { display_name: 'Delivery Address', value: deliveryAddress },
           ],
         },
         callback: async (response: any) => {
-          const deliveryAddress = `${formData.address}, ${formData.city}, ${formData.state}`;
-          const order = {
-            id: response.reference,
-            items: cartItems,
-            subtotal,
-            shippingFee,
-            tax,
-            total,
-            address: deliveryAddress,
-            date: new Date().toISOString(),
-            status: 'Paid',
-          };
-
-          // ── Save to localStorage immediately ──────────────────
-          const existing = JSON.parse(localStorage.getItem('gg_orders') || '[]');
-          existing.push(order);
-          localStorage.setItem('gg_orders', JSON.stringify(existing));
-          localStorage.removeItem('gg_cart');
-
-          // ── Also persist to Flask backend (store.db) ──────────
           try {
-            const user = JSON.parse(localStorage.getItem('gg_current_user') || '{}');
-            await fetch(`${API_URL}/api/orders`, {
+            const res = await apiFetch('/api/orders', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
-                userId: user.id,
-                total: total,
+                quoteToken: activeQuote.quoteToken,
                 paymentRef: response.reference,
                 address: deliveryAddress,
-                items: cartItems.map(item => ({
-                  id: item.id,
-                  name: item.name,
-                  image: item.image,
-                  brand: item.brand,
-                  condition: item.condition,
-                  quantity: item.quantity,
-                  price: item.price,
-                })),
               }),
             });
-          } catch {
-            // backend unavailable — order is still in localStorage
-            console.warn('Backend unavailable; order saved locally only.');
-          }
+            const result = await res.json().catch(() => ({}));
+            if (!res.ok) {
+              throw new Error(result.error || 'Could not save your order. Please contact support.');
+            }
 
-          setLoading(false);
-          navigate('/order-confirmation', { state: { order } });
+            const order = {
+              id: result.orderId,
+              paymentRef: result.paymentRef || response.reference,
+              items: activeQuote.items.length ? activeQuote.items : cartItems,
+              subtotal: activeQuote.subtotal,
+              shippingFee: activeQuote.shipping,
+              tax: activeQuote.tax,
+              total: result.total ?? activeQuote.total,
+              address: deliveryAddress,
+              date: new Date().toISOString(),
+              status: result.status || 'Pending',
+              verified: result.verified ?? false,
+            };
+
+            const existing = safeParse<any[]>(localStorage.getItem('gg_orders'), []);
+            existing.push(order);
+            localStorage.setItem('gg_orders', JSON.stringify(existing));
+            localStorage.removeItem('gg_cart');
+            navigate('/order-confirmation', { state: { order } });
+            if (order.status === 'Paid') {
+              toast.success('Payment verified and order placed successfully!');
+            } else {
+              toast.info('Order saved. We are verifying your payment.');
+            }
+          } catch (error) {
+            toast.error(error instanceof Error ? error.message : 'Could not save your order. Please contact support.');
+          } finally {
+            setLoading(false);
+          }
         },
         onClose: () => {
           setLoading(false);
         },
       });
       handler.openIframe();
+    };
+
+    if ((window as any).PaystackPop) {
+      openPaystack();
+      return;
+    }
+
+    const script = document.createElement('script');
+    script.src = 'https://js.paystack.co/v1/inline.js';
+    script.onload = openPaystack;
+    script.onerror = () => {
+      toast.error('Payment service could not be loaded. Please try again.');
+      setLoading(false);
     };
     document.body.appendChild(script);
   };
@@ -344,7 +433,7 @@ export default function Checkout() {
               ) : (
                 <>
                   <div className="space-y-3 mb-4">
-                    {cartItems.map(item => (
+                    {cartItems.map((item, index) => (
                       <div key={item.id} className="flex gap-3">
                         <img
                           src={item.image}
@@ -356,7 +445,7 @@ export default function Checkout() {
                           <p className="text-xs text-gray-400">{item.brand} · {item.condition} · x{item.quantity}</p>
                         </div>
                         <p className="text-sm font-bold text-[#1a3dc4] flex-shrink-0">
-                          {formatPrice(item.price * item.quantity)}
+                          {formatPrice((quote?.items[index]?.price ?? item.price) * item.quantity)}
                         </p>
                       </div>
                     ))}
@@ -367,30 +456,34 @@ export default function Checkout() {
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between text-gray-500">
                       <span>Subtotal</span>
-                      <span>{formatPrice(subtotal)}</span>
+                      <span>{formatPrice(displaySubtotal)}</span>
                     </div>
                     <div className="flex justify-between text-gray-500">
                       <span>Shipping</span>
-                      <span>{effectiveShipping === 0 ? <span className="text-green-600 font-semibold">Free</span> : formatPrice(effectiveShipping)}</span>
+                      <span>{displayShipping === 0 ? <span className="text-green-600 font-semibold">Free</span> : formatPrice(displayShipping)}</span>
                     </div>
                     <div className="flex justify-between text-gray-500">
                       <span>VAT (7.5%)</span>
-                      <span>{formatPrice(tax)}</span>
+                      <span>{formatPrice(displayTax)}</span>
                     </div>
-                    {discount > 0 && (
+                    {displayDiscount > 0 && (
                       <div className="flex justify-between text-green-600 font-semibold">
-                        <span>Discount ({promoCode})</span>
-                        <span>-{formatPrice(discount)}</span>
+                        <span>Discount ({displayPromoCode})</span>
+                        <span>-{formatPrice(displayDiscount)}</span>
                       </div>
                     )}
                     <hr className="border-gray-100" />
                     <div className="flex justify-between font-black text-lg text-foreground">
                       <span>Total</span>
-                      <span className="text-[#1a3dc4]">{formatPrice(total)}</span>
+                      <span className="text-[#1a3dc4]">{formatPrice(displayTotal)}</span>
                     </div>
                   </div>
 
-                  {shippingFee === 0 && subtotal > 0 && (
+                  {quoteError && (
+                    <p className="text-xs text-red-500 font-semibold mt-2 text-center">{quoteError}</p>
+                  )}
+
+                  {displayShipping === 0 && displaySubtotal > 0 && (
                     <p className="text-xs text-green-600 font-semibold mt-2 text-center">
                       Free shipping applied on your order!
                     </p>
@@ -402,7 +495,7 @@ export default function Checkout() {
                     className="w-full mt-6 py-4 bg-[#1a3dc4] hover:bg-[#1a3dc4]/90 text-white font-bold rounded-xl transition-all hover:scale-[1.02] shadow-lg shadow-[#1a3dc4]/20 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                   >
                     <Lock size={16} />
-                    {loading ? 'Processing...' : `Pay ${formatPrice(total)}`}
+                    {loading ? 'Processing...' : `Pay ${formatPrice(displayTotal)}`}
                   </button>
 
                   <p className="text-center text-xs text-gray-400 mt-3">

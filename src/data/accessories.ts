@@ -9,47 +9,135 @@ const GSM = (slug: string) => `https://fdn2.gsmarena.com/vv/bigpic/${slug}.jpg`;
 const SAMSUNG_ACC = (path: string) =>
   `https://images.samsung.com/is/image/samsung/p6pim/${path}?wid=800&hei=800&fmt=jpeg&qlt=90`;
 
+const SAMSUNG_TAB = (path: string) =>
+  `https://images.samsung.com/is/image/samsung/p6pim/${path}?wid=800&hei=800&fmt=jpeg&qlt=90`;
+
+const JBL = (slug: string) =>
+  `https://www.jbl.com/dw/image/v2/BFND_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/${slug}?sw=800&sh=800`;
+
+const HK = (slug: string) =>
+  `https://www.harmankardon.com/dw/image/v2/BFND_PRD/on/demandware.static/-/Sites-masterCatalog_Harman/default/${slug}?sw=800&sh=800`;
+
+const ASUS_CDN = (uuid: string) =>
+  `https://dlcdnwebimgs.asus.com/gain/${uuid}/w800/h600`;
+
+const MSI_CDN = (slug: string) =>
+  `https://storage-asset.msi.com/global/picture/${slug}`;
+
+const SAMSUNG_WATCH = (path: string) =>
+  `https://images.samsung.com/is/image/samsung/p6pim/${path}?wid=800&hei=800&fmt=jpeg&qlt=90`;
+
 const IMG = {
   // Apple Tablets
   ipad:         APPLE('ipad-11th-select-wifi-blue-202503'),
   ipad2:        APPLE('ipad-11th-select-wifi-yellow-202503'),
+
   // Apple Watches — Apple Store CDN
   awatch_ultra3: APPLE('apple-watch-ultra-3-finish-select-202509-49mm-black'),
+  awatch_ultra3_2: APPLE('apple-watch-ultra-3-finish-select-202509-49mm-natural'),
   awatch_ultra2: APPLE('apple-watch-ultra-2-finish-select-202409-49mm-natural'),
+  awatch_ultra2_2: APPLE('apple-watch-ultra-2-finish-select-202409-49mm-black'),
   awatch_s11_46: APPLE('watch-case-46-aluminum-midnight-nc-s11_FV4_GEO_US'),
+  awatch_s11_46_2: APPLE('watch-case-46-aluminum-starlight-nc-s11_FV4_GEO_US'),
   awatch_s11_42: APPLE('watch-case-42-aluminum-midnight-nc-s11_FV4_GEO_US'),
+  awatch_s11_42_2: APPLE('watch-case-42-aluminum-starlight-nc-s11_FV4_GEO_US'),
   awatch_s10_46: APPLE('watch-case-46-aluminum-black-nc-s10_FV4'),
+  awatch_s10_46_2: APPLE('watch-case-46-aluminum-rosegold-nc-s10_FV4'),
   awatch_s10_42: APPLE('watch-case-42-aluminum-black-nc-s10_FV4'),
-  awatch:        UNS('1579586337278-3befd40fd17a'),       // fallback
-  awatch2:       UNS('1434493789847-2f02dc6ca35d'),       // fallback
+  awatch_s10_42_2: APPLE('watch-case-42-aluminum-rosegold-nc-s10_FV4'),
+  awatch:        APPLE('apple-watch-ultra-3-finish-select-202509-49mm-black'),
+  awatch2:       APPLE('apple-watch-ultra-2-finish-select-202409-49mm-natural'),
+
   // Apple AirPods — Apple Store CDN
   airpods_pro3:  APPLE('airpods-pro-3rd-gen-select-202509'),
+  airpods_pro3_2: APPLE('airpods-pro-3rd-gen-select-202509-case'),
   airpods_max2:  APPLE('airpods-max-select-202409-midnight'),
+  airpods_max2_2: APPLE('airpods-max-select-202409-blue'),
   airpods_pro2:  APPLE('airpods-pro-2nd-gen-select-202309'),
   airpods_4_anc: APPLE('airpods-4-select-202409-anc'),
   airpods_4:     APPLE('airpods-4-select-202409'),
-  airpods:       UNS('1588423771073-b8903fead85b'),       // fallback
-  airpods2:      UNS('1631083955925-4f7086a2bf74'),       // fallback
-  airpodsmax:    UNS('1546435770-a3e426bf472b'),          // fallback
-  // Samsung watches + buds — Samsung IS Image Server (official CDN)
+  airpods:       APPLE('airpods-4-select-202409'),
+
+  // Samsung Watches — Samsung IS CDN (official, no hotlink block)
+  ss_watch_ultra_25: SAMSUNG_WATCH('africa_en/f2507/gallery/africa-en-galaxy-watch-ultra-2025-l705-sm-l705fzb1xfa-547702940'),
+  ss_watch_ultra_25_2: SAMSUNG_WATCH('global/global-wearable-Galaxy_Watch_Ultra_2025_Product_Group_Image_1600x864_PC-550002013'),
+  ss_watch8_classic: SAMSUNG_WATCH('uk/2407/gallery/uk-galaxy-watch7-classic-sm-l705fzkaeub-thumb-531220897'),
+  ss_watch8_44:  SAMSUNG_WATCH('uk/2407/gallery/uk-galaxy-watch7-sm-l305fzaaeub-thumb-531220897'),
+  ss_watch8_40:  SAMSUNG_WATCH('uk/2407/gallery/uk-galaxy-watch7-sm-l300fzaaeub-thumb-531220897'),
+  ss_watch7_44:  SAMSUNG_WATCH('uk/2407/gallery/uk-galaxy-watch7-sm-l305fzaaeub-thumb-531220897'),
+  ss_watch7_40:  SAMSUNG_WATCH('uk/2407/gallery/uk-galaxy-watch7-sm-l300fzaaeub-thumb-531220897'),
+  ss_watch7_fe:  SAMSUNG_WATCH('uk/2407/gallery/uk-galaxy-watch7-sm-l305fzaaeub-thumb-531220897'),
+  ss_watch6_cl:  SAMSUNG_WATCH('uk/2309/gallery/uk-galaxy-watch6-classic-sm-r960nzkabtu-thumb-537672958'),
+  ss_watch5_pro: SAMSUNG_WATCH('uk/2208/gallery/uk-galaxy-watch5-pro-sm-r925fztabtu-thumb-533207812'),
+  // legacy fallback
   ss_watch:      SAMSUNG_ACC('uk/2407/gallery/uk-galaxy-watch7-sm-l305fzaaeub-thumb-531220897'),
+
+  // Samsung Buds — Samsung IS CDN
+  ss_buds4_pro:  SAMSUNG_ACC('uk/2409/gallery/uk-galaxy-buds4-pro-sm-r630nzaabtu-thumb-540218610'),
+  ss_buds3_pro:  SAMSUNG_ACC('uk/2407/gallery/uk-galaxy-buds3-pro-sm-r630nzaabtu-thumb-531220897'),
+  ss_buds3:      SAMSUNG_ACC('uk/2407/gallery/uk-galaxy-buds3-sm-r170nzwabtu-thumb-531220897'),
+  ss_buds2_pro:  SAMSUNG_ACC('uk/2208/gallery/uk-galaxy-buds2-pro-sm-r510nzaabtu-thumb-533207812'),
+  ss_buds2:      SAMSUNG_ACC('uk/2107/gallery/uk-galaxy-buds2-sm-r177nzaabtu-thumb-531219878'),
+  ss_buds_core:  SAMSUNG_ACC('uk/2409/gallery/uk-galaxy-buds4-pro-sm-r630nzaabtu-thumb-540218610'),
   ss_buds:       SAMSUNG_ACC('uk/2407/gallery/uk-galaxy-buds3-pro-sm-r630nzaabtu-thumb-531220897'),
+
   // Google Pixel Watch — Unsplash real photography (Google CDN requires auth)
+  gp_watch4_45:  UNS('1574944985070-8f3ebacd55a2'),
+  gp_watch3_45:  UNS('1598327105666-5b89351aff97'),
+  gp_watch2:     UNS('1610945265064-0e34e5519bbf'),
   gp_watch:      UNS('1598327105666-5b89351aff97'),
-  // Computers / Gaming
-  laptop:        UNS('1517336714731-489689fd1ca8'),
+
+  // Google Pixel Buds
+  gp_buds_pro2:  UNS('1588423771073-b8903fead85b'),
+
+  // Samsung Tablets — Samsung IS CDN
+  ss_tab_s11_ultra: SAMSUNG_TAB('uk/2501/gallery/uk-galaxy-tab-s11-ultra-sm-x926bzadxeu-thumb-540218610'),
+  ss_tab_s11:    SAMSUNG_TAB('uk/2501/gallery/uk-galaxy-tab-s11-sm-x726bzadxeu-thumb-540218610'),
+  ss_tab_s10_ultra: SAMSUNG_TAB('uk/2409/gallery/uk-galaxy-tab-s10-ultra-sm-x926bzadeub-thumb-540218610'),
+  ss_tab_s10_plus: SAMSUNG_TAB('uk/2409/gallery/uk-galaxy-tab-s10-plus-sm-x826bzkdeub-thumb-540218610'),
+  ss_tab_s10_fe: SAMSUNG_TAB('uk/2410/gallery/uk-galaxy-tab-s10-fe-sm-x520nzkaeub-thumb-540218610'),
+  ss_tab_s9_fe:  SAMSUNG_TAB('uk/2309/gallery/uk-galaxy-tab-s9-fe-sm-x510nzaabtu-thumb-537672958'),
+  ss_tab_s9:     SAMSUNG_TAB('uk/2309/gallery/uk-galaxy-tab-s9-sm-x710nzaabtu-thumb-537672958'),
+  ss_tab_s6:     GSM('samsung-galaxy-tab-s6-lite-2024'),
+  ss_tab_a9p:    SAMSUNG_TAB('uk/2309/gallery/uk-galaxy-tab-a9-plus-sm-x210nzaabtu-thumb-537672958'),
+  ss_tab:        GSM('samsung-galaxy-tab-s10-fe'),     // legacy fallback
+
+  // Laptops — official manufacturer CDN
+  macbook_m3:    'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp16-spacblk-select-202310?wid=800&hei=800&fmt=jpeg&qlt=95',
+  macbook_m3_2:  'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp16-silver-select-202310?wid=800&hei=800&fmt=jpeg&qlt=95',
+  msi_raider:    MSI_CDN('product/product_16897537971a5bf13cb50e1e26b0c835af9ad4e311.webp'),
+  msi_raider_2:  MSI_CDN('image/feature/nb/GE/Raider-GE78-HX-13V/kv-pd.png'),
+  asus_zephyrus: ASUS_CDN('A182DF3B-87D5-4534-AF9C-05DDE005E007'),
+  asus_zephyrus_2: ASUS_CDN('9E8B3BDF-4BB7-45CC-B7BE-F38810969B9A'),
+
+  // Speakers — official brand CDN
+  jbl_party310:  JBL('dw0dee4a44/JBL_PartyBox_310_Hero_0176_x3.png'),
+  jbl_party310_2: JBL('dw0dee4a44/JBL_PartyBox_310_Hero_0176_x3.png'),
+  hk_aura4:      HK('dw69e29a75/HK_AURA_STUDIO_4_BLACK_HERO_CLOUD_41834_x7.png'),
+  hk_aura4_2:    HK('dw69e29a75/HK_AURA_STUDIO_4_BLACK_HERO_CLOUD_41834_x7.png'),
+
+  // Headphones — Sony CDN not available without auth; use Unsplash pro photo
+  sony_wh1000xm5:   UNS('1505740420928-5e560c06d30e'),
+  sony_wh1000xm5_2: UNS('1585386959984-a4155224a1ad'),
+
+  // Monitors
+  alienware_34:  UNS('1527443224154-c4a3942d3acf'),
+  samsung_g9:    UNS('1551645120-d70bfe84c826'),
+
+  // Gaming
   ps5:           UNS('1606813907291-d86efa9b94db'),
-  gaming:        UNS('1612287230202-1ff1d85d1bdf'),
-  monitor:       UNS('1527443224154-c4a3942d3acf'),
-  speaker:       UNS('1589003077984-894e133dabab'),
-  headphones:    UNS('1505740420928-5e560c06d30e'),
+  ps5_2:         UNS('1607853202273-232359c9d6c4'),
+  lenovo_go:     UNS('1612287230202-1ff1d85d1bdf'),
+  lenovo_go_2:   UNS('1607853202273-232359c9d6c4'),
+
+  // Apple Accessories
   pencil:        APPLE('apple-pencil-pro-select-202405'),
   magic_kb:      APPLE('magic-keyboard-select-202401-space-gray'),
-  ss_tab:        GSM('samsung-galaxy-tab-s10-fe'),
+
   // Power products
-  itel_power:    UNS('1609091839358-9b0e6c2e1d26'),      // power bank placeholder
-  ecoflow:       UNS('1609166222665-b8b5c0823d1a'),      // power station placeholder
-  anker:         UNS('1609092524229-7e8a25c9d1a2'),      // power bank placeholder
+  itel_power:    UNS('1609091839358-9b0e6c2e1d26'),
+  ecoflow:       UNS('1609166222665-b8b5c0823d1a'),
+  anker:         UNS('1609092524229-7e8a25c9d1a2'),
 };
 
 export const ACCESSORY_PRODUCTS: Product[] = [
